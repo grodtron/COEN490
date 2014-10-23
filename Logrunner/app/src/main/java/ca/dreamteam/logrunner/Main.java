@@ -3,13 +3,19 @@ package ca.dreamteam.logrunner;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 
 public class Main extends Activity {
@@ -66,28 +72,82 @@ public class Main extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            ImageButton startRunButton = (ImageButton) rootView.findViewById(R.id.StartRun);
-            ImageButton viewHistoryButton = (ImageButton) rootView.findViewById(R.id.ViewHistory);
-
-            startRunButton.setOnClickListener(new View.OnClickListener() {
+            ImageView startRunButton = (ImageView) rootView.findViewById(R.id.StartRun);
+            startRunButton.setDrawingCacheEnabled(true);
+            ImageView viewHistoryButton = (ImageView) rootView.findViewById(R.id.ViewHistory);
+            viewHistoryButton.setDrawingCacheEnabled(true);
+            startRunButton.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), RunningActivity.class);
-                    startActivity(intent);
+                public boolean onTouch(final View v, MotionEvent event) {
+                    Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
+                    int color = 0;
+                    try {
+                        color = bmp.getPixel((int) event.getX(), (int) event.getY());
+                    } catch(Exception e) {
+                        // log
+                    }
+                    if(color == Color.TRANSPARENT) return false;
+                    else {
+                        switch(event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                Intent intent = new Intent(getActivity(), RunningActivity.class);
+                                startActivity(intent);
+                                break;
+                            case MotionEvent.ACTION_OUTSIDE:
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                break;
+                            case MotionEvent.ACTION_SCROLL:
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                            default: break;
+
+                        }
+                        return true;
+                    }
                 }
             });
 
-            viewHistoryButton.setOnClickListener(new View.OnClickListener() {
+            viewHistoryButton.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), HistoryActivity.class);
-                    startActivity(intent);
+                public boolean onTouch(final View v, MotionEvent event) {
+                    Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
+                    int color = 0;
+                    try {
+                        color = bmp.getPixel((int) event.getX(), (int) event.getY());
+                    } catch(Exception e) {
+                        // log
+                    }
+                    if(color == Color.TRANSPARENT) return false;
+                    else {
+                        switch(event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                                startActivity(intent);
+                                break;
+                            case MotionEvent.ACTION_OUTSIDE:
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                break;
+                            case MotionEvent.ACTION_SCROLL:
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                            default: break;
+
+                        }
+                        return true;
+                    }
                 }
             });
-
             return rootView;
         }
+
 
     }
 }

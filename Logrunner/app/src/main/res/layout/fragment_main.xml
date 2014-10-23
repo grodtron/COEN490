@@ -5,16 +5,19 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical" >
 
-    <ImageButton
+    <ImageView
         android:id="@+id/StartRun"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:src="@drawable/startrun" />
+        android:layout_width="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/startrun" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/ViewHistory"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:src="@drawable/viewhistory" />
+        android:layout_width="wrap_content"
+        android:background="@drawable/viewhistory"
+        android:layout_marginTop="150dp"
+        android:layout_alignParentStart="false" />
 
 </RelativeLayout>
