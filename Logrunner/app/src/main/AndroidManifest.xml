@@ -40,6 +40,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.dreamteam.logrunner.Main" />
         </activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".Main" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.dreamteam.logrunner.Main" />
+        </activity>
+        <activity
+            android:name=".RunningActivity"
+            android:label="@string/title_activity_running"
+            android:parentActivityName=".Main" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.dreamteam.logrunner.Main" />
+        </activity>
     </application>
 
 </manifest>

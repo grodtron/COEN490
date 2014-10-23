@@ -1,23 +1,24 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.os.Build;
 
 
-public class Main extends Activity {
+
+public class HistoryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_history);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -29,7 +30,7 @@ public class Main extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.history, menu);
         return true;
     }
 
@@ -40,15 +41,6 @@ public class Main extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-        else if (id == R.id.action_about) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        }
-        else if (id == R.id.action_help) {
-            startActivity(new Intent(this, HelpActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -65,29 +57,8 @@ public class Main extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            ImageButton startRunButton = (ImageButton) rootView.findViewById(R.id.StartRun);
-            ImageButton viewHistoryButton = (ImageButton) rootView.findViewById(R.id.ViewHistory);
-
-            startRunButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), RunningActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            viewHistoryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), HistoryActivity.class);
-                    startActivity(intent);
-                }
-            });
-
+            View rootView = inflater.inflate(R.layout.fragment_history, container, false);
             return rootView;
         }
-
     }
 }

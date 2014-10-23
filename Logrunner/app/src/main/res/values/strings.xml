@@ -10,5 +10,9 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="view_history">View running history</string>
+    <string name="running">Currently running!</string>
+    <string name="title_activity_running">RunningActivity</string>
 
 </resources>

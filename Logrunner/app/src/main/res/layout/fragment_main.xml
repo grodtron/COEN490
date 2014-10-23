@@ -5,13 +5,13 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical" >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/StartRun"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:src="@drawable/startrun" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/ViewHistory"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
