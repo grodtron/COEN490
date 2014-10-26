@@ -56,6 +56,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.dreamteam.logrunner.Main" />
         </activity>
+        <activity
+            android:name=".FinishRunActivity"
+            android:label="@string/title_activity_finish_run"
+            android:parentActivityName=".RunningActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.dreamteam.logrunner.RunningActivity" />
+        </activity>
     </application>
 
 </manifest>
