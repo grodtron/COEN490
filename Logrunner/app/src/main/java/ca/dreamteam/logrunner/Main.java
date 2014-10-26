@@ -72,9 +72,9 @@ public class Main extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ImageView startRunButton = (ImageView) rootView.findViewById(R.id.StartRun);
+            final ImageView startRunButton = (ImageView) rootView.findViewById(R.id.StartRun);
             startRunButton.setDrawingCacheEnabled(true);
-            ImageView viewHistoryButton = (ImageView) rootView.findViewById(R.id.ViewHistory);
+            final ImageView viewHistoryButton = (ImageView) rootView.findViewById(R.id.ViewHistory);
             viewHistoryButton.setDrawingCacheEnabled(true);
             startRunButton.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -90,8 +90,7 @@ public class Main extends Activity {
                     else {
                         switch(event.getAction()) {
                             case MotionEvent.ACTION_DOWN:
-                                Intent intent = new Intent(getActivity(), RunningActivity.class);
-                                startActivity(intent);
+ //                               startRunButton.setImageResource(R.drawable.startrun_pressed);
                                 break;
                             case MotionEvent.ACTION_OUTSIDE:
                                 break;
@@ -102,6 +101,9 @@ public class Main extends Activity {
                             case MotionEvent.ACTION_SCROLL:
                                 break;
                             case MotionEvent.ACTION_UP:
+ //                               startRunButton.setImageResource(R.drawable.startrun);
+                                Intent intent = new Intent(getActivity(), RunningActivity.class);
+                                startActivity(intent);
                                 break;
                             default: break;
 
@@ -125,8 +127,6 @@ public class Main extends Activity {
                     else {
                         switch(event.getAction()) {
                             case MotionEvent.ACTION_DOWN:
-                                Intent intent = new Intent(getActivity(), HistoryActivity.class);
-                                startActivity(intent);
                                 break;
                             case MotionEvent.ACTION_OUTSIDE:
                                 break;
@@ -137,6 +137,8 @@ public class Main extends Activity {
                             case MotionEvent.ACTION_SCROLL:
                                 break;
                             case MotionEvent.ACTION_UP:
+                                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                                startActivity(intent);
                                 break;
                             default: break;
 
