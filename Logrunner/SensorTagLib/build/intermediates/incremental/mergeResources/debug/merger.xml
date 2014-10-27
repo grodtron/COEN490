@@ -2,167 +2,167 @@
 <merger version="2" >
 
     <dataSet config="21.0.0" >
-        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\res" />
+        <source path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res" >
+        <source path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res" >
             <file
                 name="bluetooth"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-hdpi\bluetooth.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-hdpi\bluetooth.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="list_item_normal"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-hdpi\list_item_normal.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-hdpi\list_item_normal.xml"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="buttonsoffoff"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\buttonsoffoff.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\buttonsoffoff.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="buttonsoffon"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\buttonsoffon.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\buttonsoffon.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="buttonsonoff"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\buttonsonoff.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\buttonsonoff.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="buttonsonon"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\buttonsonon.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\buttonsonon.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="tible"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\tible.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\tible.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ti_stk_2c_pos_rgb_png"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-mdpi\ti_stk_2c_pos_rgb_png.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-mdpi\ti_stk_2c_pos_rgb_png.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="accelerometer"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\accelerometer.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\accelerometer.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="barometer"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\barometer.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\barometer.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="gyroscope"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\gyroscope.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\gyroscope.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="humidity"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\humidity.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\humidity.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\ic_launcher.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\ic_launcher.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="irtemperature"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\irtemperature.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\irtemperature.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="sensortag"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\sensortag.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\sensortag.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="sensortag_magnetometer"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\sensortag_magnetometer.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\sensortag_magnetometer.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="sensortag_simplekeys"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\sensortag_simplekeys.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\sensortag_simplekeys.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="temperature"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\temperature.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\temperature.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="unknown"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\drawable-xhdpi\unknown.png"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\drawable-xhdpi\unknown.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="activity_file"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\activity_file.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\activity_file.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="activity_fwupdate"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\activity_fwupdate.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\activity_fwupdate.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="dialog_about"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\dialog_about.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\dialog_about.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="element_characteristic"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\element_characteristic.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\element_characteristic.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="element_device"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\element_device.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\element_device.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="element_file"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\element_file.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\element_file.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_help"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\fragment_help.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\fragment_help.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_pager"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\fragment_pager.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\fragment_pager.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_scan"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\fragment_scan.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\fragment_scan.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="services_browser"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\layout\services_browser.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\layout\services_browser.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="device_activity_actions"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\menu\device_activity_actions.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\menu\device_activity_actions.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="main_activity_actions"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\menu\main_activity_actions.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\menu\main_activity_actions.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\values\strings.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\values\strings.xml"
                 qualifiers="" >
                 <string name="unitRH" >%rH\n
                 </string>
@@ -279,7 +279,7 @@ SensorTag
                 </string>
             </file>
             <file
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\values\styles.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\values\styles.xml"
                 qualifiers="" >
 
                 <style name="nameStyle" >
@@ -598,35 +598,35 @@ right
             </file>
             <file
                 name="gatt_uuid"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\xml\gatt_uuid.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\xml\gatt_uuid.xml"
                 qualifiers=""
                 type="xml" />
             <file
                 name="list_gradient"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\xml\list_gradient.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\xml\list_gradient.xml"
                 qualifiers=""
                 type="xml" />
             <file
                 name="popup"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\xml\popup.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\xml\popup.xml"
                 qualifiers=""
                 type="xml" />
             <file
                 name="preferences"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\xml\preferences.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\xml\preferences.xml"
                 qualifiers=""
                 type="xml" />
             <file
                 name="preference_headers"
-                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\res\xml\preference_headers.xml"
+                path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\main\res\xml\preference_headers.xml"
                 qualifiers=""
                 type="xml" />
         </source>
-        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\build\generated\res\rs\debug" />
-        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\build\generated\res\generated\debug" />
+        <source path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\build\generated\res\rs\debug" />
+        <source path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\build\generated\res\generated\debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\debug\res" />
+        <source path="C:\workspace\ThreeNinety\Logrunner\SensorTagLib\src\debug\res" />
     </dataSet>
 
 </merger>

@@ -11,4 +11,4 @@
         android:id="@+id/opt_about"
         android:title="@string/about"/>
 
-</menu><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/sensorTagLib/src/main/res/menu/device_activity_actions.xml -->
+</menu><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/SensorTagLib/src/main/res/menu/device_activity_actions.xml -->

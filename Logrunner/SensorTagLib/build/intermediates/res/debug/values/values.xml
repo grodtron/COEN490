@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/C:/workspace/ThreeNinety/Logrunner/sensorTagLib/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/workspace/ThreeNinety/Logrunner/SensorTagLib/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string-array name="device_filter">
@@ -61,7 +61,7 @@
     <string name="unitRH">%rH\n</string>
     <string name="unitT3">uT\nuT\nuT\n</string>
     <string name="xyz3">x:\ny:\nz:\n</string>
-    <!-- From: file:/C:/workspace/ThreeNinety/Logrunner/sensorTagLib/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/workspace/ThreeNinety/Logrunner/SensorTagLib/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="AppBaseTheme" parent="android:Theme.Light">

@@ -28,4 +28,4 @@
         android:onClick="onConfirm"
         android:text="@string/btn_txt_confirm" />
 
-</LinearLayout><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/sensorTagLib/src/main/res/layout/activity_file.xml -->
+</LinearLayout><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/SensorTagLib/src/main/res/layout/activity_file.xml -->

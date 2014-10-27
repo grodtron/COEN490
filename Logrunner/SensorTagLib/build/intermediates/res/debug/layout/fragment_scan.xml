@@ -69,4 +69,4 @@
         android:padding="10dp"
         android:text="@string/button_scan" />
 
-</LinearLayout><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/sensorTagLib/src/main/res/layout/fragment_scan.xml -->
+</LinearLayout><!-- From: file:/C:/workspace/ThreeNinety/Logrunner/SensorTagLib/src/main/res/layout/fragment_scan.xml -->
