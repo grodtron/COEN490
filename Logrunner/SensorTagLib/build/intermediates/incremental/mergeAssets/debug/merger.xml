@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets" >
+            <file
+                name="about.css"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\about.css" />
+            <file
+                name="about.html"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\about.html" />
+            <file
+                name="help.css"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\help.css" />
+            <file
+                name="help_device.html"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\help_device.html" />
+            <file
+                name="help_scan.html"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\help_scan.html" />
+            <file
+                name="SensorTagImgA.bin"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\SensorTagImgA.bin" />
+            <file
+                name="SensorTagImgB.bin"
+                path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\main\assets\SensorTagImgB.bin" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\workspace\ThreeNinety\Logrunner\sensorTagLib\src\debug\assets" />
+    </dataSet>
+
+</merger>

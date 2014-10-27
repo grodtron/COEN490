@@ -13,8 +13,11 @@
     <string name="title_activity_history">HistoryActivity</string>
     <string name="view_history">View running history</string>
     <string name="running">Currently running!</string>
+    <string name="save_button_text">Save</string>
     <string name="endrun_button">End Run</string>
+    <string name="action_share">Share</string>
     <string name="run_finished">Run Finished!</string>
+    <string name="comment_hint">How did you find your run?</string>
     <string name="title_activity_running">RunningActivity</string>
     <string name="title_activity_finish_run">FinishRunActivity</string>
 
