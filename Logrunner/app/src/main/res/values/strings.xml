@@ -12,8 +12,9 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="view_history">View running history</string>
-    <string name="running">Currently running!</string>
-    <string name="endrun_button">End Run</string>
+    <string name="running"> The swapping fragment with men running goes here</string>
+    <string name="repeatedfragment"> The swapping fragment with men running goes here</string>
+    <string name="stop">STOP</string>
     <string name="run_finished">Run Finished!</string>
     <string name="title_activity_running">RunningActivity</string>
     <string name="title_activity_finish_run">FinishRunActivity</string>

@@ -6,4 +6,5 @@
     tools:context="ca.dreamteam.logrunner.RunningActivity"
     tools:ignore="MergeRootFrame"
     android:orientation="vertical">
-    </LinearLayout>
+
+</LinearLayout>

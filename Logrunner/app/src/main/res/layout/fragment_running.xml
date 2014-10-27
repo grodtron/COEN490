@@ -6,20 +6,31 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="ca.dreamteam.logrunner.RunningActivity$PlaceholderFragment">
+
+    <TextView
+        android:text="@string/repeatedfragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topfrag"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop ="true" />
 
     <TextView
         android:text="@string/running"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/middlefrag"
+        android:layout_centerInParent="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/endrun_button"
-        android:id="@+id/endrun_button"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/stop"
+        android:drawableRight="@drawable/end_flag"
+        android:id="@+id/stop_button"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
