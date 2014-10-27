@@ -15,7 +15,11 @@
     <string name="running"> The swapping fragment with men running goes here</string>
     <string name="repeatedfragment"> The swapping fragment with men running goes here</string>
     <string name="stop">STOP</string>
+    <string name="save_button_text">Save</string>
+    <string name="endrun_button">End Run</string>
+    <string name="action_share">Share</string>
     <string name="run_finished">Run Finished!</string>
+    <string name="comment_hint">How did you find your run?</string>
     <string name="title_activity_running">RunningActivity</string>
     <string name="title_activity_finish_run">FinishRunActivity</string>
 
