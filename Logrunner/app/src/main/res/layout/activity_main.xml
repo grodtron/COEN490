@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/RoadBackground"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="270dp"
+        android:background="@drawable/road_background_main" />
+
+    <ImageView
+        android:id="@+id/StartRun"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="247dp"
+        android:background="@drawable/startrun" />
+
+    <ImageView
+        android:id="@+id/ViewHistory"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="247dp"
+        android:background="@drawable/viewhistory" />
+
+</RelativeLayout>
