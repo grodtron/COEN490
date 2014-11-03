@@ -9,5 +9,6 @@
     <string name="stop_run">STOP</string>
     <string name="save">SAVE</string>
     <string name="view_history">View History</string>
+    <string name="title_activity_device_select">DeviceSelect</string>
 
 </resources>

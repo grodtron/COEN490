@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets" >
+            <file
+                name="about.css"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/about.css" />
+            <file
+                name="about.html"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/about.html" />
+            <file
+                name="help.css"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/help.css" />
+            <file
+                name="help_device.html"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/help_device.html" />
+            <file
+                name="help_scan.html"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/help_scan.html" />
+            <file
+                name="SensorTagImgA.bin"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/SensorTagImgA.bin" />
+            <file
+                name="SensorTagImgB.bin"
+                path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/main/assets/SensorTagImgB.bin" />
+        </source>
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/Users/AmineMhedhbi/Desktop/ThreeNinety/Logrunner/sensortaglib/src/release/assets" />
+    </dataSet>
+
+</merger>
