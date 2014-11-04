@@ -17,8 +17,8 @@ tools:context=".StartRunActivity" >
     <!--TextView x 4 for each bubble-->
 
     <Chronometer
-        android:id="@+id/chronometer"
-        android:format="H:MM:SS"
+        android:id="@+id/mChronometer"
+        android:format="%s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="23sp"
