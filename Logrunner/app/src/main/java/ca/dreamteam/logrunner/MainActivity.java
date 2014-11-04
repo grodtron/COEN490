@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onTouch(final View v, MotionEvent event) {
                 Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
+                ImageView startRunButtonImageView = (ImageView) v;
                 int color = 0;
                 try {
                     color = bmp.getPixel((int) event.getX(), (int) event.getY());
@@ -40,7 +41,13 @@ public class MainActivity extends Activity {
                 if(color == Color.TRANSPARENT) return false;
                 else {
                     switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
+                        case MotionEvent.ACTION_UP:
+                            startRunButtonImageView.setImageResource(R.drawable.startrun_pressed);
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             Intent intent = new Intent(getApplicationContext(), StartRunActivity.class);
                             startActivity(intent);
                             break;
@@ -56,6 +63,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onTouch(final View v, MotionEvent event) {
                 Bitmap bmp = Bitmap.createBitmap(v.getDrawingCache());
+                ImageView viewHistoryButtonImageView = (ImageView) v;
                 int color = 0;
                 try {
                     color = bmp.getPixel((int) event.getX(), (int) event.getY());
@@ -66,7 +74,13 @@ public class MainActivity extends Activity {
                 if(color == Color.TRANSPARENT) return false;
                 else {
                     switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
+                        case MotionEvent.ACTION_UP:
+                            viewHistoryButtonImageView.setImageResource(R.drawable.viewhistory_pressed);
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             Intent intent = new Intent(getApplicationContext(), ViewHistoryActivity.class);
                             startActivity(intent);
                             break;
@@ -77,6 +91,18 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        ImageView startRunButton = (ImageView) findViewById(R.id.StartRun);
+        startRunButton.setImageResource(R.drawable.startrun);
+
+        ImageView viewHistoryButton = (ImageView) findViewById(R.id.ViewHistory);
+        viewHistoryButton.setImageResource(R.drawable.viewhistory);
     }
 
     @Override
