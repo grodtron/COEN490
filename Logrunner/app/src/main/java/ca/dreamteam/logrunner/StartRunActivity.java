@@ -34,11 +34,7 @@ public class StartRunActivity extends Activity {
     private TextView mTemperatureView;
     private TextView mBarometerView;
     private TextView mHumidityView;
-
-    private double mAvgTemperature = Double.NaN;
-    private double mAvgHumidity = Double.NaN;
-    private double mAvgPressure = Double.NaN;
-    private int mCounter = 1;
+    private static double mAvgTemperature, mAvgHumidity, mAvgPressure;
 
     // Bluetooth communication with the SensorTag
     private BluetoothDevice mBtDevice;
@@ -73,6 +69,7 @@ public class StartRunActivity extends Activity {
 
                 // Based on the textButton value change between Run, Stop & Save actions
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
+                    mAvgTemperature = mAvgHumidity = mAvgPressure = 0.0;
                     // Get references to the GUI text box objects
                     mTemperatureView = (TextView) findViewById(R.id.value_temp);
                     mBarometerView = (TextView) findViewById(R.id.value_baro);
@@ -105,12 +102,11 @@ public class StartRunActivity extends Activity {
                         res = res && mStManager.enableSensor(Sensor.BAROMETER);
                     }
                     if (mStManager.isPeriodSupported(Sensor.HUMIDITY)) {
-                        res = res && mStManager.enableSensor(Sensor.HUMIDITY, UPDATE_HUMIDITY_PERIOD_MS);
+                        res = res && mStManager.enableSensor(Sensor.HUMIDITY,
+                                UPDATE_HUMIDITY_PERIOD_MS);
                     } else {
                         res = res && mStManager.enableSensor(Sensor.HUMIDITY);
                     }
-
-                    // If any of the enableSensor() calls failed, show/log an error and exit.
                     if (!res) {
                         android.util.Log.e(TAG, "Sensor configuration failed - exiting");
                         Toast.makeText(getApplicationContext(),
@@ -122,8 +118,13 @@ public class StartRunActivity extends Activity {
                     textButton.setText("SAVE");
                     tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5"));
                     chronometer.stop();
+                    mTemperatureView.setText(tempFormat.format(mAvgTemperature) + "°C");
+                    mBarometerView.setText(baroFormat.format(mAvgPressure) + "kPa");
+                    mHumidityView.setText(humiFormat.format(mAvgHumidity) + "%");
                     mStManager.disableUpdates();
+                    // TODO: load same image but with Avg instead
                 } else if (((String)textButton.getText()).compareTo("SAVE") == 0) {
+                    // TODO: deal with what happens once save is clicked and add discard button
                     textButton.setText("SAVE COMPLETE!");
                 }
             }
@@ -157,6 +158,11 @@ public class StartRunActivity extends Activity {
         public void onUpdateAmbientTemperature(SensorTagManager mgr, double temp) {
             super.onUpdateAmbientTemperature(mgr, temp);
 
+            if (mAvgTemperature != 0) {
+                mAvgTemperature = (mAvgTemperature + temp) / 2;
+            } else {
+                mAvgTemperature = temp;
+            }
             // convertTemperatureUnit(temp);
             final String tempText = tempFormat.format(temp);
             runOnUiThread(new Runnable() {
@@ -171,6 +177,11 @@ public class StartRunActivity extends Activity {
         public void onUpdateBarometer(SensorTagManager mgr, double pressure, double height) {
             super.onUpdateBarometer(mgr, pressure, height);
 
+            if (mAvgPressure != 0) {
+                mAvgPressure = (mAvgPressure + pressure) / 2;
+            } else {
+                mAvgPressure = pressure;
+            }
             // convertBarometerUnit(pressure);
             final String baroText = baroFormat.format(pressure);
             runOnUiThread(new Runnable() {
@@ -184,6 +195,12 @@ public class StartRunActivity extends Activity {
         @Override
         public void onUpdateHumidity(SensorTagManager mgr, double rh) {
             super.onUpdateHumidity(mgr, rh);
+
+            if (mAvgHumidity != 0) {
+                mAvgHumidity = (mAvgHumidity + rh) / 2;
+            } else {
+                mAvgHumidity = rh;
+            }
             final String humiText = humiFormat.format(rh);
             runOnUiThread(new Runnable() {
                 @Override
