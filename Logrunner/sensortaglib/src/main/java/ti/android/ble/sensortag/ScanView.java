@@ -135,7 +135,7 @@ public class ScanView extends Fragment {
 		if (deviceList.size() > 0) {
 			mEmptyMsg.setVisibility(View.GONE);
 		} else {
-			mEmptyMsg.setVisibility(View.VISIBLE);			
+			mEmptyMsg.setVisibility(View.VISIBLE);
 		}
 	}
 

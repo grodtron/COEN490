@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import ti.android.ble.sensortag.DeviceSelectActivity;
+
 public class SplashScreen extends Activity {
 
     private static final int SPLASHTIME = 2000;
@@ -23,6 +25,8 @@ public class SplashScreen extends Activity {
                 {
                     case STOPSPLASH:
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra(DeviceSelectActivity.EXTRA_DEVICE,
+                                getIntent().getParcelableExtra(DeviceSelectActivity.EXTRA_DEVICE));
                         startActivity(intent);
                         finish();
                 }

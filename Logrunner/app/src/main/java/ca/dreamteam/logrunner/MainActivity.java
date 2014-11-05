@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import ti.android.ble.sensortag.DeviceSelectActivity;
+
 public class MainActivity extends Activity {
 
     final String TAG = MainActivity.this.getClass().getSimpleName();
@@ -49,6 +51,8 @@ public class MainActivity extends Activity {
                                 e.printStackTrace();
                             }
                             Intent intent = new Intent(getApplicationContext(), StartRunActivity.class);
+                            intent.putExtra(DeviceSelectActivity.EXTRA_DEVICE,
+                                    getIntent().getParcelableExtra(DeviceSelectActivity.EXTRA_DEVICE));
                             startActivity(intent);
                             break;
                         default:
