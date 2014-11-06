@@ -11,6 +11,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -142,9 +143,32 @@ public class StartRunActivity extends Activity {
             }
         });
 
+        // For testing
+        int statusCode = com.google.android.gms.common.GooglePlayServicesUtil.
+                isGooglePlayServicesAvailable(StartRunActivity.this);
+        switch (statusCode)
+        {
+            case ConnectionResult.SUCCESS:
+                Toast.makeText(StartRunActivity.this, "SUCCESS", Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectionResult.SERVICE_MISSING:
+                Toast.makeText(StartRunActivity.this, "SERVICE MISSING", Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                Toast.makeText(StartRunActivity.this, "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
+                break;
+            //
+            // see http://developer.android.com/reference/com/google/android/gms/common/ConnectionResult.html
+            // for error code translation
+            //
+            default: Toast.makeText(StartRunActivity.this,
+                    "Play Service result " + statusCode, Toast.LENGTH_SHORT).show();
+        }
+
         // Gets the MapView from the XML layout and creates it
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
+
         // Gets to GoogleMap from the MapView and does initialization stuff
         map = mapView.getMap();
         map.getUiSettings().setMyLocationButtonEnabled(false);
