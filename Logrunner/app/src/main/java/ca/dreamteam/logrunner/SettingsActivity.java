@@ -6,7 +6,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
 
@@ -14,7 +13,7 @@ public class SettingsActivity extends PreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_units);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_baro_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_dist_unit_key)));
@@ -22,8 +21,8 @@ public class SettingsActivity extends PreferenceActivity
 
     /**
      * Attaches a listener so the summary is always updated with the preference value.
-     * Also fires the listener once, to initialize the summary (so it shows up before the value
-     * is changed.)
+     * Also fires the listener once, to initialize the summary
+     * (so it shows up before the value is changed)
      */
     private void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.

@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     private static final int RUN_LOADER = 0;
     final String TAG = MainActivity.this.getClass().getSimpleName();
 
-    // Mock DB data
+    // Mock DB data, Doesn't have to be static, later on create take it !!!
     static final String TEST_DATE = "20141205";
     static final String COMMENT = "wow such run";
     static final double TEMP = 25.3;
