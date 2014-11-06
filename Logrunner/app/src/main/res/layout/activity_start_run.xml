@@ -14,6 +14,12 @@ tools:context=".StartRunActivity" >
         android:layout_marginBottom="305dp"
         android:background="@drawable/road_background_startrun" />
 
+    <!--com.google.android.gms.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="205dp" /-->
+
     <Chronometer
         android:id="@+id/mChronometer"
         android:format="%s"

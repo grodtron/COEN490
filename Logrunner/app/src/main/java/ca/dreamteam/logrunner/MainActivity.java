@@ -170,7 +170,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) { // This should be disabled if START RUN is clicked
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }

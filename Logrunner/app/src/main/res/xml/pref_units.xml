@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="temp_unit"
+        android:title="@string/temp_unit_title"
+        android:defaultValue="1"
+        android:entries="@array/temp_unit_list_titles"
+        android:entryValues="@array/temp_unit_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <ListPreference
+        android:key="baro_unit"
+        android:title="@string/baro_unit_title"
+        android:defaultValue="1"
+        android:entries="@array/baro_unit_list_titles"
+        android:entryValues="@array/baro_unit_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <ListPreference
+        android:key="dist_unit"
+        android:title="@string/dist_unit_title"
+        android:defaultValue="1"
+        android:entries="@array/dist_unit_list_titles"
+        android:entryValues="@array/dist_unit_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+</PreferenceScreen>
