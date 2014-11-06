@@ -25,8 +25,8 @@ public class SettingsActivity extends PreferenceActivity
         aboutButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference arg) {
-                //Intent intent = new Intent(getApplicationContext(), About.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+                startActivity(intent);
                 return true;
             }
         });

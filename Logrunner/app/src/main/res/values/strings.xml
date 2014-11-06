@@ -24,13 +24,12 @@
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_header_Units">Units</string>
-
     <string name="pref_unit_settings_title">Unit Settings</string>
     <string name="pref_general_settings_title">General Settings</string>
     <string name="pref_run_settings_title">Run Settings</string>
-
     <string name="temp_unit_title">Temperature Units</string>
     <string name="pref_temp_unit_key">temp_unit_key</string>
+
     <string-array name="temp_unit_list_titles">
         <item>Celsius</item>
         <item>Farenheit</item>
@@ -44,6 +43,7 @@
 
     <string name="baro_unit_title">Pressure Units</string>
     <string name="pref_baro_unit_key">baro_unit_key</string>
+
     <string-array name="baro_unit_list_titles">
         <item>KiloPascal</item>
         <item>MilliBar</item>
@@ -57,6 +57,7 @@
 
     <string name="dist_unit_title">Distance Units</string>
     <string name="pref_dist_unit_key">dist_unit_key</string>
+
     <string-array name="dist_unit_list_titles">
         <item>Kilometer</item>
         <item>mile</item>
@@ -65,5 +66,7 @@
         <item>1</item>
         <item>0</item>
     </string-array>
+
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>
