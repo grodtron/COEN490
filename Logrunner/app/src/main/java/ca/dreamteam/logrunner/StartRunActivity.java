@@ -2,6 +2,7 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -9,6 +10,13 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
 
@@ -41,6 +49,9 @@ public class StartRunActivity extends Activity {
     private SensorTagManager mStManager;
     private SensorTagListener mStListener;
 
+    MapView mapView;
+    GoogleMap map;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +77,7 @@ public class StartRunActivity extends Activity {
             public void onClick(View v) {
                 TextView textButton = (TextView) findViewById(R.id.textButton);
                 Button tempButton = (Button) findViewById(R.id.runButton);
+                tempButton.setBackgroundColor(Color.TRANSPARENT);
 
                 // Based on the textButton value change between Run, Stop & Save actions
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
@@ -129,6 +141,24 @@ public class StartRunActivity extends Activity {
                 }
             }
         });
+
+        // Gets the MapView from the XML layout and creates it
+        mapView = (MapView) findViewById(R.id.mapview);
+        mapView.onCreate(savedInstanceState);
+        // Gets to GoogleMap from the MapView and does initialization stuff
+        map = mapView.getMap();
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.setMyLocationEnabled(true);
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        try {
+            MapsInitializer.initialize(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+        map.animateCamera(cameraUpdate);
     }
 
     @Override
