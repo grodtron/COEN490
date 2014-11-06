@@ -3,7 +3,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:key="temp_unit"
+        android:key="@string/pref_temp_unit_key"
         android:title="@string/temp_unit_title"
         android:defaultValue="1"
         android:entries="@array/temp_unit_list_titles"
@@ -12,7 +12,7 @@
         android:positiveButtonText="@null" />
 
     <ListPreference
-        android:key="baro_unit"
+        android:key="@string/pref_baro_unit_key"
         android:title="@string/baro_unit_title"
         android:defaultValue="1"
         android:entries="@array/baro_unit_list_titles"
@@ -21,7 +21,7 @@
         android:positiveButtonText="@null" />
 
     <ListPreference
-        android:key="dist_unit"
+        android:key="@string/pref_dist_unit_key"
         android:title="@string/dist_unit_title"
         android:defaultValue="1"
         android:entries="@array/dist_unit_list_titles"

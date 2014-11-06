@@ -25,6 +25,7 @@
     <string name="pref_header_Units">Units</string>
 
     <string name="temp_unit_title">Temperature Units</string>
+    <string name="pref_temp_unit_key">temp_unit_key</string>
     <string-array name="temp_unit_list_titles">
         <item>Celsius</item>
         <item>Farenheit</item>
@@ -37,6 +38,7 @@
     </string-array>
 
     <string name="baro_unit_title">Pressure Units</string>
+    <string name="pref_baro_unit_key">baro_unit_key</string>
     <string-array name="baro_unit_list_titles">
         <item>KiloPascal</item>
         <item>MilliBar</item>
@@ -49,6 +51,7 @@
     </string-array>
 
     <string name="dist_unit_title">Distance Units</string>
+    <string name="pref_dist_unit_key">dist_unit_key</string>
     <string-array name="dist_unit_list_titles">
         <item>Kilometer</item>
         <item>mile</item>
