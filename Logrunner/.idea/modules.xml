@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Logrunner.iml" filepath="$PROJECT_DIR$/Logrunner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SensorTagLib/sensortaglib.iml" filepath="$PROJECT_DIR$/SensorTagLib/sensortaglib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sensortaglib/sensortaglib.iml" filepath="$PROJECT_DIR$/sensortaglib/sensortaglib.iml" />
     </modules>
   </component>
 </project>

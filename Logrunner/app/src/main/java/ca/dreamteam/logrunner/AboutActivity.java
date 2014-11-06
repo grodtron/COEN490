@@ -36,8 +36,7 @@ public class AboutActivity extends Activity {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"feedback@logrunner.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
-                i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                i.putExtra(Intent.EXTRA_SUBJECT, "User Feedback");
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -57,8 +56,7 @@ public class AboutActivity extends Activity {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"bugtracker@logrunner.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "bug/problem reported");
-                i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                i.putExtra(Intent.EXTRA_SUBJECT, "bug/problem report");
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {

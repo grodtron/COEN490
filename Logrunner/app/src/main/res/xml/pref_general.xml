@@ -6,11 +6,11 @@
 
         <Preference android:title="@string/about"
             android:key="@string/about"
-            android:summary="More info"/>
+            android:summary="More info about Logrunner"/>
 
         <Preference android:title="@string/language"
             android:key="@string/language"
-            android:summary="Change the language used on device"/>
+            android:summary="Change the language used on the device"/>
 
     </PreferenceCategory>
 
