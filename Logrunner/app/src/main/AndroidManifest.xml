@@ -37,6 +37,9 @@
             android:name=".DeviceSelect"
             android:label="@string/app_name" >
         </activity>
+        <provider
+            android:authorities="ca.dreamteam.logrunner"
+            android:name=".data.RunningProvider" />
     </application>
 
 </manifest>
