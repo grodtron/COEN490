@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Logrunner</string>
+    <string name="version">0.1</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
@@ -20,6 +21,11 @@
     <string name="init_value">--.--</string>
     <string name="about">About</string>
     <string name="language">Language</string>
+    <string name="feedback">Tells us what you think</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="problem">Let us know about a bug or a problem</string>
+    <string name="report_problem">Report a problem</string>
+    <string name="terms_and_services">Terms of Services</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>
