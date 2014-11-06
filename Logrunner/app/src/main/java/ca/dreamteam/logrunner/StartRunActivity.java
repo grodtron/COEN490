@@ -12,12 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.MapFragment;
 
 import java.text.DecimalFormat;
 
@@ -50,8 +46,7 @@ public class StartRunActivity extends Activity {
     private SensorTagManager mStManager;
     private SensorTagListener mStListener;
 
-    MapView mapView;
-    GoogleMap map;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,24 +160,10 @@ public class StartRunActivity extends Activity {
                     "Play Service result " + statusCode, Toast.LENGTH_SHORT).show();
         }
 
-        // Gets the MapView from the XML layout and creates it
-        mapView = (MapView) findViewById(R.id.mapview);
-        mapView.onCreate(savedInstanceState);
-
-        // Gets to GoogleMap from the MapView and does initialization stuff
-        map = mapView.getMap();
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview)).getMap();
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.setMyLocationEnabled(true);
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        try {
-            MapsInitializer.initialize(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-        map.animateCamera(cameraUpdate);
+        // need to use location services NEXT
     }
 
     @Override
