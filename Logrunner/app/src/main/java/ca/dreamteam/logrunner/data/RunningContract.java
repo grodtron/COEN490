@@ -20,7 +20,6 @@ public class RunningContract {
     public static final String PATH_RUN = "run";
     public static final String PATH_LOCATION = "location";
 
-
     // Format used for storing dates in the database. ALso used for converting those strings
     // back into date objects for comparison/processing.
     public static final String DATE_FORMAT = "yyyyMMdd";
@@ -123,6 +122,5 @@ public class RunningContract {
         public static String getStartDateFromUri(Uri uri) {
             return uri.getQueryParameter(COLUMN_DATETEXT);
         }
-
     }
 }

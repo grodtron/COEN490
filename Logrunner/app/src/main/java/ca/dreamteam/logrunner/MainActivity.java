@@ -171,7 +171,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
         // Handle action bar item clicks
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
