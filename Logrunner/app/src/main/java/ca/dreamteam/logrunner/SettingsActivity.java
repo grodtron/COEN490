@@ -1,5 +1,6 @@
 package ca.dreamteam.logrunner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -15,10 +16,32 @@ public class SettingsActivity extends PreferenceActivity
 
         addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_units);
-        addPreferencesFromResource(R.xml.pref_run);
+
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_baro_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_dist_unit_key)));
+
+        Preference aboutButton = (Preference)findPreference(getString(R.string.about));
+        aboutButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference arg) {
+                //Intent intent = new Intent(getApplicationContext(), About.class);
+                //startActivity(intent);
+                return true;
+            }
+        });
+
+        Preference languageButton = (Preference)findPreference(getString(R.string.language));
+        languageButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference arg) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setClassName("com.android.settings",
+                        "com.android.settings.LanguageSettings");
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     /**

@@ -4,6 +4,14 @@
         android:title="@string/pref_general_settings_title"
         android:key="@string/pref_general_settings_title">
 
+        <Preference android:title="@string/about"
+            android:key="@string/about"
+            android:summary="More info"/>
+
+        <Preference android:title="@string/language"
+            android:key="@string/language"
+            android:summary="Change the language used on device"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
