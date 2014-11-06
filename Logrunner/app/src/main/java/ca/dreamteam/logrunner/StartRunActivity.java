@@ -161,7 +161,7 @@ public class StartRunActivity extends Activity {
         }
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview)).getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
         // need to use location services NEXT
     }
