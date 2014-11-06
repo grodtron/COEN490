@@ -1,6 +1,9 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- language -->
-    <!-- About -->
+    <PreferenceCategory
+        android:title="@string/pref_general_settings_title"
+        android:key="@string/pref_general_settings_title">
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

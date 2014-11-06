@@ -13,7 +13,9 @@ public class SettingsActivity extends PreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        addPreferencesFromResource(R.xml.pref_general);
         addPreferencesFromResource(R.xml.pref_units);
+        addPreferencesFromResource(R.xml.pref_run);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_baro_unit_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_dist_unit_key)));
