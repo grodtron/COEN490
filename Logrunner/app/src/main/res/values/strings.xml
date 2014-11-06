@@ -17,5 +17,7 @@
     <string name="barometer_inhg_unit">inHg</string>
     <string name="humidity_unit">%</string>
     <string name="init_value">--.--</string>
+    <string name="about">about</string>
+
 
 </resources>
