@@ -36,6 +36,8 @@
     <string name="temp_unit_title">Temperature Units</string>
     <string name="pref_temp_unit_key">temp_unit_key</string>
 
+    <string name="pref_default_value">1</string>
+
     <string-array name="temp_unit_list_titles">
         <item>Celsius</item>
         <item>Farenheit</item>

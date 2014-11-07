@@ -8,7 +8,7 @@
     <ListPreference
         android:key="@string/pref_temp_unit_key"
         android:title="@string/temp_unit_title"
-        android:defaultValue="1"
+        android:defaultValue="@string/pref_default_value"
         android:entries="@array/temp_unit_list_titles"
         android:entryValues="@array/temp_unit_list_values"
         android:negativeButtonText="@null"
@@ -17,7 +17,7 @@
     <ListPreference
         android:key="@string/pref_baro_unit_key"
         android:title="@string/baro_unit_title"
-        android:defaultValue="1"
+        android:defaultValue="@string/pref_default_value"
         android:entries="@array/baro_unit_list_titles"
         android:entryValues="@array/baro_unit_list_values"
         android:negativeButtonText="@null"
@@ -26,7 +26,7 @@
     <ListPreference
         android:key="@string/pref_dist_unit_key"
         android:title="@string/dist_unit_title"
-        android:defaultValue="1"
+        android:defaultValue="@string/pref_default_value"
         android:entries="@array/dist_unit_list_titles"
         android:entryValues="@array/dist_unit_list_values"
         android:negativeButtonText="@null"

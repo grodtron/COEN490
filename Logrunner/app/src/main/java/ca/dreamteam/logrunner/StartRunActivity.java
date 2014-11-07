@@ -187,8 +187,9 @@ public class StartRunActivity extends Activity {
         }
     }
 
-    //TODO: add units string and change it based on settings static values
     public class ManagerListener extends SensorTagLoggerListener implements SensorTagListener {
+
+        // TODO: set TextSize in SP properly depending on the unit
         @Override
         public void onUpdateAmbientTemperature(SensorTagManager mgr, double temp) {
             super.onUpdateAmbientTemperature(mgr, temp);
@@ -198,12 +199,14 @@ public class StartRunActivity extends Activity {
             } else {
                 mAvgTemperature = temp;
             }
-            // convertTemperatureUnit(temp);
-            final String tempText = tempFormat.format(temp);
+
+            final String tempText = tempFormat.format(
+                    Utilities.convertTempValue(temp,StartRunActivity.this));
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mTemperatureView.setText(tempText + "°C");
+                    mTemperatureView.setText(tempText +
+                            Utilities.convertTempUnit(StartRunActivity.this));
                 }
             });
         }
@@ -217,12 +220,13 @@ public class StartRunActivity extends Activity {
             } else {
                 mAvgPressure = pressure;
             }
-            // convertBarometerUnit(pressure);
-            final String baroText = baroFormat.format(pressure);
+            final String baroText = baroFormat.format(
+                    Utilities.convertBaroValue(pressure, StartRunActivity.this));
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mBarometerView.setText(baroText + "kPa");
+                    mBarometerView.setText(baroText +
+                            Utilities.convertBaroUnit(StartRunActivity.this));
                 }
             });
         }
