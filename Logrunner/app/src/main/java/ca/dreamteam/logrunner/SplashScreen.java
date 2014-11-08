@@ -22,7 +22,7 @@ public class SplashScreen extends Activity {
                 switch (msg.what)
                 {
                     case STOPSPLASH:
-                        Intent intent = new Intent(getApplicationContext(), DeviceSelect.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
                 }

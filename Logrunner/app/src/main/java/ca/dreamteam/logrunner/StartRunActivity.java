@@ -146,7 +146,6 @@ public class StartRunActivity extends Activity {
                 Toast.makeText(StartRunActivity.this, "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
                 break;
             //
-            // see http://developer.android.com/reference/com/google/android/gms/common/ConnectionResult.html
             // for error code translation
             //
             default: Toast.makeText(StartRunActivity.this,

@@ -24,7 +24,6 @@ import java.util.Date;
 
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
-import ti.android.ble.sensortag.DeviceSelectActivity;
 
 public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -92,9 +91,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            Intent intent = new Intent(getApplicationContext(), StartRunActivity.class);
-                            intent.putExtra(DeviceSelectActivity.EXTRA_DEVICE,
-                                    getIntent().getParcelableExtra(DeviceSelectActivity.EXTRA_DEVICE));
+                            Intent intent = new Intent(getApplicationContext(), DeviceSelect.class);
                             startActivity(intent);
                             break;
                         default:
