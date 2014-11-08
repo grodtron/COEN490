@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -32,9 +31,7 @@ public class StartRunActivity extends Activity {
     static protected final int UPDATE_TEMP_BARO_PERIOD_MS  = 30000;
     static protected final int UPDATE_HUMIDITY_PERIOD_MS = 900000;
 
-    private final static DecimalFormat tempFormat = new DecimalFormat("0.0;-0.0");
     private final static DecimalFormat humiFormat = new DecimalFormat("00");
-    private final static DecimalFormat baroFormat = new DecimalFormat("00.0");
 
     private TextView mTemperatureView;
     private TextView mBarometerView;
@@ -126,11 +123,7 @@ public class StartRunActivity extends Activity {
                     textButton.setText("SAVE");
                     tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5"));
                     chronometer.stop();
-                    mTemperatureView.setText(tempFormat.format(mAvgTemperature) + "°C");
-                    mBarometerView.setText(baroFormat.format(mAvgPressure) + "kPa");
-                    mHumidityView.setText(humiFormat.format(mAvgHumidity) + "%");
                     mStManager.disableUpdates();
-                    // TODO: load same image but with Avg instead
                 } else if (((String)textButton.getText()).compareTo("SAVE") == 0) {
                     // TODO: deal with what happens once save is clicked and add discard button
                     textButton.setText("SAVE COMPLETE!");
@@ -200,13 +193,12 @@ public class StartRunActivity extends Activity {
                 mAvgTemperature = temp;
             }
 
-            final String tempText = tempFormat.format(
-                    Utilities.convertTempValue(temp,StartRunActivity.this));
+            final double tempUI = temp;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mTemperatureView.setText(tempText +
-                            Utilities.convertTempUnit(StartRunActivity.this));
+                    mTemperatureView.setText(
+                            Utilities.convertTemp(tempUI, StartRunActivity.this));
                 }
             });
         }
@@ -220,13 +212,12 @@ public class StartRunActivity extends Activity {
             } else {
                 mAvgPressure = pressure;
             }
-            final String baroText = baroFormat.format(
-                    Utilities.convertBaroValue(pressure, StartRunActivity.this));
+
+            final double pressureUI = pressure;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mBarometerView.setText(baroText +
-                            Utilities.convertBaroUnit(StartRunActivity.this));
+                    mBarometerView.setText(Utilities.convertBaro(pressureUI,StartRunActivity.this));
                 }
             });
         }

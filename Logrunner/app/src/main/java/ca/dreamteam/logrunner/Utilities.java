@@ -4,99 +4,54 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.text.DecimalFormat;
+
 public class Utilities {
 
-    static double convertTempValue (double C, Context context) {
+    private final static DecimalFormat CF_TempFormat = new DecimalFormat("0.0;-0.0");
+    private final static DecimalFormat K_TempFormat = new DecimalFormat("0");
+    private final static DecimalFormat kpa_BaroFormat = new DecimalFormat("0.0");
+    private final static DecimalFormat mbar_BaroFormat = new DecimalFormat("0.0");
+    private final static DecimalFormat inchgh_BaroFormat = new DecimalFormat("0.0");
+    private final static DecimalFormat distFormat = new DecimalFormat("0.00");
+
+    static String convertTemp (double C, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mTempUnit = prefs.getString(
-                context.getString(R.string.pref_temp_unit_key),
-                context.getString(R.string.pref_default_value));
+        String mTempUnit = prefs.getString(context.getString(R.string.pref_temp_unit_key), context.getString(R.string.pref_default_value));
 
         if (mTempUnit.equals("0")) {
-            return 1.8 * C + 32;
+            return CF_TempFormat.format(1.8 * C + 32) + "°F";
         } else if (mTempUnit.equals("-1")) {
-            return C + 273.15;
+            return K_TempFormat.format(C + 273.15) + "°K";
         } else {
-            return C;
+            return CF_TempFormat.format(C) + "°C";
         }
     }
 
-    static String convertTempUnit (Context context) {
+    static String convertBaro (double kpa, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mTempUnit = prefs.getString(
-                context.getString(R.string.pref_temp_unit_key),
-                context.getString(R.string.pref_default_value));
-
-        if (mTempUnit.equals("0")) { // F
-            return "°F";
-        } else if (mTempUnit.equals("-1")) { // K
-            return "°K";
-        } else { //C
-            return "°C";
-        }
-    }
-
-
-    static double convertBaroValue (double kpa, Context context) {
-        SharedPreferences prefs = PreferenceManager.
-                getDefaultSharedPreferences(context);
-        String mBaroUnit = prefs.getString(
-                context.getString(R.string.pref_baro_unit_key),
-                context.getString(R.string.pref_default_value));
+        String mBaroUnit = prefs.getString(context.getString(R.string.pref_baro_unit_key), context.getString(R.string.pref_default_value));
 
         if (mBaroUnit.equals("0")) { // MillBar
-            return  10 * kpa;
+            return mbar_BaroFormat.format(10 * kpa) + "mBar";
         } else if (mBaroUnit.equals("-1")) { // Inch Hg
-            return 0.295299830714 * kpa;
+            return inchgh_BaroFormat.format(0.295299830714 * kpa) + "Inch.Hg";
         } else { // KiloPascal
-            return kpa;
+            return kpa_BaroFormat.format(kpa) + "kpa";
         }
     }
 
-    static String convertBaroUnit (Context context) {
+    static String convertDist (double Km, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mBaroUnit = prefs.getString(
-                context.getString(R.string.pref_baro_unit_key),
-                context.getString(R.string.pref_default_value));
-
-        if (mBaroUnit.equals("0")) { // MillBar
-            return "mBar";
-        } else if (mBaroUnit.equals("-1")) { // Inch Hg
-            return "Inch.Hg";
-        } else { // KiloPascal
-            return "kpa";
-        }
-    }
-
-    static double convertDistValue (double Km, Context context) {
-        SharedPreferences prefs = PreferenceManager.
-                getDefaultSharedPreferences(context);
-        String mDistUnit = prefs.getString(
-                context.getString(R.string.pref_dist_unit_key),
-                context.getString(R.string.pref_default_value));
+        String mDistUnit = prefs.getString(context.getString(R.string.pref_dist_unit_key),context.getString(R.string.pref_default_value));
 
         if (mDistUnit.equals("0")) {
-            return Km * 0.621371;
+            return distFormat.format(Km * 0.621371) + "mi";
         } else {
-            return Km;
+            return distFormat.format(Km) + "Km";
         }
     }
-
-    static String convertDistUnit (Context context) {
-        SharedPreferences prefs = PreferenceManager.
-                getDefaultSharedPreferences(context);
-        String mDistUnit = prefs.getString(
-                context.getString(R.string.pref_dist_unit_key),
-                context.getString(R.string.pref_default_value));
-
-        if (mDistUnit.equals("0")) {
-            return "mi";
-        } else {
-            return "Km";
-        }
-    }
-
 }
