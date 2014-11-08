@@ -1,4 +1,4 @@
-package ca.dreamteam.logrunner;
+package ca.dreamteam.logrunner.Util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import ca.dreamteam.logrunner.R;
 
 public class AboutActivity extends Activity {
 

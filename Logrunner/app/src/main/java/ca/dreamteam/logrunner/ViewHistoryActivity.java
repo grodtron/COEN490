@@ -20,6 +20,7 @@ import android.widget.SimpleCursorAdapter;
 
 import java.util.Date;
 
+import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 

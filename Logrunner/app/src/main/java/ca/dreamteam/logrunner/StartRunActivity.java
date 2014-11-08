@@ -21,6 +21,7 @@ import ca.concordia.sensortag.SensorTagLoggerListener;
 import ca.concordia.sensortag.SensorTagManager;
 import ca.concordia.sensortag.SensorTagManager.ErrorType;
 import ca.concordia.sensortag.SensorTagManager.StatusType;
+import ca.dreamteam.logrunner.Util.Utilities;
 import ti.android.ble.sensortag.DeviceSelectActivity;
 import ti.android.ble.sensortag.Sensor;
 

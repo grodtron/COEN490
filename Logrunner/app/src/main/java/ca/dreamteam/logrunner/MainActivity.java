@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import ca.dreamteam.logrunner.Util.DeviceSelect;
+import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 
