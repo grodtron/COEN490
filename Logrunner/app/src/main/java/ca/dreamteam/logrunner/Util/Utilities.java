@@ -3,6 +3,8 @@ package ca.dreamteam.logrunner.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -12,12 +14,12 @@ public class Utilities {
 
     private final static DecimalFormat CF_TempFormat = new DecimalFormat("0.0;-0.0");
     private final static DecimalFormat K_TempFormat = new DecimalFormat("0");
-    private final static DecimalFormat kpa_BaroFormat = new DecimalFormat("0.0");
-    private final static DecimalFormat mbar_BaroFormat = new DecimalFormat("0.0");
+    private final static DecimalFormat kpa_BaroFormat = new DecimalFormat("0.00");
+    private final static DecimalFormat mbar_BaroFormat = new DecimalFormat("0");
     private final static DecimalFormat inchgh_BaroFormat = new DecimalFormat("0.0");
     private final static DecimalFormat distFormat = new DecimalFormat("0.00");
 
-    public static String convertTemp (double C, Context context) {
+    public static String convertTemp(double C, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
         String mTempUnit = prefs.getString(context.getString(R.string.pref_temp_unit_key), context.getString(R.string.pref_default_value));
@@ -31,7 +33,7 @@ public class Utilities {
         }
     }
 
-    public static String convertBaro (double kpa, Context context) {
+    public static String convertBaro(double kpa, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
         String mBaroUnit = prefs.getString(context.getString(R.string.pref_baro_unit_key), context.getString(R.string.pref_default_value));
@@ -45,15 +47,19 @@ public class Utilities {
         }
     }
 
-    public static String convertDist (double Km, Context context) {
+    public static String convertDist(double Km, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mDistUnit = prefs.getString(context.getString(R.string.pref_dist_unit_key),context.getString(R.string.pref_default_value));
+        String mDistUnit = prefs.getString(context.getString(R.string.pref_dist_unit_key), context.getString(R.string.pref_default_value));
 
         if (mDistUnit.equals("0")) {
             return distFormat.format(Km * 0.621371) + "mi";
         } else {
             return distFormat.format(Km) + "Km";
         }
+    }
+
+    public static void setTextView(TextView textview, char measurementType, Context context) {
+        textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
     }
 }

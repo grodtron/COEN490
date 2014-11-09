@@ -199,6 +199,7 @@ public class StartRunActivity extends Activity {
                 public void run() {
                     mTemperatureView.setText(
                             Utilities.convertTemp(tempUI, StartRunActivity.this));
+                    Utilities.setTextView(mTemperatureView, 'C', StartRunActivity.this);
                 }
             });
         }
@@ -217,7 +218,9 @@ public class StartRunActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mBarometerView.setText(Utilities.convertBaro(pressureUI,StartRunActivity.this));
+                    mBarometerView.setText(
+                            Utilities.convertBaro(pressureUI,StartRunActivity.this));
+                    Utilities.setTextView(mBarometerView, 'b', StartRunActivity.this);
                 }
             });
         }
