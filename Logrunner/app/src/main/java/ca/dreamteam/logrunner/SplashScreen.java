@@ -28,7 +28,7 @@ public class SplashScreen extends Activity {
                 }
             }
         };
-    }// Handler end
+    } // Handler end
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

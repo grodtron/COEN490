@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 return true;
             }
         });
-//        addRunInfo(TEST_DATE, COMMENT, TEMP, PRESSURE, START_TIME, START_TIME, HUMIDITY, DISTANCE);
+        // addRunInfo(TEST_DATE, COMMENT, TEMP, PRESSURE, START_TIME, START_TIME, HUMIDITY, DISTANCE);
         getLoaderManager().initLoader(RUN_LOADER, null, this);
     }
 
@@ -151,11 +151,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
         ImageView viewHistoryButton = (ImageView) findViewById(R.id.ViewHistory);
         viewHistoryButton.setImageResource(R.drawable.viewhistory);
         getLoaderManager().restartLoader(RUN_LOADER, null, this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override
