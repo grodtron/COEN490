@@ -155,14 +155,12 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if present.
         getMenuInflater().inflate(R.menu.settings, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks
         int id = item.getItemId();
         if (id == R.id.action_settings) { // This should be disabled if START RUN is clicked
             startActivity(new Intent(this, SettingsActivity.class));
@@ -173,17 +171,9 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // This is called when a new Loader needs to be created. This
-        // fragment only uses one loader, so we don't care about checking the id.
-        // To only show current and future dates, get the String representation for today,
-        // and filter the query to return weather only for dates after or including today.
-        // Only return data after today.
         Log.v(TAG, "In onCreateLoader");
         String startDate = RunningContract.getDbDateString(new Date());
-        // Sort order: Ascending, by date.
         String sortOrder = RunningContract.RunningEntry._ID + " DESC";
-        // Now create and return a CursorLoader that will take care of
-        // creating a Cursor for the data being displayed.
         return new CursorLoader(
                 this,
                 RunningContract.RunningEntry.CONTENT_URI,
@@ -233,16 +223,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
     }
 
-    /**
-     * @param date The location string
-     * @param comment description of the run
-     * @param temperature temperature measured by sensor
-     * @param pressure pressure measured by sensor
-     * @param time duration of the run
-     * @param start_time time at which the run was started
-     * @param distance total distance travelled
-     * @return the row ID of the added run.
-     */
     private long addRunInfo(
             String date, String comment, double temperature, double pressure,
             int time, int start_time, double humidity, double distance) {
@@ -258,7 +238,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
         runValues.put(RunningEntry.COLUMN_DISTANCE, distance);
         runValues.put(RunningEntry.COLUMN_PRESSURE, pressure);
 
-        // Not displayed info
         runValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
         runValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);
         runValues.put(RunningEntry.COLUMN_LOC_KEY, 0);
@@ -268,7 +247,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
         // Notify new entry in the table
         getContentResolver().notifyChange(RunningEntry.CONTENT_URI, null);
-
         return ContentUris.parseId(runInsertUri);
     }
 

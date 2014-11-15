@@ -10,11 +10,10 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-
-import java.text.DecimalFormat;
 
 import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagLoggerListener;
@@ -31,8 +30,6 @@ public class StartRunActivity extends Activity {
 
     static protected final int UPDATE_TEMP_BARO_PERIOD_MS  = 30000;
     static protected final int UPDATE_HUMIDITY_PERIOD_MS = 900000;
-
-    private final static DecimalFormat humiFormat = new DecimalFormat("00");
 
     private TextView mTemperatureView;
     private TextView mBarometerView;
@@ -182,7 +179,6 @@ public class StartRunActivity extends Activity {
 
     public class ManagerListener extends SensorTagLoggerListener implements SensorTagListener {
 
-        // TODO: set TextSize in SP properly depending on the unit
         @Override
         public void onUpdateAmbientTemperature(SensorTagManager mgr, double temp) {
             super.onUpdateAmbientTemperature(mgr, temp);
@@ -198,8 +194,7 @@ public class StartRunActivity extends Activity {
                 @Override
                 public void run() {
                     mTemperatureView.setText(
-                            Utilities.convertTemp(tempUI, StartRunActivity.this));
-                    Utilities.setTextView(mTemperatureView, 'C', StartRunActivity.this);
+                            Utilities.convertTemp(tempUI, mTemperatureView, StartRunActivity.this));
                 }
             });
         }
@@ -219,8 +214,7 @@ public class StartRunActivity extends Activity {
                 @Override
                 public void run() {
                     mBarometerView.setText(
-                            Utilities.convertBaro(pressureUI,StartRunActivity.this));
-                    Utilities.setTextView(mBarometerView, 'b', StartRunActivity.this);
+                            Utilities.convertBaro(pressureUI, mBarometerView, StartRunActivity.this));
                 }
             });
         }
@@ -234,16 +228,17 @@ public class StartRunActivity extends Activity {
             } else {
                 mAvgHumidity = rh;
             }
-            final String humiText = humiFormat.format(rh);
+
+            final String humiText = Utilities.humiFormat.format(rh) + "%";
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mHumidityView.setText(humiText + "%");
+                    mHumidityView.setText(humiText);
                 }
             });
         }
 
-        // have to deal with errors based on Use cases document
+        // deal with errors based on Use cases document
         @Override
         public void onError(SensorTagManager mgr, ErrorType type, String msg) {
             super.onError(mgr, type, msg);

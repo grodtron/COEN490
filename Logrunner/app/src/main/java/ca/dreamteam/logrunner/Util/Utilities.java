@@ -14,15 +14,17 @@ public class Utilities {
 
     private final static DecimalFormat CF_TempFormat = new DecimalFormat("0.0;-0.0");
     private final static DecimalFormat K_TempFormat = new DecimalFormat("0");
-    private final static DecimalFormat kpa_BaroFormat = new DecimalFormat("0.00");
+    private final static DecimalFormat kpa_BaroFormat = new DecimalFormat("0.0");
     private final static DecimalFormat mbar_BaroFormat = new DecimalFormat("0");
     private final static DecimalFormat inchgh_BaroFormat = new DecimalFormat("0.0");
     private final static DecimalFormat distFormat = new DecimalFormat("0.00");
+    public final static DecimalFormat humiFormat = new DecimalFormat("0");
 
-    public static String convertTemp(double C, Context context) {
+    public static String convertTemp(double C, TextView tempTextView, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mTempUnit = prefs.getString(context.getString(R.string.pref_temp_unit_key), context.getString(R.string.pref_default_value));
+        String mTempUnit = prefs.getString(context.getString(R.string.pref_temp_unit_key),
+                context.getString(R.string.pref_default_value));
 
         if (mTempUnit.equals("0")) {
             return CF_TempFormat.format(1.8 * C + 32) + "°F";
@@ -33,10 +35,11 @@ public class Utilities {
         }
     }
 
-    public static String convertBaro(double kpa, Context context) {
+    public static String convertBaro(double kpa, TextView baroTextView, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mBaroUnit = prefs.getString(context.getString(R.string.pref_baro_unit_key), context.getString(R.string.pref_default_value));
+        String mBaroUnit = prefs.getString(context.getString(R.string.pref_baro_unit_key),
+                context.getString(R.string.pref_default_value));
 
         if (mBaroUnit.equals("0")) { // MillBar
             return mbar_BaroFormat.format(10 * kpa) + "mBar";
@@ -47,10 +50,11 @@ public class Utilities {
         }
     }
 
-    public static String convertDist(double Km, Context context) {
+    public static String convertDist(double Km, TextView distTextView, Context context) {
         SharedPreferences prefs = PreferenceManager.
                 getDefaultSharedPreferences(context);
-        String mDistUnit = prefs.getString(context.getString(R.string.pref_dist_unit_key), context.getString(R.string.pref_default_value));
+        String mDistUnit = prefs.getString(context.getString(R.string.pref_dist_unit_key),
+                context.getString(R.string.pref_default_value));
 
         if (mDistUnit.equals("0")) {
             return distFormat.format(Km * 0.621371) + "mi";
@@ -59,7 +63,13 @@ public class Utilities {
         }
     }
 
-    public static void setTextView(TextView textview, char measurementType, Context context) {
-        textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+    public static void setHumiTextViewSize(double rh, TextView humiTextView) {
+        if (rh >= 100) {
+            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        } else if (rh >= 10) {
+            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        } else {
+            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        }
     }
 }
