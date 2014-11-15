@@ -1,8 +1,12 @@
 package ca.dreamteam.logrunner.data;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import static ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
@@ -57,5 +61,32 @@ public class RunningDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
 
+    }
+
+    private long addRunInfo(
+            String date, String comment, double temperature, double pressure,
+            int time, int start_time, double humidity, double distance, ContentResolver cr) {
+
+        ContentValues runValues = new ContentValues();
+
+        runValues.put(RunningEntry.COLUMN_DATETEXT, date);
+        runValues.put(RunningEntry.COLUMN_COMMENT, comment);
+        runValues.put(RunningEntry.COLUMN_TEMP, temperature);
+        runValues.put(RunningEntry.COLUMN_TIME, time);
+        runValues.put(RunningEntry.COLUMN_START_TIME, start_time);
+        runValues.put(RunningEntry.COLUMN_HUMIDITY, humidity);
+        runValues.put(RunningEntry.COLUMN_DISTANCE, distance);
+        runValues.put(RunningEntry.COLUMN_PRESSURE, pressure);
+
+        runValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
+        runValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);
+        runValues.put(RunningEntry.COLUMN_LOC_KEY, 0);
+
+        Uri runInsertUri = cr
+                .insert(RunningEntry.CONTENT_URI, runValues);
+
+        // Notify new entry in the table
+        cr.notifyChange(RunningEntry.CONTENT_URI, null);
+        return ContentUris.parseId(runInsertUri);
     }
 }
