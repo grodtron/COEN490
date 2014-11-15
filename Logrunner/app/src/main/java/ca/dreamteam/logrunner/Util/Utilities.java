@@ -42,10 +42,13 @@ public class Utilities {
                 context.getString(R.string.pref_default_value));
 
         if (mBaroUnit.equals("0")) { // MillBar
+            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
             return mbar_BaroFormat.format(10 * kpa) + "mBar";
         } else if (mBaroUnit.equals("-1")) { // Inch Hg
-            return inchgh_BaroFormat.format(0.295299830714 * kpa) + "Inch.Hg";
+            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+            return inchgh_BaroFormat.format(0.295299830714 * kpa) + " Hg";
         } else { // KiloPascal
+            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             return kpa_BaroFormat.format(kpa) + "kpa";
         }
     }
@@ -60,16 +63,6 @@ public class Utilities {
             return distFormat.format(Km * 0.621371) + "mi";
         } else {
             return distFormat.format(Km) + "Km";
-        }
-    }
-
-    public static void setHumiTextViewSize(double rh, TextView humiTextView) {
-        if (rh >= 100) {
-            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        } else if (rh >= 10) {
-            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        } else {
-            humiTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         }
     }
 }
