@@ -45,8 +45,8 @@ public class RunningDbHelper extends SQLiteOpenHelper {
                 RunningEntry.COLUMN_HUMIDITY + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_PRESSURE + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_DISTANCE + " REAL NOT NULL, " +
-                RunningEntry.COLUMN_START_TIME + " INTEGER NOT NULL, " +
-                RunningEntry.COLUMN_TIME + " INTEGER NOT NULL, " +
+                RunningEntry.COLUMN_START_TIME + " TEXT NOT NULL, " +
+                RunningEntry.COLUMN_DURATION + " TEXT NOT NULL, " +
                 // Set up the location column as a foreign key to location table.
                 "FOREIGN KEY (" + RunningEntry.COLUMN_LOC_KEY + ") REFERENCES " +
                 LocationEntry.TABLE_NAME + " (" + LocationEntry._ID + "));";
@@ -63,16 +63,16 @@ public class RunningDbHelper extends SQLiteOpenHelper {
 
     }
 
-    private long addRunInfo(
+    public static long addRunInfo(
             String date, String comment, double temperature, double pressure,
-            int time, int start_time, double humidity, double distance, ContentResolver cr) {
+            String duration, String start_time, double humidity, double distance, ContentResolver cr) {
 
         ContentValues runValues = new ContentValues();
 
         runValues.put(RunningEntry.COLUMN_DATETEXT, date);
         runValues.put(RunningEntry.COLUMN_COMMENT, comment);
         runValues.put(RunningEntry.COLUMN_TEMP, temperature);
-        runValues.put(RunningEntry.COLUMN_TIME, time);
+        runValues.put(RunningEntry.COLUMN_DURATION, duration);
         runValues.put(RunningEntry.COLUMN_START_TIME, start_time);
         runValues.put(RunningEntry.COLUMN_HUMIDITY, humidity);
         runValues.put(RunningEntry.COLUMN_DISTANCE, distance);

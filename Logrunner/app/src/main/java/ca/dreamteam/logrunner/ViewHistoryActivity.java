@@ -2,10 +2,7 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -13,7 +10,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.UserDictionary;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,11 +21,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
-import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 import ca.dreamteam.logrunner.data.RunningDbHelper;
 
@@ -55,62 +48,32 @@ public class ViewHistoryActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks
         int id = item.getItemId();
-        if (id == R.id.action_settings) { // This should be disabled if START RUN is clicked
+        if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
-
-        static final String TEST_DATE = "2014/12/05";
-        static final String COMMENT = "Best run";
-        static final double TEMP = 12.5;
-        static final double PRESSURE = 103.1;
-        static final int TIME = 20;
-        static final int START_TIME = 15;
-        static final double HUMIDITY = 1.2;
-        static final double DISTANCE = 5.1;
-
         private static final String LOG_TAG = HistoryFragment.class.getSimpleName();
         private SimpleCursorAdapter mRunAdapter;
         private static final int RUN_LOADER = 0;
-        private static String mRunStr = "Best run Ever #Logrunner ";
 
-        // For the forecast view we're showing only a small subset of the stored data.
         // Specify the columns we need.
         private static final String[] RUN_COLUMNS = {
-
-        // In this case the id needs to be fully qualified with a table name, since
-        // the content provider joins the location & weather tables in the background
-        // (both have an _id column)
-        // On the one hand, that's annoying. On the other, you can search the weather table
-        // using the location set by the user, which is only in the Location table.
-        // So the convenience is worth it.
                 RunningEntry.TABLE_NAME + "." + RunningEntry._ID,
                 RunningEntry.COLUMN_DATETEXT,
                 RunningEntry.COLUMN_COMMENT,
                 RunningEntry.COLUMN_TEMP,
                 RunningEntry.COLUMN_DISTANCE,
                 RunningEntry.COLUMN_PRESSURE,
-                RunningEntry.COLUMN_TIME,
+                RunningEntry.COLUMN_DURATION,
                 RunningEntry.COLUMN_HUMIDITY,
         };
-        // These indices are tied to RUN_COLUMNS. If RUN_COLUMNS changes, these
-        // must change.
-        public static final int COL_RUN_ID = 0;
-        public static final int COL_RUN_DATE = 1;
-        public static final int COL_RUN_DESC = 2;
-        public static final int COL_RUN_TEMP = 3;
+
         public static final int COL_RUN_DISTANCE = 4;
-        public static final int COL_RUN_PRESSURE = 5;
-        public static final int COL_RUN_TIME = 6;
-        public static final int COL_RUN_HUMIDITY = 7;
+
         public HistoryFragment() {
         }
         @Override
@@ -122,12 +85,12 @@ public class ViewHistoryActivity extends Activity {
                     getActivity(),
                     R.layout.list_item_history,
                     null,
-            // the column names to use to fill the textviews
+                    // the column names to use to fill the textviews
                     new String[]{RunningEntry.COLUMN_DATETEXT,
                             RunningEntry.COLUMN_DISTANCE,
-                            RunningEntry.COLUMN_TIME,
+                            RunningEntry.COLUMN_DURATION,
                     },
-            // the textviews to fill with the data pulled from the columns above
+                    // the textviews to fill with the data pulled from the columns above
                     new int[]{R.id.list_item_date_textview,
                             R.id.list_item_distance_textview,
                             R.id.list_item_time_textview,
@@ -139,10 +102,6 @@ public class ViewHistoryActivity extends Activity {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 switch (columnIndex) {
-                case COL_RUN_TEMP: {
-                    ((TextView) view).setText(Utilities.convertTemp(cursor.getDouble(columnIndex), (TextView)view, getActivity()));
-                    return true;
-                }
                 case COL_RUN_DISTANCE: {
                     ((TextView) view).setText(Utilities.convertDist(cursor.getDouble(columnIndex), (TextView) view, getActivity()));
                     return true;
@@ -159,9 +118,11 @@ public class ViewHistoryActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     Cursor cursor = mRunAdapter.getCursor();
+                    int index =
+                            cursor.getColumnIndex(RunningEntry._ID);
                     if (cursor != null && cursor.moveToPosition(position)) {
                         Intent intent = new Intent(getActivity(), DetailActivity.class)
-                                .putExtra(DetailActivity.ID_KEY, cursor.getString(COL_RUN_ID));
+                                .putExtra(DetailActivity.ID_KEY, cursor.getString(index));
                         startActivity(intent);
                     }
                 }
@@ -171,12 +132,10 @@ public class ViewHistoryActivity extends Activity {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
                     removeItemFromList(pos);
-
                     return true;
                 }
             });
 
-//            long runId = RunningDbHelper.addRunInfo(TEST_DATE, COMMENT, TEMP, PRESSURE, TIME, START_TIME, HUMIDITY, DISTANCE, getActivity().getContentResolver());
             return rootView;
         }
         @Override
@@ -191,18 +150,12 @@ public class ViewHistoryActivity extends Activity {
         }
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-            // This is called when a new Loader needs to be created. This
-            // fragment only uses one loader, so we don't care about checking the id.
-            // To only show current and future dates, get the String representation for today,
-            // and filter the query to return weather only for dates after or including today.
-            // Only return data after today.
+
             Log.v(LOG_TAG, "In onCreateLoader");
-            String startDate = RunningContract.getDbDateString(new Date());
 
             // Sort order: Ascending, by date.
             String sortOrder = RunningEntry._ID + " DESC";
 
-            // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
                     getActivity(),

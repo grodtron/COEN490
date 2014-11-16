@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
             RunningEntry.COLUMN_TEMP,
             RunningEntry.COLUMN_DISTANCE,
             RunningEntry.COLUMN_PRESSURE,
-            RunningEntry.COLUMN_TIME,
+            RunningEntry.COLUMN_DURATION,
             RunningEntry.COLUMN_HUMIDITY,
     };
 
@@ -169,7 +169,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 int distanceIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_DISTANCE);
                 int durationIndex =
-                        data.getColumnIndex(RunningEntry.COLUMN_TIME);
+                        data.getColumnIndex(RunningEntry.COLUMN_DURATION);
                 int tempIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TEMP);
                 int humidityIndex =

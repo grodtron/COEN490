@@ -95,7 +95,7 @@ public class RunningContract {
         // Start time of the race
         public static final String COLUMN_START_TIME = "start_time";
         // Duration of the run
-        public static final String COLUMN_TIME = "time";
+        public static final String COLUMN_DURATION = "time";
         // Distance travelled during run
         public static final String COLUMN_DISTANCE = "distance";
 

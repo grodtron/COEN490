@@ -1,28 +1,22 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
-import ca.dreamteam.logrunner.Util.DeviceSelect;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
-import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 
 public class DetailActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -34,6 +28,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
     private String mRunStr;
     private ShareActionProvider mShareActionProvider;
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    String mRunId;
 
     // Specify the columns we need.
     private static final String[] RUN_COLUMNS = {
@@ -43,7 +38,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
             RunningEntry.COLUMN_TEMP,
             RunningEntry.COLUMN_DISTANCE,
             RunningEntry.COLUMN_PRESSURE,
-            RunningEntry.COLUMN_TIME,
+            RunningEntry.COLUMN_DURATION,
             RunningEntry.COLUMN_HUMIDITY,
     };
 
@@ -63,11 +58,11 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.share, menu);
-        // Retrieve the share menu item
+        getMenuInflater().inflate(R.menu.detail_settings, menu);
+        // Retrieve the detail_settings menu item
         MenuItem menuItem = menu.findItem(R.id.menu_item_share);
 
-        // Get the provider and hold onto it to set/change the share intent.
+        // Get the provider and hold onto it to set/change the detail_settings intent.
         mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
 
         if (mShareActionProvider != null ) {
@@ -82,8 +77,13 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) { // This should be disabled if START RUN is clicked
+        if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+
+        if (id == R.id.action_delete) {
+            removeItemFromDb();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -105,12 +105,12 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
         if (intent == null || !intent.hasExtra(ID_KEY)) {
             return null;
         }
-        String runId = intent.getStringExtra(ID_KEY);
+        mRunId = intent.getStringExtra(ID_KEY);
         // Define 'where' part of query.
         String selection = RunningEntry._ID + " LIKE ?";
-        // Specify arguments in placeholder order.
 
-        String[] selectionArgs = { String.valueOf(runId) };
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = { String.valueOf(mRunId) };
 
         String sortOrder = RunningEntry._ID + " ASC";
         return new CursorLoader(
@@ -134,7 +134,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 int distanceIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_DISTANCE);
                 int durationIndex =
-                        data.getColumnIndex(RunningEntry.COLUMN_TIME);
+                        data.getColumnIndex(RunningEntry.COLUMN_DURATION);
                 int tempIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TEMP);
                 int humidityIndex =
@@ -175,10 +175,42 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
 
                 mRunStr = String.format("I just ran %s in %s", Utilities.convertDist(distance,(TextView) findViewById(R.id.value_dist),DetailActivity.this), duration);
             }
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+    }
+
+    public void removeItemFromDb() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                this);
+
+        final String selection = RunningEntry._ID + " LIKE ?";
+        final String[] selectionArgs = { String.valueOf(mRunId) };
+
+        alert.setTitle("Delete");
+        alert.setMessage("Are you sure want to delete the selected run?");
+        alert.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int mValuesDeleted = getContentResolver().delete(
+                        RunningEntry.CONTENT_URI,
+                        selection,
+                        selectionArgs
+                );
+                Intent intent = new Intent(getApplicationContext(), ViewHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
     }
 }
