@@ -87,6 +87,30 @@ tools:context=".StartRunActivity" >
         android:textSize="28sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="6dp"/>
+        android:layout_marginBottom="6dp" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:text="@string/save"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="180dp"
+        android:background="#33B5E5"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/discard_button"
+        android:text="@string/discard"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="180dp"
+        android:background="#FF0000"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -68,7 +67,8 @@ public class StartRunActivity extends Activity {
             public void onClick(View v) {
                 TextView textButton = (TextView) findViewById(R.id.textButton);
                 Button tempButton = (Button) findViewById(R.id.runButton);
-                tempButton.setBackgroundColor(Color.TRANSPARENT);
+                Button saveButton = (Button) findViewById(R.id.save_button);
+                Button discardButton = (Button) findViewById(R.id.discard_button);
 
                 // Based on the textButton value change between Run, Stop & Save actions
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
@@ -118,13 +118,12 @@ public class StartRunActivity extends Activity {
                         finish();
                     }
                 } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
-                    textButton.setText("SAVE");
-                    tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5"));
                     chronometer.stop();
                     mStManager.disableUpdates();
-                } else if (((String)textButton.getText()).compareTo("SAVE") == 0) {
-                    // TODO: deal with what happens once save is clicked and add discard button
-                    textButton.setText("SAVE COMPLETE!");
+                    textButton.setVisibility(View.GONE);
+                    tempButton.setVisibility(View.GONE);
+                    saveButton.setVisibility(View.VISIBLE);
+                    discardButton.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -154,6 +153,22 @@ public class StartRunActivity extends Activity {
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
         // need to use location services NEXT
+
+        Button saveButton = (Button) findViewById(R.id.save_button);
+        Button discardButton = (Button) findViewById(R.id.discard_button);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Do save shit !
+            }
+        });
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Do discard shit !
+            }
+        });
     }
 
     @Override

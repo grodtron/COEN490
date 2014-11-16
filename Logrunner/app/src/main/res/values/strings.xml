@@ -11,6 +11,7 @@
     <string name="start_run">START RUN</string>
     <string name="stop_run">STOP</string>
     <string name="save">SAVE</string>
+    <string name="discard">DISCARD</string>
     <string name="view_history">View History</string>
     <string name="temperature_c_unit">°C</string>
     <string name="temperature_f_unit">°F</string>
@@ -19,7 +20,7 @@
     <string name="barometer_inhg_unit">inHg</string>
     <string name="humidity_unit">%</string>
     <string name="init_value">--.--</string>
-    <string name="about">About</string>
+    <string name="about">About Logrunner</string>
     <string name="language">Language</string>
     <string name="feedback">Tells us what you think</string>
     <string name="send_feedback">Send Feedback</string>
