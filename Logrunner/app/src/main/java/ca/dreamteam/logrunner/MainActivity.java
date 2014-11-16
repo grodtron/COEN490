@@ -185,7 +185,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
                 ((TextView)findViewById(R.id.value_dist)).
-                        setText(Utilities.convertTemp(distance,
+                        setText(Utilities.convertDist(distance,
                                 (TextView)findViewById(R.id.value_dist),
                                         MainActivity.this));
                 ((TextView)findViewById(R.id.mChronometer)).

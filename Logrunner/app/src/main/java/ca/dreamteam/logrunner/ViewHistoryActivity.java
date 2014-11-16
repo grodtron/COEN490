@@ -146,8 +146,12 @@ public class ViewHistoryActivity extends Activity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    // String forecast = mRunAdapter.getItem(position);
-                    // Expand info for selected run
+                    Cursor cursor = mRunAdapter.getCursor();
+                    if (cursor != null && cursor.moveToPosition(position)) {
+                        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                                .putExtra(DetailActivity.ID_KEY, cursor.getString(COL_RUN_ID));
+                        startActivity(intent);
+                    }
                 }
             });
 
@@ -212,7 +216,7 @@ public class ViewHistoryActivity extends Activity {
                     getActivity() );
 
             alert.setTitle("Delete");
-            alert.setMessage("Do you really want to delete the selected run?");
+            alert.setMessage("Are you sure want to delete the selected run?");
             alert.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

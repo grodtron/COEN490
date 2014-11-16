@@ -13,6 +13,7 @@
     <string name="save">SAVE</string>
     <string name="discard">DISCARD</string>
     <string name="view_history">View History</string>
+    <string name="detail_activity">Selected Run</string>
     <string name="temperature_c_unit">°C</string>
     <string name="temperature_f_unit">°F</string>
     <string name="barometer_kpa_unit">kPa</string>

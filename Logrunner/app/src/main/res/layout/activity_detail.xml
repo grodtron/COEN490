@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/RoadBackground"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="270dp"
+        android:background="@drawable/road_background_main" />
+
+    <Chronometer
+        android:id="@+id/mChronometer"
+        android:format="%s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/value_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:text="00.0°C"
+        android:layout_alignBottom="@+id/mChronometer"
+        android:layout_marginLeft="258dp" />
+
+    <TextView
+        android:id="@+id/value_dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:layout_alignBottom="@+id/mChronometer"
+        android:layout_marginLeft="45dp" />
+
+    <TextView
+        android:id="@+id/value_baro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_alignBottom="@+id/RoadBackground"
+        android:text="100.3kPa"
+        android:layout_marginLeft="186dp"
+        android:layout_marginBottom="40dp" />
+
+    <TextView
+        android:id="@+id/value_humi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:layout_alignBottom="@+id/RoadBackground"
+        android:layout_marginLeft="96dp"
+        android:text="32%"
+        android:layout_marginBottom="40dp" />
+
+</RelativeLayout>

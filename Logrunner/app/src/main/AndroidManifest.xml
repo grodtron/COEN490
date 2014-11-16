@@ -55,6 +55,14 @@
                 android:value="ca.dreamteam.logrunner.MainActivity" />
         </activity>
         <activity
+            android:name=".DetailActivity"
+            android:label="@string/detail_activity"
+            android:parentActivityName=".ViewHistoryActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.dreamteam.logrunner.MainActivity" />
+        </activity>
+        <activity
             android:name=".Util.DeviceSelect"
             android:label="@string/app_name" >
         </activity>
