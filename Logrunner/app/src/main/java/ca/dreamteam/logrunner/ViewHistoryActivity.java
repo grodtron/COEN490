@@ -104,21 +104,13 @@ public class ViewHistoryActivity extends Activity {
                     null,
             // the column names to use to fill the textviews
                     new String[]{RunningEntry.COLUMN_DATETEXT,
-                            RunningEntry.COLUMN_COMMENT,
-                            RunningEntry.COLUMN_TEMP,
                             RunningEntry.COLUMN_DISTANCE,
-                            RunningEntry.COLUMN_PRESSURE,
                             RunningEntry.COLUMN_TIME,
-                            RunningEntry.COLUMN_HUMIDITY
                     },
             // the textviews to fill with the data pulled from the columns above
                     new int[]{R.id.list_item_date_textview,
-                            R.id.list_item_comment_textview,
-                            R.id.list_item_temp_textview,
                             R.id.list_item_distance_textview,
-                            R.id.list_item_pressure_textview,
                             R.id.list_item_time_textview,
-                            R.id.list_item_humidity_textview
                     },
                     0
             );
@@ -186,7 +178,7 @@ public class ViewHistoryActivity extends Activity {
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
                     getActivity(),
-                    RunningContract.RunningEntry.CONTENT_URI,
+                    RunningEntry.CONTENT_URI,
                     RUN_COLUMNS,
                     null,
                     null,
