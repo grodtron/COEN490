@@ -1,13 +1,19 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.UserDictionary;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,10 +23,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import java.util.Date;
 
 import ca.dreamteam.logrunner.Util.SettingsActivity;
+import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 
@@ -115,29 +123,22 @@ public class ViewHistoryActivity extends Activity {
                     0
             );
 
-        /*
-        mRunAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-        @Override
-        public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-        // TODO: Check parameters, display depending on preferences
-            switch (columnIndex) {
-            case COL_RUN_TEMP: {
-                // we have to do some formatting and possibly a conversion
-                ((TextView) view).setText(cursor.getString(columnIndex));
-                return true;
+            mRunAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                switch (columnIndex) {
+                case COL_RUN_TEMP: {
+                    ((TextView) view).setText(Utilities.convertTemp(cursor.getDouble(columnIndex), (TextView)view, getActivity()));
+                    return true;
+                }
+                case COL_RUN_DISTANCE: {
+                    ((TextView) view).setText(Utilities.convertDist(cursor.getDouble(columnIndex), (TextView) view, getActivity()));
+                    return true;
+                }
             }
-            case COL_RUN_DESC: {
-            }
-            case COL_RUN_DATE: {
-                String dateString = cursor.getString(columnIndex);
-                TextView dateView = (TextView) view;
-                dateView.setText(dateString);
-                return true;
-            }
-        }
-        return false;
-        }});
-        */
+            return false;
+            }});
+
             View rootView = inflater.inflate(R.layout.fragment_history, container, false);
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listview_history);
@@ -147,6 +148,15 @@ public class ViewHistoryActivity extends Activity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     // String forecast = mRunAdapter.getItem(position);
                     // Expand info for selected run
+                }
+            });
+
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+                    removeItemFromList(pos);
+
+                    return true;
                 }
             });
             return rootView;
@@ -193,6 +203,35 @@ public class ViewHistoryActivity extends Activity {
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
             mRunAdapter.swapCursor(null);
+        }
+
+        public void removeItemFromList(int position) {
+            final String deletePosition = String.valueOf(position);
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(
+                    getActivity() );
+
+            alert.setTitle("Delete");
+            alert.setMessage("Do you really want to delete the selected run?");
+            alert.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int mValuesDeleted = getActivity().getContentResolver().delete(
+                            RunningEntry.CONTENT_URI,
+                            "_id=?",
+                            new String[] {deletePosition}
+                    );
+                }
+            });
+            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            alert.show();
+
         }
     }
 }
