@@ -75,8 +75,11 @@ public class StartRunActivity extends Activity {
                     mAvgTemperature = mAvgHumidity = mAvgPressure = 0.0;
                     // Get references to the GUI text box objects
                     mTemperatureView = (TextView) findViewById(R.id.value_temp);
+                    mTemperatureView.setVisibility(View.VISIBLE);
                     mBarometerView = (TextView) findViewById(R.id.value_baro);
+                    mBarometerView.setVisibility(View.VISIBLE);
                     mHumidityView = (TextView) findViewById(R.id.value_humi);
+                    mHumidityView.setVisibility(View.VISIBLE);
 
                     textButton.setText("STOP");
                     tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
@@ -90,6 +93,7 @@ public class StartRunActivity extends Activity {
                         finish();
                         return;
                     }
+                    mStManager.enableUpdates();
 
                     boolean res = true;
                     if (mStManager.isPeriodSupported(Sensor.IR_TEMPERATURE)) {
@@ -142,9 +146,7 @@ public class StartRunActivity extends Activity {
             case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
                 Toast.makeText(StartRunActivity.this, "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
                 break;
-            //
             // for error code translation
-            //
             default: Toast.makeText(StartRunActivity.this,
                     "Play Service result " + statusCode, Toast.LENGTH_SHORT).show();
         }
@@ -166,7 +168,22 @@ public class StartRunActivity extends Activity {
         discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do discard shit !
+                chronometer.setText("00:00");
+                mTemperatureView.setVisibility(View.GONE);
+                mBarometerView.setVisibility(View.GONE);
+                mHumidityView.setVisibility(View.GONE);
+
+                TextView textButton = (TextView) findViewById(R.id.textButton);
+                Button tempButton = (Button) findViewById(R.id.runButton);
+                Button save_btn = (Button) findViewById(R.id.save_button);
+                Button discard_btn = (Button) findViewById(R.id.discard_button);
+
+                save_btn.setVisibility(View.GONE);
+                discard_btn.setVisibility(View.GONE);
+                textButton.setVisibility(View.VISIBLE);
+                tempButton.setVisibility(View.VISIBLE);
+                textButton.setText("START RUN");
+                tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
             }
         });
     }
