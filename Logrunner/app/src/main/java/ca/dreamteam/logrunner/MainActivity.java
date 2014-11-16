@@ -24,6 +24,7 @@ import java.util.Date;
 
 import ca.dreamteam.logrunner.Util.DeviceSelect;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
+import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 
@@ -96,11 +97,11 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 int color = 0;
                 try {
                     color = bmp.getPixel((int) event.getX(), (int) event.getY());
-                } catch(Exception e) {
-                    android.util.Log.e(TAG,"getting the Bitmap" +
+                } catch (Exception e) {
+                    android.util.Log.e(TAG, "getting the Bitmap" +
                             " Pixel touched for viewHistoryButton threw an exception");
                 }
-                if(color == Color.TRANSPARENT) return false;
+                if (color == Color.TRANSPARENT) return false;
                 else {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_UP:
@@ -181,22 +182,23 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 int pressureIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_PRESSURE);
 
-                String distance = data.getString(distanceIndex);
+                double distance = data.getDouble(distanceIndex);
                 String duration = data.getString(durationIndex);
-                String temp = data.getString(tempIndex);
-                String humidity = data.getString(humidityIndex);
-                String pressure = data.getString(pressureIndex);
+                double temp = data.getDouble(tempIndex);
+                double humidity = data.getDouble(humidityIndex);
+                double pressure = data.getDouble(pressureIndex);
 
+                final String humidityText = Utilities.humiFormat.format(humidity) + "%";
                 ((TextView)findViewById(R.id.value_dist)).
-                        setText(distance);
+                        setText(Utilities.convertTemp(distance, (TextView)findViewById(R.id.value_dist), MainActivity.this));
                 ((TextView)findViewById(R.id.mChronometer)).
                         setText(duration);
                 ((TextView)findViewById(R.id.value_temp)).
-                        setText(temp);
+                        setText(Utilities.convertTemp(temp, (TextView)findViewById(R.id.value_temp), MainActivity.this));
                 ((TextView)findViewById(R.id.value_humi)).
-                        setText(humidity);
+                        setText(humidityText);
                 ((TextView)findViewById(R.id.value_baro)).
-                        setText(pressure);
+                        setText(Utilities.convertBaro(pressure, (TextView)findViewById(R.id.value_baro), MainActivity.this));
             }
     }
 
