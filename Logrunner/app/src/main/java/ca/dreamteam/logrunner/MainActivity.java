@@ -24,6 +24,7 @@ import java.util.Date;
 
 import ca.dreamteam.logrunner.Util.DeviceSelect;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
+import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 
@@ -32,24 +33,8 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     private static final int RUN_LOADER = 0;
     final String TAG = MainActivity.this.getClass().getSimpleName();
 
-    // Mock DB data, Doesn't have to be static, later on create take it !!!
-    static final String TEST_DATE = "20141205";
-    static final String COMMENT = "wow such run";
-    static final double TEMP = 25.3;
-    static final double PRESSURE = 100.1;
-    static final String TIME = "00:01";
-    static final int START_TIME = 15;
-    static final double HUMIDITY = 30;
-    static final double DISTANCE = 3.5;
-
     // Specify the columns we need.
     private static final String[] RUN_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying. On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             RunningEntry.TABLE_NAME + "." + RunningEntry._ID,
             RunningEntry.COLUMN_DATETEXT,
             RunningEntry.COLUMN_COMMENT,
@@ -112,11 +97,11 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 int color = 0;
                 try {
                     color = bmp.getPixel((int) event.getX(), (int) event.getY());
-                } catch(Exception e) {
-                    android.util.Log.e(TAG,"getting the Bitmap" +
+                } catch (Exception e) {
+                    android.util.Log.e(TAG, "getting the Bitmap" +
                             " Pixel touched for viewHistoryButton threw an exception");
                 }
-                if(color == Color.TRANSPARENT) return false;
+                if (color == Color.TRANSPARENT) return false;
                 else {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_UP:
@@ -136,7 +121,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 return true;
             }
         });
-        // addRunInfo(TEST_DATE, COMMENT, TEMP, PRESSURE, START_TIME, START_TIME, HUMIDITY, DISTANCE);
         getLoaderManager().initLoader(RUN_LOADER, null, this);
     }
 
@@ -172,7 +156,6 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.v(TAG, "In onCreateLoader");
-        String startDate = RunningContract.getDbDateString(new Date());
         String sortOrder = RunningContract.RunningEntry._ID + " DESC";
         return new CursorLoader(
                 this,
@@ -199,55 +182,27 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                 int pressureIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_PRESSURE);
 
-                String distance = data.getString(distanceIndex);
+                double distance = data.getDouble(distanceIndex);
                 String duration = data.getString(durationIndex);
-                String temp = data.getString(tempIndex);
-                String humidity = data.getString(humidityIndex);
-                String pressure = data.getString(pressureIndex);
+                double temp = data.getDouble(tempIndex);
+                double humidity = data.getDouble(humidityIndex);
+                double pressure = data.getDouble(pressureIndex);
 
+                final String humidityText = Utilities.humiFormat.format(humidity) + "%";
                 ((TextView)findViewById(R.id.value_dist)).
-                        setText(distance);
+                        setText(Utilities.convertTemp(distance, (TextView)findViewById(R.id.value_dist), MainActivity.this));
                 ((TextView)findViewById(R.id.mChronometer)).
-                        setText(TIME);
+                        setText(duration);
                 ((TextView)findViewById(R.id.value_temp)).
-                        setText(temp);
+                        setText(Utilities.convertTemp(temp, (TextView)findViewById(R.id.value_temp), MainActivity.this));
                 ((TextView)findViewById(R.id.value_humi)).
-                        setText(humidity);
+                        setText(humidityText);
                 ((TextView)findViewById(R.id.value_baro)).
-                        setText(pressure);
+                        setText(Utilities.convertBaro(pressure, (TextView)findViewById(R.id.value_baro), MainActivity.this));
             }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
-
-    private long addRunInfo(
-            String date, String comment, double temperature, double pressure,
-            int time, int start_time, double humidity, double distance) {
-
-        ContentValues runValues = new ContentValues();
-
-        runValues.put(RunningEntry.COLUMN_DATETEXT, date);
-        runValues.put(RunningEntry.COLUMN_COMMENT, comment);
-        runValues.put(RunningEntry.COLUMN_TEMP, temperature);
-        runValues.put(RunningEntry.COLUMN_TIME, time);
-        runValues.put(RunningEntry.COLUMN_START_TIME, start_time);
-        runValues.put(RunningEntry.COLUMN_HUMIDITY, humidity);
-        runValues.put(RunningEntry.COLUMN_DISTANCE, distance);
-        runValues.put(RunningEntry.COLUMN_PRESSURE, pressure);
-
-        runValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
-        runValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);
-        runValues.put(RunningEntry.COLUMN_LOC_KEY, 0);
-
-        Uri runInsertUri = getContentResolver()
-                .insert(RunningEntry.CONTENT_URI, runValues);
-
-        // Notify new entry in the table
-        getContentResolver().notifyChange(RunningEntry.CONTENT_URI, null);
-        return ContentUris.parseId(runInsertUri);
-    }
-
 }
