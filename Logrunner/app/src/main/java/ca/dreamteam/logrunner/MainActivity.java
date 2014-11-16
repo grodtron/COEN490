@@ -2,15 +2,12 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,8 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Date;
 
 import ca.dreamteam.logrunner.Util.DeviceSelect;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
@@ -190,15 +185,21 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
                 ((TextView)findViewById(R.id.value_dist)).
-                        setText(Utilities.convertTemp(distance, (TextView)findViewById(R.id.value_dist), MainActivity.this));
+                        setText(Utilities.convertTemp(distance,
+                                (TextView)findViewById(R.id.value_dist),
+                                        MainActivity.this));
                 ((TextView)findViewById(R.id.mChronometer)).
                         setText(duration);
                 ((TextView)findViewById(R.id.value_temp)).
-                        setText(Utilities.convertTemp(temp, (TextView)findViewById(R.id.value_temp), MainActivity.this));
+                        setText(Utilities.convertTemp(temp,
+                                (TextView)findViewById(R.id.value_temp),
+                                        MainActivity.this));
                 ((TextView)findViewById(R.id.value_humi)).
                         setText(humidityText);
                 ((TextView)findViewById(R.id.value_baro)).
-                        setText(Utilities.convertBaro(pressure, (TextView)findViewById(R.id.value_baro), MainActivity.this));
+                        setText(Utilities.convertBaro(pressure,
+                                (TextView)findViewById(R.id.value_baro),
+                                        MainActivity.this));
             }
     }
 

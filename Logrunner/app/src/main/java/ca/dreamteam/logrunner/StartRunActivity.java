@@ -313,7 +313,6 @@ public class StartRunActivity extends Activity {
                     break;
                 default:
                     break;
-
             }
             if (text != null)
                 Toast.makeText(StartRunActivity.this, text, Toast.LENGTH_SHORT).show();
