@@ -24,8 +24,8 @@
     <string name="about">About Logrunner</string>
     <string name="language">Language</string>
     <string name="dialog_title">Do you really want to delete the selected run?</string>
-    <string name="dialog_delete">delete</string>
-    <string name="dialog_cancel">cancel</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
     <string name="feedback">Tells us what you think</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="problem">Let us know about a bug or a problem</string>

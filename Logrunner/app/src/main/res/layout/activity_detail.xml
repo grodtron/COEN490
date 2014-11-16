@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_main"
+    android:id="@+id/container_detail"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -65,5 +65,16 @@
         android:layout_marginLeft="96dp"
         android:text="32%"
         android:layout_marginBottom="40dp" />
+
+    <TextView
+        android:id="@+id/value_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="32sp"
+        android:text="Comment"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

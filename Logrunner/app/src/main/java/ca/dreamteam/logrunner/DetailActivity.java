@@ -160,6 +160,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                                 DetailActivity.this));
                 ((TextView)findViewById(R.id.mChronometer)).
                         setText(duration);
+                ((TextView)findViewById(R.id.value_comment)).
+                        setText(comment);
                 ((TextView)findViewById(R.id.value_temp)).
                         setText(Utilities.convertTemp(temp,
                                 (TextView)findViewById(R.id.value_temp),

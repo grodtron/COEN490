@@ -31,6 +31,7 @@ import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
+import ca.dreamteam.logrunner.data.RunningDbHelper;
 
 public class ViewHistoryActivity extends Activity {
     @Override
@@ -65,6 +66,17 @@ public class ViewHistoryActivity extends Activity {
      * A placeholder fragment containing a simple view.
      */
     public static class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+
+        static final String TEST_DATE = "2014/12/05";
+        static final String COMMENT = "Best run";
+        static final double TEMP = 12.5;
+        static final double PRESSURE = 103.1;
+        static final int TIME = 20;
+        static final int START_TIME = 15;
+        static final double HUMIDITY = 1.2;
+        static final double DISTANCE = 5.1;
+
         private static final String LOG_TAG = HistoryFragment.class.getSimpleName();
         private SimpleCursorAdapter mRunAdapter;
         private static final int RUN_LOADER = 0;
@@ -163,6 +175,8 @@ public class ViewHistoryActivity extends Activity {
                     return true;
                 }
             });
+
+//            long runId = RunningDbHelper.addRunInfo(TEST_DATE, COMMENT, TEMP, PRESSURE, TIME, START_TIME, HUMIDITY, DISTANCE, getActivity().getContentResolver());
             return rootView;
         }
         @Override
@@ -210,10 +224,13 @@ public class ViewHistoryActivity extends Activity {
         }
 
         public void removeItemFromList(int position) {
-            final String deletePosition = String.valueOf(position);
 
             AlertDialog.Builder alert = new AlertDialog.Builder(
                     getActivity() );
+
+            final String selection = RunningEntry._ID + " LIKE ?";
+            long rowId = mRunAdapter.getItemId(position);
+            final String[] selectionArgs = { String.valueOf(rowId) };
 
             alert.setTitle("Delete");
             alert.setMessage("Are you sure want to delete the selected run?");
@@ -222,8 +239,8 @@ public class ViewHistoryActivity extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     int mValuesDeleted = getActivity().getContentResolver().delete(
                             RunningEntry.CONTENT_URI,
-                            "_id=?",
-                            new String[] {deletePosition}
+                            selection,
+                            selectionArgs
                     );
                 }
             });
