@@ -35,4 +35,22 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <Button
+            android:id="@+id/saveButton"
+            android:text="@string/save2"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginRight="150dp"/>
+        <Button
+            android:id="@+id/cancelButton"
+            android:text="@string/cancel"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="150dp"/>
+    </RelativeLayout>
+
 </LinearLayout>

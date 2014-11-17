@@ -1,7 +1,6 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,23 +14,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.text.DateFormat;
-
 import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagLoggerListener;
 import ca.concordia.sensortag.SensorTagManager;
 import ca.concordia.sensortag.SensorTagManager.ErrorType;
 import ca.concordia.sensortag.SensorTagManager.StatusType;
 import ca.dreamteam.logrunner.Util.Utilities;
-import ca.dreamteam.logrunner.data.RunningDbHelper;
 import ti.android.ble.sensortag.DeviceSelectActivity;
 import ti.android.ble.sensortag.Sensor;
 
 public class StartRunActivity extends Activity {
 
-    final String TAG = StartRunActivity.this.getClass().getSimpleName();
+    final String TAG = "ca.dreamteam.logrunner.StartRunActivity";
 
     static protected final int UPDATE_TEMP_BARO_PERIOD_MS  = 30000;
     static protected final int UPDATE_HUMIDITY_PERIOD_MS = 900000;
@@ -197,26 +191,6 @@ public class StartRunActivity extends Activity {
                 tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
             }
         });
-    }
-
-    public void onDialogPositiveClick(DialogFragment dialog,
-                                      double rating,
-                                      String titleInput,
-                                      String commentInput,
-                                      String duration) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        RunningDbHelper.addRunInfo(
-                df.format(Calendar.getInstance().getTime()),
-                commentInput,
-                mAvgTemperature,
-                mAvgPressure,
-                duration,
-                "00:00",
-                mAvgHumidity,
-                0,
-                rating,
-                StartRunActivity.this.getContentResolver()
-        );
     }
 
     @Override

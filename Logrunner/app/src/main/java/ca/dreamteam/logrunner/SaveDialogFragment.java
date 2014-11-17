@@ -1,72 +1,100 @@
 package ca.dreamteam.logrunner;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RatingBar;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import ca.dreamteam.logrunner.data.RunningDbHelper;
 
 public class SaveDialogFragment extends DialogFragment {
 
     private static final String KEY_SAVE_RATING_BAR_VALUE = "KEY_SAVE_RATING_BAR_VALUE";
-    private RatingBar mRatingBar;
-    private EditText titleInput;
-    private EditText commentInput;
+    private double rating;
+    private String title;
+    private String comment;
+    private String duration;
 
     static SaveDialogFragment newInstance(String duration) {
-
         SaveDialogFragment f = new SaveDialogFragment();
         Bundle args = new Bundle();
         args.putString("duration", duration);
-
         f.setArguments(args);
         return f;
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_saving, null);
-
-        builder.setView(dialogView)
-               .setTitle(getString(R.string.how_did_it_go))
-               .setPositiveButton(R.string.save2, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        /*mListener.onDialogPositiveClick(SaveDialogFragment.this,
-                                4,//mRatingBar.getRating(),
-                                "woohoo",//titleInput.getText().toString(),
-                                "woohoo",//commentInput.getText().toString(),
-                                getArguments().getString("duration"));*/
-                        SaveDialogFragment.this.getDialog().dismiss();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        SaveDialogFragment.this.getDialog().cancel();
-                    }
-                });
-
-        return builder.create();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        duration = getArguments().getString("duration");
     }
-
-    public interface SaveDialogFragmentListener
-    {
-        public void onDialogPositiveClick(DialogFragment dialog,
-                                          double rating,
-                                          String titleInput,
-                                          String commentInput,
-                                          String duration);
-    }
-
-    SaveDialogFragmentListener mListener;
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putFloat(KEY_SAVE_RATING_BAR_VALUE, mRatingBar.getRating());
-        super.onSaveInstanceState(outState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View dialogView = inflater.inflate(R.layout.dialog_saving, container, false);
+
+
+
+        Button saveButton = (Button) dialogView.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // add values to DB
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                RunningDbHelper.addRunInfo(
+                        df.format(Calendar.getInstance().getTime()),
+                        "WOO",//comment,
+                        0,//mAvgTemperature,
+                        0,//mAvgPressure,
+                        getArguments().getString("duration"),
+                        "00:00",
+                        0,//mAvgHumidity,
+                        0,
+                        4,//rating,
+                        getActivity().getContentResolver()
+                );
+                getDialog().dismiss();
+            }
+        });
+
+        Button cancelButton = (Button) dialogView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().cancel();
+            }
+        });
+
+        return dialogView;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setTitle(getString(R.string.how_did_it_go));
+        return dialog;
     }
 }
+/*
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        RunningDbHelper.addRunInfo(
+                df.format(Calendar.getInstance().getTime()),
+                commentInput,
+                mAvgTemperature,
+                mAvgPressure,
+                duration,
+                "00:00",
+                mAvgHumidity,
+                0,
+                rating,
+                StartRunActivity.this.getContentResolver()
+        );
+*/
