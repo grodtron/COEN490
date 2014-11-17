@@ -80,8 +80,10 @@ public class StartRunActivity extends Activity {
                     mBarometerView.setVisibility(View.VISIBLE);
                     mHumidityView = (TextView) findViewById(R.id.value_humi);
                     mHumidityView.setVisibility(View.VISIBLE);
-                    mDisatanceView = (TextView) findViewById(R.id.value_humi);
+                    mDisatanceView = (TextView) findViewById(R.id.value_dist);
                     mDisatanceView.setVisibility(View.VISIBLE);
+                    mDisatanceView.setText(
+                            Utilities.convertDist(0.00, mDisatanceView, StartRunActivity.this));
 
                     textButton.setText("STOP");
                     tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
@@ -165,7 +167,7 @@ public class StartRunActivity extends Activity {
             @Override
             public void onClick(View v) {
                 SaveDialogFragment saveDialog =
-                        SaveDialogFragment.newInstance(chronometer.getFormat(),
+                        SaveDialogFragment.newInstance(chronometer.getText().toString(),
                                                        mAvgTemperature,
                                                        mAvgPressure,
                                                        mAvgHumidity,

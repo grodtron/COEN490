@@ -48,8 +48,13 @@ public class Utilities {
             baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             return inchgh_BaroFormat.format(0.295299830714 * kpa) + " Hg";
         } else { // KiloPascal
-            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-            return kpa_BaroFormat.format(kpa) + "kpa";
+            if (kpa >= 100.0) {
+                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                return kpa_BaroFormat.format(kpa) + "kpa";
+            } else {
+                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 27);
+                return kpa_BaroFormat.format(kpa) + " kpa";
+            }
         }
     }
 
@@ -60,7 +65,7 @@ public class Utilities {
                 context.getString(R.string.pref_default_value));
 
         if (mDistUnit.equals("0")) {
-            return distFormat.format(Km * 0.621371) + "mi";
+            return distFormat.format(Km * 0.621371) + " mi";
         } else {
             return distFormat.format(Km) + "Km";
         }
