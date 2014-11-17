@@ -83,6 +83,7 @@ public class TestDb extends AndroidTestCase {
         weatherValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
         weatherValues.put(RunningEntry.COLUMN_TEMP, 75.2);
         weatherValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);
+        weatherValues.put(RunningEntry.COLUMN_RATING, 1.5);
         weatherValues.put(RunningEntry.COLUMN_COMMENT, "Best run");
         weatherValues.put(RunningEntry.COLUMN_DISTANCE, 5.5);
         weatherValues.put(RunningEntry.COLUMN_DURATION, "23:01");

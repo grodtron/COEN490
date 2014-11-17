@@ -46,6 +46,7 @@ public class RunningDbHelper extends SQLiteOpenHelper {
                 RunningEntry.COLUMN_PRESSURE + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_DISTANCE + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_START_TIME + " TEXT NOT NULL, " +
+                RunningEntry.COLUMN_RATING + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_DURATION + " TEXT NOT NULL, " +
                 // Set up the location column as a foreign key to location table.
                 "FOREIGN KEY (" + RunningEntry.COLUMN_LOC_KEY + ") REFERENCES " +
@@ -65,7 +66,7 @@ public class RunningDbHelper extends SQLiteOpenHelper {
 
     public static long addRunInfo(
             String date, String comment, double temperature, double pressure,
-            String duration, String start_time, double humidity, double distance, ContentResolver cr) {
+            String duration, String start_time, double humidity, double distance, double rating, ContentResolver cr) {
 
         ContentValues runValues = new ContentValues();
 
@@ -77,6 +78,7 @@ public class RunningDbHelper extends SQLiteOpenHelper {
         runValues.put(RunningEntry.COLUMN_HUMIDITY, humidity);
         runValues.put(RunningEntry.COLUMN_DISTANCE, distance);
         runValues.put(RunningEntry.COLUMN_PRESSURE, pressure);
+        runValues.put(RunningEntry.COLUMN_RATING, rating);
 
         runValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
         runValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);

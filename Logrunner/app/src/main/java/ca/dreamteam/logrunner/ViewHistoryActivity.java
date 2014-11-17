@@ -70,6 +70,7 @@ public class ViewHistoryActivity extends Activity {
                 RunningEntry.COLUMN_PRESSURE,
                 RunningEntry.COLUMN_DURATION,
                 RunningEntry.COLUMN_HUMIDITY,
+                RunningEntry.COLUMN_RATING,
         };
 
         public static final int COL_RUN_DISTANCE = 4;

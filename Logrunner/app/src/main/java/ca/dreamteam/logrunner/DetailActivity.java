@@ -40,6 +40,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
             RunningEntry.COLUMN_PRESSURE,
             RunningEntry.COLUMN_DURATION,
             RunningEntry.COLUMN_HUMIDITY,
+            RunningEntry.COLUMN_RATING
     };
 
     @Override
@@ -141,6 +142,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         data.getColumnIndex(RunningEntry.COLUMN_HUMIDITY);
                 int pressureIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_PRESSURE);
+                int ratingIndex =
+                        data.getColumnIndex(RunningEntry.COLUMN_RATING);
 
                 double distance = data.getDouble(distanceIndex);
                 String duration = data.getString(durationIndex);
@@ -150,6 +153,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 double temp = data.getDouble(tempIndex);
                 double humidity = data.getDouble(humidityIndex);
                 double pressure = data.getDouble(pressureIndex);
+                double rating = data.getDouble(ratingIndex);
 
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
 
@@ -211,6 +215,5 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
         });
 
         alert.show();
-
     }
 }

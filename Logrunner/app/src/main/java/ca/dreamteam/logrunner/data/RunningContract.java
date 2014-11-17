@@ -80,7 +80,7 @@ public class RunningContract {
         // Date, stored as Text with format yyyy-MM-dd
         public static final String COLUMN_DATETEXT = "date";
         // Run id to identify the icon to be used (mood)
-        public static final String COLUMN_RUN_ID = "run_id";
+        public static final String COLUMN_RATING = "rating";
         // Short description/comment of the run
         public static final String COLUMN_COMMENT = "comment";
         // Min and max temperatures for the day (stored as floats)
