@@ -24,7 +24,6 @@ import android.widget.TextView;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
-import ca.dreamteam.logrunner.data.RunningDbHelper;
 
 public class ViewHistoryActivity extends Activity {
     @Override
@@ -104,7 +103,8 @@ public class ViewHistoryActivity extends Activity {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 switch (columnIndex) {
                 case COL_RUN_DISTANCE: {
-                    ((TextView) view).setText(Utilities.convertDist(cursor.getDouble(columnIndex), (TextView) view, getActivity()));
+                    ((TextView) view).setText(Utilities.convertDist(cursor.getDouble(columnIndex),
+                            (TextView) view, getActivity()));
                     return true;
                 }
             }

@@ -298,5 +298,4 @@ public class RunningProvider extends ContentProvider {
         }
     }
 
-
 }

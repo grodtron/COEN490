@@ -33,6 +33,7 @@ public class StartRunActivity extends Activity {
     private TextView mTemperatureView;
     private TextView mBarometerView;
     private TextView mHumidityView;
+    private TextView mDisatanceView;
     private static double mAvgTemperature, mAvgHumidity, mAvgPressure;
 
     // Bluetooth communication with the SensorTag
@@ -80,6 +81,8 @@ public class StartRunActivity extends Activity {
                     mBarometerView.setVisibility(View.VISIBLE);
                     mHumidityView = (TextView) findViewById(R.id.value_humi);
                     mHumidityView.setVisibility(View.VISIBLE);
+                    mDisatanceView = (TextView) findViewById(R.id.value_humi);
+                    mDisatanceView.setVisibility(View.VISIBLE);
 
                     textButton.setText("STOP");
                     tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
@@ -162,8 +165,31 @@ public class StartRunActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SaveDialogFragment saveDialog = new SaveDialogFragment();
+                SaveDialogFragment saveDialog = SaveDialogFragment.newInstance (
+                         mAvgTemperature,
+                         mAvgPressure,
+                         mAvgHumidity,
+                         0,
+                         chronometer.getFormat()
+                );
                 saveDialog.show(getFragmentManager(), "dialog");
+                chronometer.setText("00:00");
+                mTemperatureView.setVisibility(View.GONE);
+                mBarometerView.setVisibility(View.GONE);
+                mHumidityView.setVisibility(View.GONE);
+                mDisatanceView.setVisibility(View.GONE);
+
+                TextView textButton = (TextView) findViewById(R.id.textButton);
+                Button tempButton = (Button) findViewById(R.id.runButton);
+                Button save_btn = (Button) findViewById(R.id.save_button);
+                Button discard_btn = (Button) findViewById(R.id.discard_button);
+
+                save_btn.setVisibility(View.GONE);
+                discard_btn.setVisibility(View.GONE);
+                textButton.setVisibility(View.VISIBLE);
+                tempButton.setVisibility(View.VISIBLE);
+                textButton.setText("START RUN");
+                tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
             }
         });
         discardButton.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +199,7 @@ public class StartRunActivity extends Activity {
                 mTemperatureView.setVisibility(View.GONE);
                 mBarometerView.setVisibility(View.GONE);
                 mHumidityView.setVisibility(View.GONE);
+                mDisatanceView.setVisibility(View.GONE);
 
                 TextView textButton = (TextView) findViewById(R.id.textButton);
                 Button tempButton = (Button) findViewById(R.id.runButton);

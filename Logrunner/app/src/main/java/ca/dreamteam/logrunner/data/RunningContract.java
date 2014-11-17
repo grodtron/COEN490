@@ -79,7 +79,7 @@ public class RunningContract {
         public static final String COLUMN_LOC_KEY = "location_id";
         // Date, stored as Text with format yyyy-MM-dd
         public static final String COLUMN_DATETEXT = "date";
-        // Run id to identify the icon to be used (mood)
+        // Run id to identify the icon to be used
         public static final String COLUMN_RATING = "rating";
         // Short description/comment of the run
         public static final String COLUMN_COMMENT = "comment";
