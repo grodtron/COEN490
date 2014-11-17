@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,11 +23,24 @@ public class SaveDialogFragment extends DialogFragment {
     private String title;
     private String comment;
     private String duration;
+    private double temperature;
+    private double pressure;
+    private double humidity;
+    private double distance;
 
-    static SaveDialogFragment newInstance(String duration) {
+    static SaveDialogFragment newInstance(String duration,
+                                          double temperature,
+                                          double pressure,
+                                          double humidity,
+                                          double distance) {
         SaveDialogFragment f = new SaveDialogFragment();
         Bundle args = new Bundle();
         args.putString("duration", duration);
+        args.putDouble("temperature", temperature);
+        args.putDouble("pressure", pressure);
+        args.putDouble("humidity", humidity);
+        args.putDouble("distance", distance);
+
         f.setArguments(args);
         return f;
     }
@@ -34,12 +49,16 @@ public class SaveDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         duration = getArguments().getString("duration");
+        temperature = getArguments().getDouble("temperature");
+        pressure = getArguments().getDouble("pressure");
+        humidity = getArguments().getDouble("humidity");
+        distance = getArguments().getDouble("distance");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View dialogView = inflater.inflate(R.layout.dialog_saving, container, false);
+        final View dialogView = inflater.inflate(R.layout.dialog_saving, container, false);
 
         Button saveButton = (Button) dialogView.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -47,17 +66,24 @@ public class SaveDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 // add values to DB
                 DateFormat df = new SimpleDateFormat("EEE, dd MMM");
+                RatingBar ratingBar = (RatingBar) dialogView.findViewById(R.id.ratingBar);
+                rating = ratingBar.getRating();
+                EditText titleEditText = (EditText) dialogView.findViewById(R.id.title);
+                title = titleEditText.getText().toString();
+                EditText commentEditText = (EditText) dialogView.findViewById(R.id.comment);
+                comment = commentEditText.getText().toString();
+
                 RunningDbHelper.addRunInfo(
-                        "Morning run",
-                        df.format(Calendar.getInstance().getTime()),
-                        "WOO",//comment,
-                        getArguments().getString("duration"),
-                        "00:00",//Start time
-                        0,//mAvgTemperature,
-                        0,//mAvgPressure,
-                        0,//mAvgHumidity,
-                        0,//Distance
-                        4,//rating,
+                        title,
+                        df.format(Calendar.getInstance().getTime()), // current Date
+                        comment,
+                        duration,
+                        "00:00", //Start time of run
+                        temperature,
+                        pressure,
+                        humidity,
+                        distance,
+                        rating,
                         getActivity().getContentResolver()
                 );
                 getDialog().dismiss();

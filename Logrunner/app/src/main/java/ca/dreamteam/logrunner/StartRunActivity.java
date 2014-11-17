@@ -165,7 +165,11 @@ public class StartRunActivity extends Activity {
             @Override
             public void onClick(View v) {
                 SaveDialogFragment saveDialog =
-                        SaveDialogFragment.newInstance(chronometer.getFormat());
+                        SaveDialogFragment.newInstance(chronometer.getFormat(),
+                                                       mAvgTemperature,
+                                                       mAvgPressure,
+                                                       mAvgHumidity,
+                                                       0);
                 saveDialog.show(getFragmentManager(), "dialog");
             }
         });
