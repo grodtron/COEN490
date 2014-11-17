@@ -156,7 +156,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 double rating = data.getDouble(ratingIndex);
 
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
-
+/*
                 setTitle(date);
                 ((TextView)findViewById(R.id.value_dist)).
                         setText(Utilities.convertDist(distance,
@@ -176,7 +176,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         setText(Utilities.convertBaro(pressure,
                                 (TextView)findViewById(R.id.value_baro),
                                         DetailActivity.this));
-
+*/
                 mRunStr = String.format("I just ran %s in %s", Utilities.convertDist(distance,(TextView) findViewById(R.id.value_dist),DetailActivity.this), duration);
             }
     }
