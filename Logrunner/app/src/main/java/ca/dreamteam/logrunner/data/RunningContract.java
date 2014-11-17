@@ -87,6 +87,7 @@ public class RunningContract {
         public static final String COLUMN_MIN_TEMP = "min";
         public static final String COLUMN_MAX_TEMP = "max";
         public static final String COLUMN_TEMP = "temp";
+        public static final String COLUMN_TITLE = "title";
 
         // Humidity is stored as a float representing percentage
         public static final String COLUMN_HUMIDITY = "humidity";

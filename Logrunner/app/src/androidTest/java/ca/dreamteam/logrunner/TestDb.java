@@ -88,6 +88,8 @@ public class TestDb extends AndroidTestCase {
         weatherValues.put(RunningEntry.COLUMN_DISTANCE, 5.5);
         weatherValues.put(RunningEntry.COLUMN_DURATION, "23:01");
         weatherValues.put(RunningEntry.COLUMN_START_TIME, "00:00");
+        weatherValues.put(RunningEntry.COLUMN_TITLE, "Weekly run");
+
         return weatherValues;
     }
 

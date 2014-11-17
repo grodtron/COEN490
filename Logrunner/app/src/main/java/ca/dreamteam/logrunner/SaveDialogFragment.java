@@ -41,23 +41,22 @@ public class SaveDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View dialogView = inflater.inflate(R.layout.dialog_saving, container, false);
 
-
-
         Button saveButton = (Button) dialogView.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // add values to DB
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                DateFormat df = new SimpleDateFormat("EEE, dd MMM");
                 RunningDbHelper.addRunInfo(
+                        "Morning run",
                         df.format(Calendar.getInstance().getTime()),
                         "WOO",//comment,
+                        getArguments().getString("duration"),
+                        "00:00",//Start time
                         0,//mAvgTemperature,
                         0,//mAvgPressure,
-                        getArguments().getString("duration"),
-                        "00:00",
                         0,//mAvgHumidity,
-                        0,
+                        0,//Distance
                         4,//rating,
                         getActivity().getContentResolver()
                 );
