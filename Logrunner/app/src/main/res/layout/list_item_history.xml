@@ -6,9 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="horizontal">
-
-
+    android:orientation="horizontal"
+    android:background="#80BCBCBC">
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -25,7 +24,8 @@
             android:id="@+id/list_item_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
     <View
         android:layout_width="1px"
@@ -42,14 +42,15 @@
             android:id="@+id/list_item_time_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
         <TextView
             android:id="@+id/list_item_duration_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Duration"
             android:layout_gravity="bottom|center_horizontal"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="#E6E6E6"/>
 
     </LinearLayout>
     <View
@@ -65,14 +66,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_distance_textview"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
         <TextView
             android:id="@+id/list_item_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="#E6E6E6"/>
 
     </LinearLayout>
 </LinearLayout>
