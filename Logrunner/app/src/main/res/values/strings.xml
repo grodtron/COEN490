@@ -11,6 +11,7 @@
     <string name="start_run">START RUN</string>
     <string name="stop_run">STOP</string>
     <string name="save">SAVE</string>
+    <string name="save2">Save</string>
     <string name="discard">DISCARD</string>
     <string name="view_history">View History</string>
     <string name="detail_activity">Selected Run</string>
@@ -31,6 +32,8 @@
     <string name="problem">Let us know about a bug or a problem</string>
     <string name="report_problem">Report a problem</string>
     <string name="terms_and_services">Terms of Services</string>
+    <string name="how_did_it_go">How did it go?</string>
+    <string name="rate">Rate the run</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>

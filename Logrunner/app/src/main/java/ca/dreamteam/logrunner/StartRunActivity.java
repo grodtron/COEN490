@@ -162,7 +162,8 @@ public class StartRunActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do save shit !
+                SaveDialogFragment saveDialog = new SaveDialogFragment();
+                saveDialog.show(getFragmentManager(), "dialog");
             }
         });
         discardButton.setOnClickListener(new View.OnClickListener() {
