@@ -5,31 +5,22 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import ca.dreamteam.logrunner.data.RunningDbHelper;
-
 public class SaveDialogFragment extends DialogFragment {
 
-    static SaveDialogFragment newInstance(
-            double temperature, double pressure,
-                    double humidity, double distance, String duration) {
+    private static final String KEY_SAVE_RATING_BAR_VALUE = "KEY_SAVE_RATING_BAR_VALUE";
+    private RatingBar mRatingBar;
+    private EditText titleInput;
+    private EditText commentInput;
+
+    static SaveDialogFragment newInstance(String duration) {
 
         SaveDialogFragment f = new SaveDialogFragment();
-
-        // Supply input as an argument.
         Bundle args = new Bundle();
         args.putString("duration", duration);
-        args.putDouble("temperature", temperature);
-        args.putDouble("pressure", pressure);
-        args.putDouble("humidity", humidity);
-        args.putDouble("distance", distance);
 
         f.setArguments(args);
         return f;
@@ -39,30 +30,18 @@ public class SaveDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_saving, null);
 
-        builder.setView(inflater.inflate(R.layout.dialog_saving, null))
-                .setPositiveButton(R.string.save2, new DialogInterface.OnClickListener() {
+        builder.setView(dialogView)
+               .setTitle(getString(R.string.how_did_it_go))
+               .setPositiveButton(R.string.save2, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                        RatingBar mBar = (RatingBar) getView().findViewById(R.id.ratingBar);
-                        float rating = mBar.getRating();
-                        EditText titleInput = (EditText) getView().findViewById(R.id.title);
-                        String title = titleInput.getText().toString();
-                        EditText commentInput = (EditText) getView().findViewById(R.id.comment);
-                        String comment = commentInput.getText().toString();
-                        RunningDbHelper.addRunInfo(
-                                df.format(Calendar.getInstance().getTime()),
-                                comment,
-                                getArguments().getDouble("temperature"),
-                                getArguments().getDouble("pressure"),
-                                getArguments().getString("duration"),
-                                "00:00",
-                                getArguments().getDouble("humidity"),
-                                getArguments().getDouble("distance"),
-                                rating,
-                                getActivity().getContentResolver()
-                        );
+                        /*mListener.onDialogPositiveClick(SaveDialogFragment.this,
+                                4,//mRatingBar.getRating(),
+                                "woohoo",//titleInput.getText().toString(),
+                                "woohoo",//commentInput.getText().toString(),
+                                getArguments().getString("duration"));*/
+                        SaveDialogFragment.this.getDialog().dismiss();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -72,5 +51,22 @@ public class SaveDialogFragment extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    public interface SaveDialogFragmentListener
+    {
+        public void onDialogPositiveClick(DialogFragment dialog,
+                                          double rating,
+                                          String titleInput,
+                                          String commentInput,
+                                          String duration);
+    }
+
+    SaveDialogFragmentListener mListener;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putFloat(KEY_SAVE_RATING_BAR_VALUE, mRatingBar.getRating());
+        super.onSaveInstanceState(outState);
     }
 }

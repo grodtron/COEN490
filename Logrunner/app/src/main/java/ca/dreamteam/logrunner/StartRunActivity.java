@@ -1,6 +1,7 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -14,12 +15,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.text.DateFormat;
+
 import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagLoggerListener;
 import ca.concordia.sensortag.SensorTagManager;
 import ca.concordia.sensortag.SensorTagManager.ErrorType;
 import ca.concordia.sensortag.SensorTagManager.StatusType;
 import ca.dreamteam.logrunner.Util.Utilities;
+import ca.dreamteam.logrunner.data.RunningDbHelper;
 import ti.android.ble.sensortag.DeviceSelectActivity;
 import ti.android.ble.sensortag.Sensor;
 
@@ -40,7 +46,6 @@ public class StartRunActivity extends Activity {
     private BluetoothDevice mBtDevice;
     private SensorTagManager mStManager;
     private SensorTagListener mStListener;
-
     private GoogleMap map;
 
     @Override
@@ -49,7 +54,6 @@ public class StartRunActivity extends Activity {
         setContentView(R.layout.activity_start_run);
 
         Button runButton = (Button) findViewById(R.id.runButton);
-        final Chronometer chronometer = (Chronometer) findViewById(R.id.mChronometer);
 
         // Get the Bluetooth device selected by the user
         mBtDevice = (BluetoothDevice) getIntent().getParcelableExtra(DeviceSelectActivity.EXTRA_DEVICE);
@@ -62,6 +66,7 @@ public class StartRunActivity extends Activity {
         }
         mStManager = new SensorTagManager(getApplicationContext(), mBtDevice);
         mStListener = new ManagerListener();
+        final Chronometer chronometer = (Chronometer) findViewById(R.id.mChronometer);
 
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,31 +170,9 @@ public class StartRunActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SaveDialogFragment saveDialog = SaveDialogFragment.newInstance (
-                         mAvgTemperature,
-                         mAvgPressure,
-                         mAvgHumidity,
-                         0,
-                         chronometer.getFormat()
-                );
+                SaveDialogFragment saveDialog =
+                        SaveDialogFragment.newInstance(chronometer.getFormat());
                 saveDialog.show(getFragmentManager(), "dialog");
-                chronometer.setText("00:00");
-                mTemperatureView.setVisibility(View.GONE);
-                mBarometerView.setVisibility(View.GONE);
-                mHumidityView.setVisibility(View.GONE);
-                mDisatanceView.setVisibility(View.GONE);
-
-                TextView textButton = (TextView) findViewById(R.id.textButton);
-                Button tempButton = (Button) findViewById(R.id.runButton);
-                Button save_btn = (Button) findViewById(R.id.save_button);
-                Button discard_btn = (Button) findViewById(R.id.discard_button);
-
-                save_btn.setVisibility(View.GONE);
-                discard_btn.setVisibility(View.GONE);
-                textButton.setVisibility(View.VISIBLE);
-                tempButton.setVisibility(View.VISIBLE);
-                textButton.setText("START RUN");
-                tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
             }
         });
         discardButton.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +197,26 @@ public class StartRunActivity extends Activity {
                 tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
             }
         });
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog,
+                                      double rating,
+                                      String titleInput,
+                                      String commentInput,
+                                      String duration) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        RunningDbHelper.addRunInfo(
+                df.format(Calendar.getInstance().getTime()),
+                commentInput,
+                mAvgTemperature,
+                mAvgPressure,
+                duration,
+                "00:00",
+                mAvgHumidity,
+                0,
+                rating,
+                StartRunActivity.this.getContentResolver()
+        );
     }
 
     @Override
