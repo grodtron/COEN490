@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:background="#80BCBCBC">
+    android:background="#80B2B2B2">
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -43,12 +43,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
         <TextView
             android:id="@+id/list_item_duration_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Duration"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_gravity="bottom|center_horizontal"
             android:textColor="#E6E6E6"/>
 
@@ -67,12 +71,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_item_distance_textview"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
         <TextView
             android:id="@+id/list_item_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_gravity="center_horizontal"
             android:textColor="#E6E6E6"/>
 
