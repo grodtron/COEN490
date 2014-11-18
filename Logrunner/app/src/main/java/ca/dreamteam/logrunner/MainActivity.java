@@ -201,6 +201,19 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                                 (TextView)findViewById(R.id.value_baro),
                                         MainActivity.this));
             }
+        else {
+            ((TextView)findViewById(R.id.value_dist)).
+                    setText("");
+            ((TextView)findViewById(R.id.mChronometer)).
+                    setText("");
+            ((TextView)findViewById(R.id.value_temp)).
+                    setText("");
+            ((TextView)findViewById(R.id.value_humi)).
+                    setText("");
+            ((TextView)findViewById(R.id.value_baro)).
+                    setText("");
+
+        }
     }
 
     @Override

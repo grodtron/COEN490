@@ -97,26 +97,18 @@
         android:text="--:--"
         android:layout_centerHorizontal="true" />
 
-    <!--TextView
+    <TextView
         android:id="@+id/value_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="32sp"
+        android:textColor="@android:color/white"
+        android:textSize="27sp"
+        android:layout_marginTop="272dp"
+        android:layout_marginRight="257dp"
+        android:layout_alignParentRight="true"
         android:text="00.0°C"
-        android:layout_alignBottom="@+id/mChronometer"
-        android:layout_marginLeft="258dp" />
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/value_humi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="32sp"
-        android:layout_alignBottom="@+id/RoadBackground"
-        android:layout_marginLeft="96dp"
-        android:text="32%"
-        android:layout_marginBottom="40dp" /-->
 
     <TextView
         android:id="@+id/value_baro"
@@ -125,9 +117,21 @@
         android:textColor="@android:color/white"
         android:textSize="27sp"
         android:text="00:00"
-        android:layout_marginTop="269dp"
+        android:layout_marginTop="272dp"
         android:layout_marginRight="23dp"
         android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/value_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="27sp"
+        android:layout_marginTop="272dp"
+        android:layout_marginRight="123dp"
+        android:layout_alignParentRight="true"
+        android:text="0.0pka"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
