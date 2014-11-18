@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
@@ -40,7 +41,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
             RunningEntry.COLUMN_PRESSURE,
             RunningEntry.COLUMN_DURATION,
             RunningEntry.COLUMN_HUMIDITY,
-            RunningEntry.COLUMN_RATING
+            RunningEntry.COLUMN_RATING,
+            RunningEntry.COLUMN_TITLE,
     };
 
     @Override
@@ -144,11 +146,14 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         data.getColumnIndex(RunningEntry.COLUMN_PRESSURE);
                 int ratingIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_RATING);
+                int titleIndex =
+                        data.getColumnIndex(RunningEntry.COLUMN_TITLE);
 
                 double distance = data.getDouble(distanceIndex);
                 String duration = data.getString(durationIndex);
                 String comment = data.getString(commentIndex);
                 String date = data.getString(dateIndex);
+                String title = data.getString(titleIndex);
 
                 double temp = data.getDouble(tempIndex);
                 double humidity = data.getDouble(humidityIndex);
@@ -176,6 +181,9 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         setText(Utilities.convertBaro(pressure,
                                 (TextView)findViewById(R.id.value_baro),
                                         DetailActivity.this));
+                ((TextView)findViewById(R.id.value_title)).setText(title);
+                ((RatingBar)findViewById(R.id.ratingBar)).
+                        setRating((float)rating);
 
                 mRunStr = String.format("I just ran %s in %s", Utilities.convertDist(distance,(TextView) findViewById(R.id.value_dist),DetailActivity.this), duration);
             }

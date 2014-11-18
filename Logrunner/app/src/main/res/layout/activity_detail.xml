@@ -18,9 +18,12 @@
         android:id="@+id/value_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
         android:textSize="32sp"
-        android:layout_marginBottom="170dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -28,12 +31,14 @@
         android:id="@+id/value_comment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="28sp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="comment" />
 
     <ImageView
         android:id="@+id/historybar"
@@ -52,6 +57,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="true"
         android:layout_marginTop="140dp"
         android:layout_centerHorizontal="true" />
 
