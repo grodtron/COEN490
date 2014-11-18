@@ -30,7 +30,7 @@
         android:textColor="@android:color/white"
         android:textSize="32sp"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="120dp"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -60,19 +60,34 @@
         android:layout_height="match_parent"
         android:layout_marginTop="310dp" />
 
-    <!--TextView
+    <TextView
         android:id="@+id/mChronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/white"
         android:textSize="32sp"
         android:text="00:00"
         android:layout_alignBottom="@+id/mChronometer"
         android:layout_marginLeft="258dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="215dp"
+        android:layout_marginRight="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/value_dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:layout_marginTop="215dp"
+        android:layout_marginRight="98dp"
+        android:layout_alignParentRight="true"
+        android:text="0.00Km"
+        android:layout_centerHorizontal="true" />
+
+
+    <!--TextView
         android:id="@+id/value_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,15 +96,6 @@
         android:text="00.0°C"
         android:layout_alignBottom="@+id/mChronometer"
         android:layout_marginLeft="258dp" />
-
-    <TextView
-        android:id="@+id/value_dist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="32sp"
-        android:layout_alignBottom="@+id/mChronometer"
-        android:layout_marginLeft="45dp" />
 
     <TextView
         android:id="@+id/value_baro"
