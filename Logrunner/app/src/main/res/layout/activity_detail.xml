@@ -64,11 +64,10 @@
         android:layout_marginTop="140dp"
         android:layout_centerHorizontal="true" />
 
-    <fragment
-        android:id="@+id/mapview"
-        class="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/map_picture"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_marginTop="310dp" />
 
     <TextView

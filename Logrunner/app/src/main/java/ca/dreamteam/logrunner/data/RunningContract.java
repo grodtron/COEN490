@@ -102,6 +102,9 @@ public class RunningContract {
         // Image of the run
         public static final String COLUMN_IMAGE = "image";
 
+        public static final String COLUMN_IMAGE = "image";
+
+
         public static Uri buildRunUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

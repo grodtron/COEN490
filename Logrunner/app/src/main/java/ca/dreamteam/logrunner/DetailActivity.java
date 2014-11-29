@@ -8,10 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
@@ -43,6 +46,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
             RunningEntry.COLUMN_HUMIDITY,
             RunningEntry.COLUMN_RATING,
             RunningEntry.COLUMN_TITLE,
+            RunningEntry.COLUMN_IMAGE
     };
 
     @Override
@@ -149,6 +153,9 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 int titleIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TITLE);
 
+                int imageIndex =
+                        data.getColumnIndex(RunningEntry.COLUMN_IMAGE);
+
                 double distance = data.getDouble(distanceIndex);
                 String duration = data.getString(durationIndex);
                 String comment = data.getString(commentIndex);
@@ -159,6 +166,14 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 double humidity = data.getDouble(humidityIndex);
                 double pressure = data.getDouble(pressureIndex);
                 double rating = data.getDouble(ratingIndex);
+                byte[] image = data.getBlob(imageIndex);
+
+                if(image != null) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    ((ImageView)findViewById(R.id.map_picture)).
+                            setImageBitmap(bitmap);
+                }
+
 
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
 

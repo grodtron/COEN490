@@ -1,7 +1,10 @@
 package ca.dreamteam.logrunner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+
+import java.io.ByteArrayOutputStream;
 
 import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagLoggerListener;
@@ -33,7 +38,7 @@ public class StartRunActivity extends Activity {
     private TextView mTemperatureView;
     private TextView mBarometerView;
     private TextView mHumidityView;
-    private TextView mDisatanceView;
+    private TextView mDistanceView;
     private static double mAvgTemperature, mAvgHumidity, mAvgPressure;
 
     // Bluetooth communication with the SensorTag
@@ -41,6 +46,7 @@ public class StartRunActivity extends Activity {
     private SensorTagManager mStManager;
     private SensorTagListener mStListener;
     private GoogleMap map;
+    private byte mByteArray[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +71,10 @@ public class StartRunActivity extends Activity {
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView textButton = (TextView) findViewById(R.id.textButton);
-                Button tempButton = (Button) findViewById(R.id.runButton);
-                Button saveButton = (Button) findViewById(R.id.save_button);
-                Button discardButton = (Button) findViewById(R.id.discard_button);
+                final TextView textButton = (TextView) findViewById(R.id.textButton);
+                final Button tempButton = (Button) findViewById(R.id.runButton);
+                final Button saveButton = (Button) findViewById(R.id.save_button);
+                final Button discardButton = (Button) findViewById(R.id.discard_button);
                 tempButton.setClickable(false);
 
                 // Based on the textButton value change between Run, Stop & Save actions
@@ -84,10 +90,10 @@ public class StartRunActivity extends Activity {
                     mBarometerView.setVisibility(View.VISIBLE);
                     mHumidityView = (TextView) findViewById(R.id.value_humi);
                     mHumidityView.setVisibility(View.VISIBLE);
-                    mDisatanceView = (TextView) findViewById(R.id.value_dist);
-                    mDisatanceView.setVisibility(View.VISIBLE);
-                    mDisatanceView.setText(
-                            Utilities.convertDist(0.00, mDisatanceView, StartRunActivity.this));
+                    mDistanceView = (TextView) findViewById(R.id.value_dist);
+                    mDistanceView.setVisibility(View.VISIBLE);
+                    mDistanceView.setText(
+                            Utilities.convertDist(0.00, mDistanceView, StartRunActivity.this));
 
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
@@ -127,12 +133,45 @@ public class StartRunActivity extends Activity {
                         finish();
                     }
                 } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
-                    chronometer.stop();
-                    mStManager.disableUpdates();
-                    textButton.setVisibility(View.GONE);
-                    tempButton.setVisibility(View.GONE);
-                    saveButton.setVisibility(View.VISIBLE);
-                    discardButton.setVisibility(View.VISIBLE);
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(
+                            StartRunActivity.this);
+
+                    alert.setTitle("Stop");
+                    alert.setMessage("Are you sure want to stop the current run?");
+                    alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            chronometer.stop();
+                            mStManager.disableUpdates();
+                            textButton.setVisibility(View.GONE);
+                            tempButton.setVisibility(View.GONE);
+                            saveButton.setVisibility(View.VISIBLE);
+                            discardButton.setVisibility(View.VISIBLE);
+
+                            map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                                @Override
+                                public void onMapLoaded() {
+                                    map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                                        public void onSnapshotReady(Bitmap bitmap) {
+                                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                            mByteArray = stream.toByteArray();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    alert.show();
+
                 }
                 tempButton.setClickable(true);
             }
@@ -165,39 +204,65 @@ public class StartRunActivity extends Activity {
 
         Button saveButton = (Button) findViewById(R.id.save_button);
         Button discardButton = (Button) findViewById(R.id.discard_button);
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 SaveDialogFragment saveDialog =
                         SaveDialogFragment.newInstance(chronometer.getText().toString(),
-                                                       mAvgTemperature,
-                                                       mAvgPressure,
-                                                       mAvgHumidity,
-                                                       0);
+                                mAvgTemperature,
+                                mAvgPressure,
+                                mAvgHumidity,
+                                0,
+                                mByteArray);
                 saveDialog.show(getFragmentManager(), "dialog");
             }
         });
+
         discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chronometer.setText("00:00");
-                mTemperatureView.setVisibility(View.GONE);
-                mBarometerView.setVisibility(View.GONE);
-                mHumidityView.setVisibility(View.GONE);
-                mDisatanceView.setVisibility(View.GONE);
 
-                TextView textButton = (TextView) findViewById(R.id.textButton);
-                Button tempButton = (Button) findViewById(R.id.runButton);
-                Button save_btn = (Button) findViewById(R.id.save_button);
-                Button discard_btn = (Button) findViewById(R.id.discard_button);
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        StartRunActivity.this);
 
-                save_btn.setVisibility(View.GONE);
-                discard_btn.setVisibility(View.GONE);
-                textButton.setVisibility(View.VISIBLE);
-                tempButton.setVisibility(View.VISIBLE);
-                textButton.setText("START RUN");
-                tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
+                alert.setTitle("Stop");
+                alert.setMessage("Are you sure want to discard the current run?");
+                alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        chronometer.setText("00:00");
+                        mTemperatureView.setVisibility(View.GONE);
+                        mBarometerView.setVisibility(View.GONE);
+                        mHumidityView.setVisibility(View.GONE);
+                        mDistanceView.setVisibility(View.GONE);
+
+                        final TextView textButton = (TextView) findViewById(R.id.textButton);
+                        final Button tempButton = (Button) findViewById(R.id.runButton);
+                        final Button save_btn = (Button) findViewById(R.id.save_button);
+                        final Button discard_btn = (Button) findViewById(R.id.discard_button);
+
+                        save_btn.setVisibility(View.GONE);
+                        discard_btn.setVisibility(View.GONE);
+                        textButton.setVisibility(View.VISIBLE);
+                        tempButton.setVisibility(View.VISIBLE);
+                        textButton.setText("START RUN");
+                        tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
+
+                    }
+                });
+                alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+
+
             }
         });
     }
@@ -336,5 +401,11 @@ public class StartRunActivity extends Activity {
             if (text != null)
                 Toast.makeText(StartRunActivity.this, text, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void confirmDialog() {
+
+
+
     }
 }

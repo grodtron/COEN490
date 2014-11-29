@@ -63,14 +63,15 @@ public class RunningDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RunningEntry.TABLE_NAME);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int i, int i2) {
+        db.execSQL("DROP TABLE IF EXISTS " + RunningEntry.TABLE_NAME);
+        onCreate(db);
     }
 
     public static long addRunInfo(
             String title, String date, String comment, String duration, String start_time,
             double temperature, double pressure, double humidity, double distance, double rating,
+            byte[] image,
             ContentResolver cr) {
 
         ContentValues runValues = new ContentValues();
@@ -85,6 +86,7 @@ public class RunningDbHelper extends SQLiteOpenHelper {
         runValues.put(RunningEntry.COLUMN_DISTANCE, distance);
         runValues.put(RunningEntry.COLUMN_PRESSURE, pressure);
         runValues.put(RunningEntry.COLUMN_RATING, rating);
+        runValues.put(RunningEntry.COLUMN_IMAGE, image);
 
         runValues.put(RunningEntry.COLUMN_MAX_TEMP, 75);
         runValues.put(RunningEntry.COLUMN_MIN_TEMP, 65);

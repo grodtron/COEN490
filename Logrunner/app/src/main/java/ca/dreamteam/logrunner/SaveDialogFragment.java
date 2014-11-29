@@ -27,12 +27,14 @@ public class SaveDialogFragment extends DialogFragment {
     private double pressure;
     private double humidity;
     private double distance;
+    private byte[] image;
 
     static SaveDialogFragment newInstance(String duration,
                                           double temperature,
                                           double pressure,
                                           double humidity,
-                                          double distance) {
+                                          double distance,
+                                          byte[] byteArray) {
         SaveDialogFragment f = new SaveDialogFragment();
         Bundle args = new Bundle();
         args.putString("duration", duration);
@@ -40,6 +42,7 @@ public class SaveDialogFragment extends DialogFragment {
         args.putDouble("pressure", pressure);
         args.putDouble("humidity", humidity);
         args.putDouble("distance", distance);
+        args.putByteArray("image", byteArray);
 
         f.setArguments(args);
         return f;
@@ -53,6 +56,7 @@ public class SaveDialogFragment extends DialogFragment {
         pressure = getArguments().getDouble("pressure");
         humidity = getArguments().getDouble("humidity");
         distance = getArguments().getDouble("distance");
+        image = getArguments().getByteArray("image");
     }
 
     @Override
@@ -84,6 +88,7 @@ public class SaveDialogFragment extends DialogFragment {
                         humidity,
                         distance,
                         rating,
+                        image,
                         getActivity().getContentResolver()
                 );
                 getDialog().dismiss();
