@@ -25,7 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"/>
     </LinearLayout>
     <View
         android:layout_width="1px"
@@ -45,7 +49,11 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"/>
         <TextView
             android:id="@+id/list_item_duration_textview"
             android:layout_width="wrap_content"
@@ -54,7 +62,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_gravity="bottom|center_horizontal"
-            android:textColor="#E6E6E6"/>
+            android:textColor="#E6E6E6"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"/>
 
     </LinearLayout>
     <View
@@ -73,7 +85,11 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"/>
         <TextView
             android:id="@+id/list_item_distance"
             android:layout_width="wrap_content"
@@ -82,7 +98,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
-            android:textColor="#E6E6E6"/>
+            android:textColor="#E6E6E6"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"/>
 
     </LinearLayout>
 </LinearLayout>

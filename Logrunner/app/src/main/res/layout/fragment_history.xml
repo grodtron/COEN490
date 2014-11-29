@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.dreamteam.logrunner.HistoryActivity.HistoryFragment" >
+    tools:context="ca.dreamteam.logrunner.HistoryActivity.HistoryFragment"
+    android:id="@+id/RootView">
     <ImageView
         android:id="@+id/history_background"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:layout_alignParentTop="true"
-        android:background="@drawable/history_background"/>
+        android:background="@drawable/path_background"/>
     <ListView
         android:id="@+id/listview_history"
         android:layout_width="match_parent"

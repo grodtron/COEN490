@@ -1,11 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.dreamteam.logrunner.HistoryActivity" >
-    <item android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="always" />
     <item
         android:id="@+id/menu_item_share"
         android:showAsAction="ifRoom"
@@ -14,4 +9,6 @@
             "android.widget.ShareActionProvider" />
     <item android:id="@+id/action_delete"
         android:title="@string/delete"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"/>
 </menu>
