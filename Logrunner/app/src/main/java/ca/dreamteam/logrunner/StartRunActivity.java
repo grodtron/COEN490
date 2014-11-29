@@ -69,9 +69,13 @@ public class StartRunActivity extends Activity {
                 Button tempButton = (Button) findViewById(R.id.runButton);
                 Button saveButton = (Button) findViewById(R.id.save_button);
                 Button discardButton = (Button) findViewById(R.id.discard_button);
+                tempButton.setClickable(false);
 
                 // Based on the textButton value change between Run, Stop & Save actions
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
+                    tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
+                    textButton.setText("STOP");
+
                     mAvgTemperature = mAvgHumidity = mAvgPressure = 0.0;
                     // Get references to the GUI text box objects
                     mTemperatureView = (TextView) findViewById(R.id.value_temp);
@@ -84,9 +88,6 @@ public class StartRunActivity extends Activity {
                     mDisatanceView.setVisibility(View.VISIBLE);
                     mDisatanceView.setText(
                             Utilities.convertDist(0.00, mDisatanceView, StartRunActivity.this));
-
-                    textButton.setText("STOP");
-                    tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
 
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
@@ -133,6 +134,7 @@ public class StartRunActivity extends Activity {
                     saveButton.setVisibility(View.VISIBLE);
                     discardButton.setVisibility(View.VISIBLE);
                 }
+                tempButton.setClickable(true);
             }
         });
 
@@ -155,10 +157,11 @@ public class StartRunActivity extends Activity {
                     "Play Service result " + statusCode, Toast.LENGTH_SHORT).show();
         }
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview)).getMap();
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
-        // need to use location services NEXT
+        if (map ==  null) {
+            map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview)).getMap();
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.setMyLocationEnabled(true);
+        }
 
         Button saveButton = (Button) findViewById(R.id.save_button);
         Button discardButton = (Button) findViewById(R.id.discard_button);
@@ -203,6 +206,11 @@ public class StartRunActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (mStManager != null) mStManager.enableUpdates();
+        if (map ==  null) {
+            map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview)).getMap();
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.setMyLocationEnabled(true);
+        }
     }
 
     @Override
