@@ -13,7 +13,7 @@ import static ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
 import static ca.dreamteam.logrunner.data.RunningContract.LocationEntry;
 
 public class RunningDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "run.db";
     private static final String LOG_TAG = RunningDbHelper.class.getSimpleName();
 
@@ -49,6 +49,7 @@ public class RunningDbHelper extends SQLiteOpenHelper {
                 RunningEntry.COLUMN_RATING + " REAL NOT NULL, " +
                 RunningEntry.COLUMN_DURATION + " TEXT NOT NULL, " +
                 RunningEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                RunningEntry.COLUMN_IMAGE + " BLOB, " +
 
                 // Set up the location column as a foreign key to location table.
                 "FOREIGN KEY (" + RunningEntry.COLUMN_LOC_KEY + ") REFERENCES " +
@@ -63,7 +64,8 @@ public class RunningDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RunningEntry.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 
     public static long addRunInfo(
