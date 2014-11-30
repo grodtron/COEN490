@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,7 +25,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagLoggerListener;
@@ -49,8 +53,9 @@ public class StartRunActivity extends Activity {
     private static double mAvgTemperature, mAvgHumidity, mAvgPressure, mDistance;
     double latitude;
     double longitude;
-    private String provider;
     private LocationManager locationManager;
+    String start_time;
+    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
     // Bluetooth communication with the SensorTag
     private BluetoothDevice mBtDevice;
@@ -76,6 +81,14 @@ public class StartRunActivity extends Activity {
                                             previous_longitude,
                                             latitude,
                                             longitude);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDistanceView.setText(Utilities.convertDist(mDistance,
+                                                                mDistanceView,
+                                                                StartRunActivity.this));
+                }
+            });
             if (counter > 3) {
                 map.addPolyline(
                         new PolylineOptions().
@@ -138,6 +151,7 @@ public class StartRunActivity extends Activity {
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
                     tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
                     textButton.setText("STOP");
+                    start_time = formatter.format(Calendar.getInstance().getTime());
 
                     mAvgTemperature = mAvgHumidity = mAvgPressure = 0.0;
                     // Get references to the GUI text box objects
@@ -209,6 +223,7 @@ public class StartRunActivity extends Activity {
                             tempButton.setVisibility(View.GONE);
                             saveButton.setVisibility(View.VISIBLE);
                             discardButton.setVisibility(View.VISIBLE);
+                            textButton.setText("START RUN");
 
                             map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                                 @Override
@@ -268,11 +283,13 @@ public class StartRunActivity extends Activity {
             @Override
             public void onClick(View v) {
                 SaveDialogFragment saveDialog =
-                        SaveDialogFragment.newInstance(chronometer.getText().toString(),
+                        SaveDialogFragment.newInstance(
+                                chronometer.getText().toString(),
+                                start_time,
                                 mAvgTemperature,
                                 mAvgPressure,
                                 mAvgHumidity,
-                                0,
+                                mDistance,
                                 mByteArray);
                 saveDialog.show(getFragmentManager(), "dialog");
             }
@@ -364,11 +381,13 @@ public class StartRunActivity extends Activity {
                     StartRunActivity.this);
 
             alert.setTitle("Stop");
-            alert.setMessage("Are you sure want to stop the current run and go back?");
+            alert.setMessage("Are you sure want to stop the current run without saving and go back?");
             alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     StartRunActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             });
             alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

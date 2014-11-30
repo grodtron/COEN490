@@ -27,9 +27,11 @@ public class SaveDialogFragment extends DialogFragment {
     private double pressure;
     private double humidity;
     private double distance;
+    private String start_time;
     private byte[] image;
 
     static SaveDialogFragment newInstance(String duration,
+                                          String start_time,
                                           double temperature,
                                           double pressure,
                                           double humidity,
@@ -43,6 +45,7 @@ public class SaveDialogFragment extends DialogFragment {
         args.putDouble("humidity", humidity);
         args.putDouble("distance", distance);
         args.putByteArray("image", byteArray);
+        args.putString("start time", start_time);
 
         f.setArguments(args);
         return f;
@@ -57,6 +60,7 @@ public class SaveDialogFragment extends DialogFragment {
         humidity = getArguments().getDouble("humidity");
         distance = getArguments().getDouble("distance");
         image = getArguments().getByteArray("image");
+        start_time = getArguments().getString("start time");
     }
 
     @Override
@@ -82,7 +86,7 @@ public class SaveDialogFragment extends DialogFragment {
                         df.format(Calendar.getInstance().getTime()), // current Date
                         comment,
                         duration,
-                        "00:00", //Start time of run
+                        start_time, //Start time of run
                         temperature,
                         pressure,
                         humidity,
@@ -113,18 +117,3 @@ public class SaveDialogFragment extends DialogFragment {
         return dialog;
     }
 }
-/*
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        RunningDbHelper.addRunInfo(
-                df.format(Calendar.getInstance().getTime()),
-                commentInput,
-                mAvgTemperature,
-                mAvgPressure,
-                duration,
-                "00:00",
-                mAvgHumidity,
-                0,
-                rating,
-                StartRunActivity.this.getContentResolver()
-        );
-*/

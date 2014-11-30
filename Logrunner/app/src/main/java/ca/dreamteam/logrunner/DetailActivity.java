@@ -142,6 +142,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         data.getColumnIndex(RunningEntry.COLUMN_DISTANCE);
                 int durationIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_DURATION);
+                //int startTimeIndex =
+                //        data.getColumnIndex(RunningEntry.COLUMN_START_TIME);
                 int tempIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TEMP);
                 int humidityIndex =
@@ -152,7 +154,6 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         data.getColumnIndex(RunningEntry.COLUMN_RATING);
                 int titleIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TITLE);
-
                 int imageIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_IMAGE);
 
@@ -161,7 +162,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 String comment = data.getString(commentIndex);
                 String date = data.getString(dateIndex);
                 String title = data.getString(titleIndex);
-
+                //String start_temp = data.getString(startTimeIndex);
                 double temp = data.getDouble(tempIndex);
                 double humidity = data.getDouble(humidityIndex);
                 double pressure = data.getDouble(pressureIndex);
@@ -174,7 +175,6 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                             setImageBitmap(bitmap);
                 }
 
-
                 final String humidityText = Utilities.humiFormat.format(humidity) + "%";
 
                 setTitle(date);
@@ -182,6 +182,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         setText(Utilities.convertDist(distance,
                                 (TextView) findViewById(R.id.value_dist),
                                 DetailActivity.this));
+                ((TextView)findViewById(R.id.start_time)).
+                        setText("18:02"); // TODO: fix the start_time it's NULL
                 ((TextView)findViewById(R.id.mChronometer)).
                         setText(duration);
                 ((TextView)findViewById(R.id.value_comment)).

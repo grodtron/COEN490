@@ -67,7 +67,7 @@
     <ImageView
         android:id="@+id/map_picture"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_marginTop="310dp" />
 
     <TextView
@@ -102,7 +102,7 @@
         android:textColor="@android:color/white"
         android:textSize="27sp"
         android:layout_marginTop="219dp"
-        android:layout_marginRight="272dp"
+        android:layout_marginRight="257dp"
         android:layout_alignParentRight="true"
         android:text="--:--"
         android:layout_centerHorizontal="true" />
