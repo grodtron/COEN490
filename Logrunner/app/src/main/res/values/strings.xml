@@ -26,6 +26,7 @@
     <string name="language">Language</string>
     <string name="dialog_title">Do you really want to delete the selected run?</string>
     <string name="delete">Delete</string>
+    <string name="delete_all">Delete all runs</string>
     <string name="cancel">Cancel</string>
     <string name="feedback">Tells us what you think</string>
     <string name="send_feedback">Send Feedback</string>

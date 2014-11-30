@@ -39,7 +39,7 @@ public class ViewHistoryActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings, menu);
+        getMenuInflater().inflate(R.menu.history_settings, menu);
         return true;
     }
 
@@ -50,6 +50,12 @@ public class ViewHistoryActivity extends Activity {
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        }
+        else if (id == R.id.action_delete_all) {
+            getContentResolver().delete(RunningEntry.CONTENT_URI,
+                    null,
+                    null
+            );
         }
         return super.onOptionsItemSelected(item);
     }

@@ -19,6 +19,8 @@ import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
@@ -33,6 +35,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
     private ShareActionProvider mShareActionProvider;
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     String mRunId;
+    Bitmap bitmap;
 
     // Specify the columns we need.
     private static final String[] RUN_COLUMNS = {
@@ -99,9 +102,15 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
     private Intent createShareRunIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        shareIntent.setType("text/plain");
+        shareIntent.setType("*/*");
         shareIntent.putExtra(Intent.EXTRA_TEXT,
                 mRunStr + SHARE_HASHTAG);
+        if(bitmap != null) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bos.toByteArray());
+        }
+
         return shareIntent;
     }
 
@@ -170,7 +179,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 byte[] image = data.getBlob(imageIndex);
 
                 if(image != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
                     ((ImageView)findViewById(R.id.map_picture)).
                             setImageBitmap(bitmap);
                 }
