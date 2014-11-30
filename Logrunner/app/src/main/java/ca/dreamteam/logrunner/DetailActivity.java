@@ -19,8 +19,6 @@ import android.widget.RatingBar;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract.RunningEntry;
@@ -49,7 +47,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
             RunningEntry.COLUMN_HUMIDITY,
             RunningEntry.COLUMN_RATING,
             RunningEntry.COLUMN_TITLE,
-            RunningEntry.COLUMN_IMAGE
+            RunningEntry.COLUMN_IMAGE,
+            RunningEntry.COLUMN_START_TIME
     };
 
     @Override
@@ -102,14 +101,9 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
     private Intent createShareRunIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        shareIntent.setType("*/*");
+        shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT,
                 mRunStr + SHARE_HASHTAG);
-        if(bitmap != null) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bos.toByteArray());
-        }
 
         return shareIntent;
     }
@@ -151,8 +145,8 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         data.getColumnIndex(RunningEntry.COLUMN_DISTANCE);
                 int durationIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_DURATION);
-                //int startTimeIndex =
-                //        data.getColumnIndex(RunningEntry.COLUMN_START_TIME);
+                int startTimeIndex =
+                        data.getColumnIndex(RunningEntry.COLUMN_START_TIME);
                 int tempIndex =
                         data.getColumnIndex(RunningEntry.COLUMN_TEMP);
                 int humidityIndex =
@@ -171,7 +165,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                 String comment = data.getString(commentIndex);
                 String date = data.getString(dateIndex);
                 String title = data.getString(titleIndex);
-                //String start_temp = data.getString(startTimeIndex);
+                String start_temp = data.getString(startTimeIndex);
                 double temp = data.getDouble(tempIndex);
                 double humidity = data.getDouble(humidityIndex);
                 double pressure = data.getDouble(pressureIndex);
@@ -192,7 +186,7 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                                 (TextView) findViewById(R.id.value_dist),
                                 DetailActivity.this));
                 ((TextView)findViewById(R.id.start_time)).
-                        setText("18:02"); // TODO: fix the start_time it's NULL
+                        setText(start_temp);
                 ((TextView)findViewById(R.id.mChronometer)).
                         setText(duration);
                 ((TextView)findViewById(R.id.value_comment)).

@@ -376,6 +376,13 @@ public class StartRunActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
+        if (mStManager != null) {
+            mStManager.disableUpdates();
+            mStManager.close();
+            mStManager = null;
+        }
+
         if (textButton == null) {
             StartRunActivity.this.finish();
             return;
@@ -391,10 +398,7 @@ public class StartRunActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     StartRunActivity.this.finish();
-                    if (mStManager != null) {
-                        mStManager.disableUpdates();
-                        mStManager.close();
-                    }
+
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
