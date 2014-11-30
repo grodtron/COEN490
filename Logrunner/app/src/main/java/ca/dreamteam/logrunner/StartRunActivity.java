@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -57,7 +58,7 @@ public class StartRunActivity extends Activity {
     private SensorTagListener mStListener;
     private GoogleMap map;
     private byte mByteArray[];
-
+    TextView textButton;
     private LocationListener locationListener = new LocationListener() {
 
         int counter = 0;
@@ -120,7 +121,7 @@ public class StartRunActivity extends Activity {
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final TextView textButton = (TextView) findViewById(R.id.textButton);
+                textButton = (TextView) findViewById(R.id.textButton);
                 final Button tempButton = (Button) findViewById(R.id.runButton);
                 final Button saveButton = (Button) findViewById(R.id.save_button);
                 final Button discardButton = (Button) findViewById(R.id.discard_button);
@@ -259,9 +260,6 @@ public class StartRunActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 SaveDialogFragment saveDialog =
                         SaveDialogFragment.newInstance(chronometer.getText().toString(),
                                 mAvgTemperature,
@@ -339,6 +337,43 @@ public class StartRunActivity extends Activity {
         if (mStManager != null) {
             mStManager.disableUpdates();
             mStManager.close();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(((String)textButton.getText()).compareTo("STOP") == 0) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(
+                    StartRunActivity.this);
+
+            alert.setTitle("Stop");
+            alert.setMessage("Are you sure want to stop the current run?");
+            alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    StartRunActivity.this.finish();
+                }
+            });
+            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+        }
+        else {
+            StartRunActivity.this.finish();
         }
     }
 
