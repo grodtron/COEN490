@@ -11,7 +11,8 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="title" />
+        android:hint="title"
+        android:maxLength="16" />
     <EditText
         android:id="@+id/comment"
         android:inputType="textEmailAddress"
@@ -22,7 +23,8 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="comment" />
+        android:hint="comment"
+        android:maxLength="48" />
     <TextView
         android:text="@string/rate"
         android:layout_width="match_parent"
