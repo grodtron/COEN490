@@ -376,6 +376,11 @@ public class StartRunActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        if (textButton == null) {
+            StartRunActivity.this.finish();
+            return;
+        }
+
         if(((String)textButton.getText()).compareTo("STOP") == 0) {
             AlertDialog.Builder alert = new AlertDialog.Builder(
                     StartRunActivity.this);
@@ -386,6 +391,10 @@ public class StartRunActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     StartRunActivity.this.finish();
+                    if (mStManager != null) {
+                        mStManager.disableUpdates();
+                        mStManager.close();
+                    }
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
@@ -400,6 +409,8 @@ public class StartRunActivity extends Activity {
         }
         else {
             StartRunActivity.this.finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
     }
 
