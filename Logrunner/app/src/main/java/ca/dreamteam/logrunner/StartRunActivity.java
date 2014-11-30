@@ -19,11 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 import java.io.ByteArrayOutputStream;
 
 import ca.concordia.sensortag.SensorTagListener;
@@ -83,6 +83,8 @@ public class StartRunActivity extends Activity {
                                         new LatLng(latitude, longitude)).width(5)
                                 .color(android.graphics.Color.RED).geodesic(true));
             }
+            LatLng updateToLocation = new LatLng (latitude,longitude);
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 16));
         }
 
         @Override
@@ -362,7 +364,7 @@ public class StartRunActivity extends Activity {
                     StartRunActivity.this);
 
             alert.setTitle("Stop");
-            alert.setMessage("Are you sure want to stop the current run?");
+            alert.setMessage("Are you sure want to stop the current run and go back?");
             alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
