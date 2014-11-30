@@ -19,6 +19,7 @@ public class Utilities {
     private final static DecimalFormat inchgh_BaroFormat = new DecimalFormat("0.0");
     private final static DecimalFormat distFormat = new DecimalFormat("0.00");
     public final static DecimalFormat humiFormat = new DecimalFormat("0");
+    public final static float MAP_ZOOM = 15;
 
     public static String convertTemp(double C, TextView tempTextView, Context context) {
         SharedPreferences prefs = PreferenceManager.
@@ -69,5 +70,23 @@ public class Utilities {
         } else {
             return distFormat.format(Km) + "Km";
         }
+    }
+
+    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515 * 1.609344;
+        return dist;
+    }
+
+    static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 }

@@ -46,7 +46,7 @@ public class StartRunActivity extends Activity {
     private TextView mBarometerView;
     private TextView mHumidityView;
     private TextView mDistanceView;
-    private static double mAvgTemperature, mAvgHumidity, mAvgPressure;
+    private static double mAvgTemperature, mAvgHumidity, mAvgPressure, mDistance;
     double latitude;
     double longitude;
     private String provider;
@@ -69,8 +69,13 @@ public class StartRunActivity extends Activity {
             double previous_longitude = longitude;
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
             android.util.Log.v(TAG, "lat = " + latitude + " & lng = " + longitude);
             counter++;
+            mDistance += Utilities.distance(previous_latitude,
+                                            previous_longitude,
+                                            latitude,
+                                            longitude);
             if (counter > 3) {
                 map.addPolyline(
                         new PolylineOptions().
@@ -100,7 +105,7 @@ public class StartRunActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_run);
-
+        mDistance = 0;
         Button runButton = (Button) findViewById(R.id.runButton);
 
         // Get the Bluetooth device selected by the user
