@@ -182,8 +182,8 @@ public class StartRunActivity extends Activity {
                         finish();
                     }
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                                                           3000,
-                                                           2,
+                                                           0,
+                                                           0,
                                                            locationListener);
                 } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
 
