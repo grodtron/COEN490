@@ -3,8 +3,12 @@ package ca.dreamteam.logrunner;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -16,6 +20,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.ByteArrayOutputStream;
 
@@ -40,6 +46,10 @@ public class StartRunActivity extends Activity {
     private TextView mHumidityView;
     private TextView mDistanceView;
     private static double mAvgTemperature, mAvgHumidity, mAvgPressure;
+    double latitude;
+    double longitude;
+    private String provider;
+    private LocationManager locationManager;
 
     // Bluetooth communication with the SensorTag
     private BluetoothDevice mBtDevice;
@@ -47,6 +57,43 @@ public class StartRunActivity extends Activity {
     private SensorTagListener mStListener;
     private GoogleMap map;
     private byte mByteArray[];
+
+    private LocationListener locationListener = new LocationListener() {
+
+        int counter = 0;
+
+        @Override
+        public void onLocationChanged(Location location) {
+            double previous_latitude = latitude;
+            double previous_longitude = longitude;
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            android.util.Log.v(TAG, "lat = " + latitude + " & lng = " + longitude);
+            counter++;
+            if (counter > 3) {
+                map.addPolyline(
+                        new PolylineOptions().
+                                add(new LatLng(previous_latitude, previous_longitude),
+                                        new LatLng(latitude, longitude)).width(5)
+                                .color(android.graphics.Color.RED).geodesic(true));
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // Auto-generated method stub
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +114,8 @@ public class StartRunActivity extends Activity {
         mStManager = new SensorTagManager(getApplicationContext(), mBtDevice);
         mStListener = new ManagerListener();
         final Chronometer chronometer = (Chronometer) findViewById(R.id.mChronometer);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +181,10 @@ public class StartRunActivity extends Activity {
                                         Toast.LENGTH_LONG).show();
                         finish();
                     }
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                                                           0,
+                                                           0,
+                                                           locationListener);
                 } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -161,6 +214,7 @@ public class StartRunActivity extends Activity {
                                     });
                                 }
                             });
+                            locationManager.removeUpdates(locationListener);
                         }
                     });
                     alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -169,9 +223,7 @@ public class StartRunActivity extends Activity {
                             dialog.dismiss();
                         }
                     });
-
                     alert.show();
-
                 }
                 tempButton.setClickable(true);
             }
@@ -259,10 +311,7 @@ public class StartRunActivity extends Activity {
                         dialog.dismiss();
                     }
                 });
-
                 alert.show();
-
-
             }
         });
     }
@@ -404,8 +453,6 @@ public class StartRunActivity extends Activity {
     }
 
     public void confirmDialog() {
-
-
 
     }
 }
