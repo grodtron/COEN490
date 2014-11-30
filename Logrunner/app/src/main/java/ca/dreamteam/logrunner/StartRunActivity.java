@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
@@ -134,6 +133,14 @@ public class StartRunActivity extends Activity {
         }
         mStManager = new SensorTagManager(getApplicationContext(), mBtDevice);
         mStListener = new ManagerListener();
+        mStManager.addListener(mStListener);
+        mStManager.initServices();
+        if (!mStManager.isServicesReady()) { // initServices failed or took too long
+            android.util.Log.e(TAG, "Discover failed - exiting");
+            finish();
+            return;
+        }
+
         final Chronometer chronometer = (Chronometer) findViewById(R.id.mChronometer);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -168,13 +175,7 @@ public class StartRunActivity extends Activity {
 
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
-                    mStManager.addListener(mStListener);
-                    mStManager.initServices();
-                    if (!mStManager.isServicesReady()) { // initServices failed or took too long
-                        android.util.Log.e(TAG, "Discover failed - exiting");
-                        finish();
-                        return;
-                    }
+
                     mStManager.enableUpdates();
 
                     boolean res = true;
@@ -391,16 +392,12 @@ public class StartRunActivity extends Activity {
         if(((String)textButton.getText()).compareTo("STOP") == 0) {
             AlertDialog.Builder alert = new AlertDialog.Builder(
                     StartRunActivity.this);
-
             alert.setTitle("Stop");
             alert.setMessage("Are you sure want to stop the current run without saving and go back?");
             alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     StartRunActivity.this.finish();
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
                 }
             });
             alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -413,8 +410,6 @@ public class StartRunActivity extends Activity {
         }
         else {
             StartRunActivity.this.finish();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
         }
     }
 
