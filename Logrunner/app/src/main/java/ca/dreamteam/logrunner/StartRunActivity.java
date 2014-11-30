@@ -181,7 +181,7 @@ public class StartRunActivity extends Activity {
                                         Toast.LENGTH_LONG).show();
                         finish();
                     }
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                                                            0,
                                                            0,
                                                            locationListener);
