@@ -12,7 +12,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:hint="title"
-        android:maxLength="16" />
+        android:maxLength="18" />
     <EditText
         android:id="@+id/comment"
         android:inputType="textEmailAddress"
