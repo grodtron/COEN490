@@ -38,9 +38,9 @@ tools:context=".StartRunActivity" >
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="32sp"
+        android:textSize="30sp"
         android:layout_alignBottom="@+id/mChronometer"
-        android:layout_marginLeft="258dp" />
+        android:layout_marginLeft="252dp" />
 
     <TextView
         android:id="@+id/value_dist"
@@ -68,7 +68,7 @@ tools:context=".StartRunActivity" >
         android:textColor="#FFFFFF"
         android:textSize="35sp"
         android:layout_alignBottom="@+id/RoadBackground"
-        android:layout_marginLeft="96dp"
+        android:layout_marginLeft="92dp"
         android:layout_marginBottom="34dp" />
 
     <Button
