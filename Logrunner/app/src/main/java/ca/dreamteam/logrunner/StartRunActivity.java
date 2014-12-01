@@ -96,7 +96,7 @@ public class StartRunActivity extends Activity {
                         longitude);
             }
             LatLng updateToLocation = new LatLng (latitude,longitude);
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 16));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 15));
         }
 
         @Override

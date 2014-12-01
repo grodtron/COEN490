@@ -43,17 +43,17 @@ public class Utilities {
                 context.getString(R.string.pref_default_value));
 
         if (mBaroUnit.equals("0")) { // MillBar
-            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
+            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
             return mbar_BaroFormat.format(10 * kpa) + "mBar";
         } else if (mBaroUnit.equals("-1")) { // Inch Hg
-            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+            baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             return inchgh_BaroFormat.format(0.295299830714 * kpa) + " Hg";
         } else { // KiloPascal
-            if (kpa >= 100.0) {
-                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            if (kpa >= 99.9) {
+                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
                 return kpa_BaroFormat.format(kpa) + "kpa";
             } else {
-                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 27);
+                baroTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
                 return kpa_BaroFormat.format(kpa) + " kpa";
             }
         }
@@ -66,8 +66,18 @@ public class Utilities {
                 context.getString(R.string.pref_default_value));
 
         if (mDistUnit.equals("0")) {
+            if (Km * 0.621371 >= 10) {
+                distTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
+            } else {
+                distTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
+            }
             return distFormat.format(Km * 0.621371) + " mi";
         } else {
+            if (Km >= 10) {
+                distTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
+            } else {
+                distTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
+            }
             return distFormat.format(Km) + "Km";
         }
     }
