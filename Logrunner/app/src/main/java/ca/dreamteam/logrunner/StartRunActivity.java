@@ -76,10 +76,6 @@ public class StartRunActivity extends Activity {
 
             android.util.Log.v(TAG, "lat = " + latitude + " & lng = " + longitude);
             counter++;
-            mDistance += Utilities.distance(previous_latitude,
-                                            previous_longitude,
-                                            latitude,
-                                            longitude);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -88,12 +84,16 @@ public class StartRunActivity extends Activity {
                                                                 StartRunActivity.this));
                 }
             });
-            if (counter > 3) {
+            if (counter > 2) {
                 map.addPolyline(
                         new PolylineOptions().
                                 add(new LatLng(previous_latitude, previous_longitude),
                                         new LatLng(latitude, longitude)).width(5)
                                 .color(android.graphics.Color.RED).geodesic(true));
+                mDistance += Utilities.distance(previous_latitude,
+                        previous_longitude,
+                        latitude,
+                        longitude);
             }
             LatLng updateToLocation = new LatLng (latitude,longitude);
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 16));

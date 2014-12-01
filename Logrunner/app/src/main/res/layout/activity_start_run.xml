@@ -29,7 +29,7 @@ tools:context=".StartRunActivity" >
         android:layout_height="wrap_content"
         android:textSize="32sp"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
