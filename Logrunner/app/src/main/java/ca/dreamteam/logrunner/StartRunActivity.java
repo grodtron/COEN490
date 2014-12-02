@@ -95,8 +95,10 @@ public class StartRunActivity extends Activity {
                         latitude,
                         longitude);
             }
-            LatLng updateToLocation = new LatLng (latitude,longitude);
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 15));
+            if (((String)textButton.getText()).compareTo("STOP") == 0) {
+                LatLng updateToLocation = new LatLng(latitude, longitude);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(updateToLocation, 15));
+            }
         }
 
         @Override
@@ -313,6 +315,7 @@ public class StartRunActivity extends Activity {
                         mBarometerView.setVisibility(View.GONE);
                         mHumidityView.setVisibility(View.GONE);
                         mDistanceView.setVisibility(View.GONE);
+                        map.clear();
 
                         final TextView textButton = (TextView) findViewById(R.id.textButton);
                         final Button tempButton = (Button) findViewById(R.id.runButton);

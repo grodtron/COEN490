@@ -74,10 +74,10 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
         // Get the provider and hold onto it to set/change the detail_settings intent.
         mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
 
-        if (mShareActionProvider != null ) {
+        if (mRunStr != null ) {
             mShareActionProvider.setShareIntent(createShareRunIntent());
         } else {
-            Log.d(LOG_TAG, "Share Action Provider is null?");
+            Log.d(LOG_TAG, "mRunStr is null?");
         }
 
         return true;
@@ -206,6 +206,11 @@ public class DetailActivity extends Activity implements LoaderManager.LoaderCall
                         setRating((float)rating);
 
                 mRunStr = String.format("I just ran %s in %s", Utilities.convertDist(distance,(TextView) findViewById(R.id.value_dist),DetailActivity.this), duration);
+                if (mShareActionProvider != null ) {
+                    mShareActionProvider.setShareIntent(createShareRunIntent());
+                } else {
+                    Log.d(LOG_TAG, "Share Action Provider is null?");
+                }
             }
     }
 

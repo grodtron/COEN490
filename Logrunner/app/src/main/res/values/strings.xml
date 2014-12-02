@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Logrunner</string>
-    <string name="version">0.1</string>
+    <string name="version">0.9.8</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
