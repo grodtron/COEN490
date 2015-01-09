@@ -1,4 +1,4 @@
-ThreeNinety
+<strike>Three</strike>FourNinety
 ===========
 
-Android App which makes use of the SensorTag Hardware. Main idea to be determined.
+Just another capstone project.
