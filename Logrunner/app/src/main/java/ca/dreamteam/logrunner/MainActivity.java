@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import ca.dreamteam.logrunner.Util.DeviceSelect;
 import ca.dreamteam.logrunner.Util.SettingsActivity;
 import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.data.RunningContract;
@@ -73,7 +72,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            Intent intent = new Intent(getApplicationContext(), DeviceSelect.class);
+                            Intent intent = new Intent(getApplicationContext(), StartRunActivity.class);
                             startActivity(intent);
                             break;
                         default:

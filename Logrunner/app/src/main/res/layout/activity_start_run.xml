@@ -6,70 +6,54 @@ android:layout_height="fill_parent"
 android:orientation="vertical"
 tools:context=".StartRunActivity" >
 
-    <ImageView
-        android:id="@+id/RoadBackground"
-        android:layout_height="fill_parent"
+
+    <TabHost
         android:layout_width="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="305dp"
-        android:background="@drawable/road_background_startrun" />
+        android:layout_height="fill_parent"
+        android:id="@+id/tabHost"
+        android:layout_above="@+id/runButton">
 
-    <fragment
-        android:id="@+id/mapview"
-        class="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="214dp"
-        android:layout_marginBottom="50dp"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-    <Chronometer
-        android:id="@+id/mChronometer"
-        android:format="%s"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="32sp"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="36dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="64dp"
+                android:visibility="visible"
+                ></TabWidget>
 
-    <TextView
-        android:id="@+id/value_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:layout_alignBottom="@+id/mChronometer"
-        android:layout_marginLeft="252dp" />
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-    <TextView
-        android:id="@+id/value_dist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:layout_alignBottom="@+id/mChronometer"
-        android:layout_marginLeft="19dp" />
+                <LinearLayout
+                    android:id="@+id/chartTab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/value_baro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:layout_alignBottom="@+id/RoadBackground"
-        android:layout_marginLeft="186dp"
-        android:layout_marginBottom="34dp" />
+                    <LinearLayout
+                        android:id="@+id/chartview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
 
-    <TextView
-        android:id="@+id/value_humi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:layout_alignBottom="@+id/RoadBackground"
-        android:layout_marginLeft="92dp"
-        android:layout_marginBottom="34dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/footTab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+                    </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
     <Button
         android:id="@+id/runButton"
