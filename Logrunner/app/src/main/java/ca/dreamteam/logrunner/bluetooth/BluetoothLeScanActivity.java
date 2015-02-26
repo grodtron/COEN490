@@ -3,10 +3,14 @@ package ca.dreamteam.logrunner.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothProfile;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -27,13 +31,14 @@ public class BluetoothLeScanActivity extends Activity {
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
 
-    BluetoothAdapter mBluetoothAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
+    private BluetoothGatt mBluetoothLeGatt;
     private Handler mHandler;
     private ListView mLeDeviceList;
     private Button mLeScanButton;
     private ProgressBar mLeProgressBar;
 
-    private ArrayAdapter<BluetoothDevice> mLeDeviceListAdapter;
+    private LeDeviceListAdapter mLeDeviceListAdapter;
 
     // Device scan callback.
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
@@ -58,7 +63,7 @@ public class BluetoothLeScanActivity extends Activity {
         mBluetoothAdapter = BluetoothLeUtil.getLeAdapter(this);
 
         mLeDeviceList = (ListView) findViewById(R.id.deviceListView);
-        mLeDeviceListAdapter = new ArrayAdapter<BluetoothDevice>(this, R.layout.device_list_text_view);
+        mLeDeviceListAdapter = new LeDeviceListAdapter(this, R.layout.device_list_text_view);
         mLeDeviceList.setAdapter(mLeDeviceListAdapter);
 
         mLeProgressBar = (ProgressBar) findViewById(R.id.scanProgressBar);
@@ -67,12 +72,44 @@ public class BluetoothLeScanActivity extends Activity {
         mLeScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BluetoothLeScanActivity.this.scanLeDevice();
+                scanLeDevice();
+            }
+        });
+
+        mLeDeviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                BluetoothDevice device = mLeDeviceListAdapter.getItem(i);
+                connectToLeDevice(device);
             }
         });
     }
 
+    private void connectToLeDevice(BluetoothDevice device) {
+        mBluetoothLeGatt = device.connectGatt(this, false, new LeGattCallback(){
+            @Override
+            public void onConnectionStateChange(BluetoothGatt gatt, int status, final int newState) {
+                String intentAction;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (newState == BluetoothProfile.STATE_CONNECTED) {
+                            Toast.makeText(BluetoothLeScanActivity.this, "connected to device!", Toast.LENGTH_SHORT).show();
+
+                        } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                            Toast.makeText(BluetoothLeScanActivity.this, "disconnected from device!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        mBluetoothLeGatt.connect();
+    }
+
     private void scanLeDevice() {
+        mLeDeviceListAdapter.clear();
+        mLeDeviceListAdapter.notifyDataSetChanged();
         mLeScanButton.setEnabled(false);
 
         CountDownTimer timer = new CountDownTimer(SCAN_PERIOD, 200) {
