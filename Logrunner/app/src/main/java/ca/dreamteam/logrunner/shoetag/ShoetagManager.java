@@ -46,4 +46,5 @@ public abstract class ShoetagManager {
 
     public abstract void resume();
 
+    public abstract boolean connected();
 }

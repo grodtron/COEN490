@@ -72,5 +72,10 @@ public class DummyShoetagManager extends ShoetagManager {
         paused.set(false);
     }
 
+    @Override
+    public boolean connected() {
+        return false;
+    }
+
 
 }

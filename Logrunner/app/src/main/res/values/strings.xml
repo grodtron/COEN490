@@ -36,6 +36,15 @@
     <string name="how_did_it_go">How did it go?</string>
     <string name="rate">Rate the run</string>
 
+    <!-- Strings for bluetooth not connected dialog -->
+    <string name="ble_not_connected_dialog_title">ShoeTag device not connected</string>
+    <string name="ble_not_connected_dialog_content">
+        Do you want to search for the device and connect to it?
+    </string>
+    <string name="ble_not_connected_dialog_positive">Connect Device</string>
+    <string name="ble_not_connected_dialog_negative">Cancel</string>
+
+
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_header_Units">Units</string>

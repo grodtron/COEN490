@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ca.dreamteam.logrunner.Util.Utilities;
+import ca.dreamteam.logrunner.bluetooth.BluetoothLeScanActivity;
 import ca.dreamteam.logrunner.shoetag.AccelerationReading;
 import ca.dreamteam.logrunner.shoetag.DummyShoetagManager;
 import ca.dreamteam.logrunner.shoetag.ForceReading;
@@ -93,10 +95,38 @@ public class StartRunActivity extends Activity {
 
                 // Based on the textButton value change between Run, Stop & Save actions
                 if (((String)textButton.getText()).compareTo("START RUN") == 0) {
-                    tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
-                    textButton.setText("STOP");
+                    if(mStManager.connected()){
+                        tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
+                        textButton.setText("STOP");
+                        mStManager.start();
+                    }else{
 
-                    mStManager.start();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(StartRunActivity.this);
+
+                        builder.setTitle(R.string.ble_not_connected_dialog_title);
+                        builder.setMessage(R.string.ble_not_connected_dialog_content);
+
+                        builder.setPositiveButton(R.string.ble_not_connected_dialog_positive,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(
+                                            new Intent(
+                                                    StartRunActivity.this,
+                                                    BluetoothLeScanActivity.class));
+                                    dialog.dismiss();
+                                }
+                            });
+
+                        // Simply dismiss the dialog, we're done
+                        builder.setNegativeButton(R.string.ble_not_connected_dialog_negative,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface d, int w) { d.dismiss(); }
+                            });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
 
                 } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
 
