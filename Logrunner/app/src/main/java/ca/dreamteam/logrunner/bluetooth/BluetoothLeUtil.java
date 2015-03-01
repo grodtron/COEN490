@@ -2,9 +2,13 @@ package ca.dreamteam.logrunner.bluetooth;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gordon on 25/02/2015.
@@ -35,6 +39,32 @@ public class BluetoothLeUtil {
         }else {
             return bluetoothLeAdapter;
         }
+    }
+
+    public final static Object properties [][] = new Object [][] {
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_BROADCAST,         "is broadcastable."},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_EXTENDED_PROPS,    "has extended properties"},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_INDICATE, 	      "supports indication"},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_NOTIFY, 	          "supports notification"},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_READ, 	          "is readable."},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_SIGNED_WRITE, 	  "supports write with signature"},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_WRITE, 	          "can be written."},
+        new Object[]{ BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE, "can be written without response."},
+    };
+
+    public static List<String> getReadableCharacteristicProperties(BluetoothGattCharacteristic c){
+
+        List<String> properties = new ArrayList<String>();
+
+        int cProps = c.getProperties();
+
+        for(Object[] property : BluetoothLeUtil.properties){
+            if( (cProps & ((Integer)property[0])) != 0 ){
+                properties.add((String)property[1]);
+            }
+        }
+
+        return properties;
     }
 
 }

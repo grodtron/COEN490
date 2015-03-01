@@ -6,9 +6,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothProfile;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,7 +82,11 @@ public class BluetoothLeScanActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 BluetoothDevice device = mLeDeviceListAdapter.getItem(i);
-                connectToLeDevice(device);
+
+                Intent intent = new Intent(BluetoothLeScanActivity.this, BluetoothLeDeviceActivity.class);
+                intent.putExtra(getString(R.string.bluetooth_le_device_extra), (Parcelable)device);
+
+                startActivity(intent);
             }
         });
     }
