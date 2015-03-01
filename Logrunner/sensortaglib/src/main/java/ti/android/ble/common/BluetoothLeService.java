@@ -54,7 +54,8 @@ import android.util.Log;
 /**
  * Service for managing connection and data communication with a GATT server hosted on a given Bluetooth LE device.
  */
-public class BluetoothLeService extends Service {
+public class
+        BluetoothLeService extends Service {
   static final String TAG = "BluetoothLeService";
 
   public final static String ACTION_GATT_CONNECTED ="ti.android.ble.common.ACTION_GATT_CONNECTED";

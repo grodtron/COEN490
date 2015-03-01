@@ -114,19 +114,14 @@ public class LeServiceListAdapter extends BaseExpandableListAdapter {
         TextView uuidText = (TextView) newView.findViewById(R.id.characteristicUuidText);
         uuidText.setText(characteristic.getUuid().toString());
 
-        ListView propertyList = (ListView) newView.findViewById(R.id.characteristicPropertyList);
-        ArrayAdapter<String> propertyListAdapter
-                = new ArrayAdapter<String>(viewGroup.getContext(), R.layout.characteristic_list_text_view);
-        propertyListAdapter.addAll(
-                BluetoothLeUtil.getReadableCharacteristicProperties(characteristic));
-        propertyList.setAdapter(propertyListAdapter);
-
+        TextView propertyList = (TextView) newView.findViewById(R.id.characteristicQualitiesText);
+        propertyList.setText(BluetoothLeUtil.getReadableCharacteristicProperties(characteristic));
 
         return newView;
     }
 
     @Override
     public boolean isChildSelectable(int i, int i2) {
-        return false;
+        return true;
     }
 }

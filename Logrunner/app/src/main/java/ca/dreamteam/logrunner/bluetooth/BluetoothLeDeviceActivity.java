@@ -8,8 +8,13 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcelable;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,25 +29,12 @@ public class BluetoothLeDeviceActivity extends Activity {
 
     private ExpandableListView mLeCharacteristicList;
     private LeServiceListAdapter mLeServiceListAdapter;
-    private BluetoothGatt mBtLeGatt;
     private TextView mConnectionStatusText;
     private TextView mDeviceNameText;
     private TextView mDeviceAddressText;
     private TextView mRssiText;
     private BluetoothDevice mLeDevice;
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        mBtLeGatt.disconnect();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(BluetoothLeDeviceActivity.this,
-                        "device disconnected", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    private BluetoothLeService.BluetoothLeServiceGattListener mBluetoothLeServiceListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +42,9 @@ public class BluetoothLeDeviceActivity extends Activity {
         setContentView(R.layout.activity_bluetooth_device);
 
         mConnectionStatusText = (TextView) findViewById(R.id.connectionStatusText);
-        mDeviceNameText       = (TextView) findViewById(R.id.deviceNameText);
-        mDeviceAddressText    = (TextView) findViewById(R.id.deviceAddressText);
-        mRssiText             = (TextView) findViewById(R.id.rssiText);
+        mDeviceNameText = (TextView) findViewById(R.id.deviceNameText);
+        mDeviceAddressText = (TextView) findViewById(R.id.deviceAddressText);
+        mRssiText = (TextView) findViewById(R.id.rssiText);
 
         mLeCharacteristicList = (ExpandableListView) findViewById(R.id.characteristicListView);
         mLeServiceListAdapter = new LeServiceListAdapter();
@@ -71,118 +63,147 @@ public class BluetoothLeDeviceActivity extends Activity {
             }
         });
 
-        mBtLeGatt = mLeDevice.connectGatt(this, true, new BluetoothGattCallback() {
+        mLeCharacteristicList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-                super.onConnectionStateChange(gatt, status, newState);
-
-                switch (newState) {
-                    case BluetoothProfile.STATE_CONNECTED:
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mConnectionStatusText.setText("connected");
-                                mConnectionStatusText.setTextColor(getResources().getColor(
-                                        R.color.bluetooth_connected));
-                            }
-                        });
-
-                        // Once we connect to the device, then we discover the services that it
-                        // makes available
-                        gatt.discoverServices();
-                        gatt.readRemoteRssi();
-                        break;
-
-                    case BluetoothProfile.STATE_DISCONNECTED:
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mConnectionStatusText.setText("disconnected");
-                                mConnectionStatusText.setTextColor(getResources().getColor(
-                                        R.color.bluetooth_disconnected));
-
-                                // We are disconnected, so this list of services is no longer valid
-                                mLeServiceListAdapter.clear();
-                            }
-                        });
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-                super.onServicesDiscovered(gatt, status);
-                // update list of services
-                final List<BluetoothGattService> services = gatt.getServices();
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int j, long l) {
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mLeServiceListAdapter.setServiceList(services);
+                        Toast.makeText(BluetoothLeDeviceActivity.this, "child clicked", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
 
-            @Override
-            public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-                super.onCharacteristicRead(gatt, characteristic, status);
-            }
+                BluetoothGattCharacteristic c = (BluetoothGattCharacteristic)
+                        mLeServiceListAdapter.getChild(i, j);
 
-            @Override
-            public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-                super.onCharacteristicWrite(gatt, characteristic, status);
-            }
+                Intent intent = new Intent(
+                        BluetoothLeDeviceActivity.this, BluetoothLeCharacteristicActivity.class);
 
-            @Override
-            public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-                super.onCharacteristicChanged(gatt, characteristic);
-            }
+                intent.putExtra(getString(R.string.bluetooth_le_gatt_characteristic_extra), c.getUuid());
+                intent.putExtra(getString(R.string.bluetooth_le_gatt_service_extra), c.getService().getUuid());
 
-            @Override
-            public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-                super.onDescriptorRead(gatt, descriptor, status);
-            }
+                startActivity(intent);
 
-            @Override
-            public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-                super.onDescriptorWrite(gatt, descriptor, status);
-            }
-
-            @Override
-            public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
-                super.onReliableWriteCompleted(gatt, status);
-            }
-
-            @Override
-            public void onReadRemoteRssi(final BluetoothGatt gatt, final int rssi, int status) {
-                super.onReadRemoteRssi(gatt, rssi, status);
-                if(status == BluetoothGatt.GATT_SUCCESS) {
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mRssiText.setText(Integer.toString(rssi) + " dBm");
-                        }
-                    });
-
-                    // re-read the RSSI after a brief delay
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            gatt.readRemoteRssi();
-                        }
-                    }, 100);
-                }else{
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mRssiText.setText("");
-                        }
-                    });
-                }
+                return false;
             }
         });
 
+        mLeCharacteristicList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener(){
+
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BluetoothLeDeviceActivity.this, "group clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        });
+
+        // TODO ......
+        startService(new Intent(this, BluetoothLeService.class));
+        bindService(new Intent(this, BluetoothLeService.class), new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                serviceConnected(((BluetoothLeService.BluetoothLeBinder)iBinder).getService());
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        }, 0);
+    }
+
+    private class DeviceActivityListener extends BluetoothLeService.BluetoothLeServiceGattListener {
+        @Override
+        public void onConnectionStateChange(BluetoothLeService service, int status, int newState) {
+            super.onConnectionStateChange(service, status, newState);
+
+            switch (newState) {
+                case BluetoothProfile.STATE_CONNECTED:
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mConnectionStatusText.setText("connected");
+                            mConnectionStatusText.setTextColor(getResources().getColor(
+                                    R.color.bluetooth_connected));
+                        }
+                    });
+
+                    // Once we connect to the device, then we discover the services that it
+                    // makes available
+                    service.discoverServices();
+                    service.readRemoteRssi();
+                    break;
+
+                case BluetoothProfile.STATE_DISCONNECTED:
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mConnectionStatusText.setText("disconnected");
+                            mConnectionStatusText.setTextColor(getResources().getColor(
+                                    R.color.bluetooth_disconnected));
+
+                            // We are disconnected, so this list of services is no longer valid
+                            mLeServiceListAdapter.clear();
+                        }
+                    });
+
+                    break;
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothLeService service, int status) {
+            super.onServicesDiscovered(service, status);
+            // update list of services
+            final List<BluetoothGattService> services = service.getServices();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mLeServiceListAdapter.setServiceList(services);
+                }
+            });
+        }
+
+        @Override
+        public void onReadRemoteRssi(final BluetoothLeService service, final int rssi, int status) {
+            super.onReadRemoteRssi(service, rssi, status);
+            if(status == BluetoothGatt.GATT_SUCCESS) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRssiText.setText(Integer.toString(rssi) + " dBm");
+                    }
+                });
+
+                // re-read the RSSI after a brief delay
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        service.readRemoteRssi();
+                    }
+                }, 100);
+            }else{
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRssiText.setText("");
+                    }
+                });
+            }
+        }
+    }
+
+    private void serviceConnected(BluetoothLeService service) {
+        mBluetoothLeServiceListener = new DeviceActivityListener();
+        service.addListener(mBluetoothLeServiceListener);
+        service.connectToDevice(mLeDevice);
     }
 }

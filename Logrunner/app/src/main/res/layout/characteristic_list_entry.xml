@@ -17,9 +17,16 @@
         android:textSize="7pt"
         android:fontFamily="monospace" />
 
-    <ListView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/characteristicPropertyList"
-        android:paddingLeft="100dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/characteristicQualitiesText"
+        android:paddingLeft="90dp"
+        android:paddingTop="2dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="2dp"
+        android:textSize="6.5pt"
+        />
 </LinearLayout>

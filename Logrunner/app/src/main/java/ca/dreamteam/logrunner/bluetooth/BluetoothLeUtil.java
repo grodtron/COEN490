@@ -33,6 +33,8 @@ public class BluetoothLeUtil {
 
         // Ensures Bluetooth is available on the device and it is enabled. If not,
         // displays a dialog requesting user permission to enable Bluetooth.
+        // TODO / FIXME currently this bugs if the user doesn't have BT enabled,
+        // TODO / FIXME since it just returns null and doesn't check the result later.
         if (bluetoothLeAdapter == null || !bluetoothLeAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             _this.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
@@ -75,26 +77,29 @@ public class BluetoothLeUtil {
         new Object[]{ BluetoothGattCharacteristic.PERMISSION_WRITE_SIGNED_MITM, "allows signed write operations with man-in-the-middle protection"},
     };
 
-    public static List<String> getReadableCharacteristicProperties(BluetoothGattCharacteristic c){
+    public static String getReadableCharacteristicProperties(BluetoothGattCharacteristic c){
 
         List<String> qualities = new ArrayList<String>();
 
+        StringBuilder s = new StringBuilder();
 
         int cProps = c.getProperties();
         for(Object[] property : properties){
             if( (cProps & ((Integer)property[0])) != 0 ){
-                qualities.add((String) property[1]);
+                s.append((String) property[1]);
+                s.append('\n');
             }
         }
 
         int cPerms = c.getPermissions();
         for(Object[] permission : permissions){
             if( (cProps & ((Integer)permission[0])) != 0 ){
-                qualities.add((String) permission[1]);
+                s.append((String) permission[1]);
+                s.append('\n');
             }
         }
 
-        return qualities;
+        return s.toString();
     }
 
 }

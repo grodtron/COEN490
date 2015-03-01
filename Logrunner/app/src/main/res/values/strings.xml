@@ -46,6 +46,15 @@
 
     <!-- Strings for Intent Extra Names -->
     <string name="bluetooth_le_device_extra">ca.dreamteam.logrunner.bluetooth.device_extra</string>
+    <string name="bluetooth_le_gatt_characteristic_extra">
+        ca.dreamteam.logrunner.bluetooth.characteristic_extra
+    </string>
+    <string name="bluetooth_le_gatt_extra">ca.dreamteam.logrunner.bluetooth.gatt_extra</string>
+    <string name="bluetooth_le_gatt_service_extra">
+        ca.dreamteam.logrunner.bluetooth.service_extra
+    </string>
+
+
 
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>
