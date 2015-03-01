@@ -12,8 +12,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ca.dreamteam.logrunner.R;
 
@@ -26,6 +29,20 @@ public class BluetoothLeDeviceActivity extends Activity {
     private TextView mDeviceNameText;
     private TextView mDeviceAddressText;
     private TextView mRssiText;
+    private BluetoothDevice mLeDevice;
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mBtLeGatt.disconnect();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BluetoothLeDeviceActivity.this,
+                        "device disconnected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +60,18 @@ public class BluetoothLeDeviceActivity extends Activity {
 
         Intent intent = getIntent();
 
-        final BluetoothDevice device = (BluetoothDevice)
+        mLeDevice = (BluetoothDevice)
                 intent.getParcelableExtra(getString(R.string.bluetooth_le_device_extra));
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDeviceNameText.setText(device.getName());
-                mDeviceAddressText.setText(device.getAddress());
+                mDeviceNameText.setText(mLeDevice.getName());
+                mDeviceAddressText.setText(mLeDevice.getAddress());
             }
         });
 
-        mBtLeGatt = device.connectGatt(this, true, new BluetoothGattCallback() {
+        mBtLeGatt = mLeDevice.connectGatt(this, true, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
                 super.onConnectionStateChange(gatt, status, newState);
@@ -73,6 +90,7 @@ public class BluetoothLeDeviceActivity extends Activity {
                         // Once we connect to the device, then we discover the services that it
                         // makes available
                         gatt.discoverServices();
+                        gatt.readRemoteRssi();
                         break;
 
                     case BluetoothProfile.STATE_DISCONNECTED:
@@ -137,8 +155,32 @@ public class BluetoothLeDeviceActivity extends Activity {
             }
 
             @Override
-            public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+            public void onReadRemoteRssi(final BluetoothGatt gatt, final int rssi, int status) {
                 super.onReadRemoteRssi(gatt, rssi, status);
+                if(status == BluetoothGatt.GATT_SUCCESS) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRssiText.setText(Integer.toString(rssi) + " dBm");
+                        }
+                    });
+
+                    // re-read the RSSI after a brief delay
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            gatt.readRemoteRssi();
+                        }
+                    }, 100);
+                }else{
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRssiText.setText("");
+                        }
+                    });
+                }
             }
         });
 

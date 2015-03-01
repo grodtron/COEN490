@@ -14,5 +14,6 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         android:paddingRight="4dp"
-        android:fontFamily="monospace" />
+        android:fontFamily="monospace"
+        android:textSize="7.5pt" />
 </LinearLayout>

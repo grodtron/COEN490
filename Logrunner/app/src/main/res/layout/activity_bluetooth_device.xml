@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="rssi"
+            android:text=""
             android:textColor="@android:color/secondary_text_dark"
             android:id="@+id/rssiText"
             android:layout_weight="0.4" />

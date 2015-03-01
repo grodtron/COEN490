@@ -13,7 +13,9 @@
         android:paddingLeft="80dp"
         android:paddingTop="2dp"
         android:paddingRight="2dp"
-        android:paddingBottom="2dp" />
+        android:paddingBottom="2dp"
+        android:textSize="7pt"
+        android:fontFamily="monospace" />
 
     <ListView
         android:layout_width="match_parent"
