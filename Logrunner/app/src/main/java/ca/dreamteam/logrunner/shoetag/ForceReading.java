@@ -21,6 +21,9 @@ public class ForceReading {
     public ForceReading(long millis){
         this.millis = millis;
         readings = new HashMap<Location, Integer>(5);
+        for(Location loc : Location.values()){
+            readings.put(loc, 0);
+        }
     }
 
     /**
@@ -31,9 +34,7 @@ public class ForceReading {
      * @param value The numerical value of the force
      */
     public void setReading(Location where, int value){
-        if(! readings.containsKey(where)){
-            readings.put(where, value);
-        }
+        readings.put(where, value);
     }
 
     /**

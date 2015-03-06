@@ -32,7 +32,7 @@ public class BluetoothLeUtil {
         final BluetoothAdapter bluetoothLeAdapter = bluetoothLeManager.getAdapter();
 
         // Ensures Bluetooth is available on the device and it is enabled. If not,
-        // displays a dialog requesting user permission to enable Bluetooth.
+        // displays a dialog requesting user permission to mEnableCharacteristic Bluetooth.
         // TODO / FIXME currently this bugs if the user doesn't have BT enabled,
         // TODO / FIXME since it just returns null and doesn't check the result later.
         if (bluetoothLeAdapter == null || !bluetoothLeAdapter.isEnabled()) {

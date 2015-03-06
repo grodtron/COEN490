@@ -6,11 +6,15 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothProfile;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,15 +34,17 @@ import ca.dreamteam.logrunner.R;
  */
 public class BluetoothLeScanActivity extends Activity {
 
+    private final static String TAG = BluetoothLeScanActivity.class.getSimpleName();
+
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
 
     private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothGatt mBluetoothLeGatt;
-    private Handler mHandler;
     private ListView mLeDeviceList;
     private Button mLeScanButton;
     private ProgressBar mLeProgressBar;
+
+    private ServiceConnection mServiceConnection;
 
     private LeDeviceListAdapter mLeDeviceListAdapter;
 
@@ -56,6 +62,8 @@ public class BluetoothLeScanActivity extends Activity {
                 });
             }
         };
+    private BluetoothLeService mLeService;
+    private DeviceActivityListener mBluetoothLeServiceListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,39 +86,41 @@ public class BluetoothLeScanActivity extends Activity {
             }
         });
 
+        Log.i(TAG, "Starting service");
+        startService(new Intent(this, BluetoothLeService.class));
+        Log.i(TAG, "Binding service");
+        mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                Log.i(TAG, "Service connected");
+                mLeService = ((BluetoothLeService.BluetoothLeBinder)iBinder).getService();
+                mBluetoothLeServiceListener = new DeviceActivityListener();
+                mLeService.addListener(mBluetoothLeServiceListener);
+            }
+
+            @Override public void onServiceDisconnected(ComponentName componentName) {}
+        };
+        bindService(new Intent(this, BluetoothLeService.class), mServiceConnection, 0);
+
         mLeDeviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i(TAG, "Device clicked");
                 BluetoothDevice device = mLeDeviceListAdapter.getItem(i);
-
-                Intent intent = new Intent(BluetoothLeScanActivity.this, BluetoothLeDeviceActivity.class);
-                intent.putExtra(getString(R.string.bluetooth_le_device_extra), (Parcelable)device);
-
-                startActivity(intent);
+                if(BluetoothLeService.deviceMatches(device)){
+                    Log.i(TAG, "Device matches, connecting!");
+                    mLeService.connectToDevice(device);
+                } else {
+                    Log.i(TAG, "Device does not match, not connecting!");
+                }
             }
         });
     }
 
-    private void connectToLeDevice(BluetoothDevice device) {
-        mBluetoothLeGatt = device.connectGatt(this, false, new LeGattCallback(){
-            @Override
-            public void onConnectionStateChange(BluetoothGatt gatt, int status, final int newState) {
-                String intentAction;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (newState == BluetoothProfile.STATE_CONNECTED) {
-                            Toast.makeText(BluetoothLeScanActivity.this, "connected to device!", Toast.LENGTH_SHORT).show();
-
-                        } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                            Toast.makeText(BluetoothLeScanActivity.this, "disconnected from device!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-
-        mBluetoothLeGatt.connect();
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        unbindService(mServiceConnection);
     }
 
     private void scanLeDevice() {
@@ -136,5 +146,19 @@ public class BluetoothLeScanActivity extends Activity {
         timer.start();
     }
 
+    private class DeviceActivityListener extends BluetoothLeService.BluetoothLeServiceGattListener {
+        @Override
+        public void onConnectionStateChange(BluetoothLeService service, int status, int newState) {
+            super.onConnectionStateChange(service, status, newState);
 
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                service.discoverServices();
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothLeService service, int status) {
+            finish();
+        }
+    }
 }

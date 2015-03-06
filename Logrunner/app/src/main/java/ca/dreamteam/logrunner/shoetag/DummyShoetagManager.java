@@ -77,5 +77,4 @@ public class DummyShoetagManager extends ShoetagManager {
         return false;
     }
 
-
 }

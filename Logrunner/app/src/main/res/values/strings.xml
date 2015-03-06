@@ -55,6 +55,13 @@
     </string>
 
 
+    <!-- stuff related to the bluetooth device and service -->
+    <string name="le_device_uuid"></string>
+    <string name="le_service_uuid"></string>
+    <string name="le_notification_characteristic_uuid"></string>
+    <string name="le_control_characteristic_uuid"></string>
+
+
 
     <!-- Strings related to Settings -->
     <string name="pref_header_general">General</string>

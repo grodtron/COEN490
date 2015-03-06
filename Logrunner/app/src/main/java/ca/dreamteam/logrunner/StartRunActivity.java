@@ -2,42 +2,20 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.SimpleSeriesRenderer;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
-import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import ca.dreamteam.logrunner.Util.Utilities;
 import ca.dreamteam.logrunner.bluetooth.BluetoothLeScanActivity;
-import ca.dreamteam.logrunner.shoetag.AccelerationReading;
-import ca.dreamteam.logrunner.shoetag.DummyShoetagManager;
-import ca.dreamteam.logrunner.shoetag.ForceReading;
-import ca.dreamteam.logrunner.shoetag.ShoetagListener;
+import ca.dreamteam.logrunner.shoetag.BluetoothLeShoetagManager;
 import ca.dreamteam.logrunner.shoetag.ShoetagManager;
 
 public class StartRunActivity extends Activity {
@@ -45,7 +23,6 @@ public class StartRunActivity extends Activity {
     final String TAG = "ca.dreamteam.logrunner.StartRunActivity";
 
     private ShoetagManager mStManager;
-    private ShoetagListener mStListener;
 
     private GraphicalView mChartView;
     private byte mByteArray[];
@@ -57,13 +34,12 @@ public class StartRunActivity extends Activity {
         setContentView(R.layout.activity_start_run);
         Button runButton = (Button) findViewById(R.id.runButton);
 
-        mStManager = new DummyShoetagManager();
-        mStManager.addListener(mStListener);
+        mStManager = new BluetoothLeShoetagManager(this);
 
         LinearLayout chartContainer = (LinearLayout) findViewById(
                 R.id.chartview);
 
-        GraphTesting gt= new GraphTesting();
+        GraphView gt= new GraphView();
         mStManager.addListener(gt);
         mChartView = gt.getGraphView(getApplicationContext());
 
@@ -231,7 +207,7 @@ public class StartRunActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         if (mStManager != null) {
-            mStManager.stop();
+            mStManager.onDestroy();
         }
     }
 
