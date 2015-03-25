@@ -20,6 +20,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import ca.dreamteam.logrunner.shoetag.AccelerationReading;
 import ca.dreamteam.logrunner.shoetag.ForceReading;
@@ -33,6 +34,8 @@ public class GraphView implements ShoetagListener {
 
     private GraphicalView graphicalView;
     private int n;
+    private TextView mCadence;
+    private TextView mGroundContactTime;
 
     public GraphicalView getGraphView(Context context) {
 
@@ -74,8 +77,8 @@ public class GraphView implements ShoetagListener {
         renderers.setPointSize(5f);
         renderers.setMargins(new int[] { 20, 30, 15, 20 });
 
-        renderers.setYAxisMax(150);
-        renderers.setYAxisMin(-150);
+        renderers.setYAxisMax(1000);
+        renderers.setYAxisMin(-10);
 
         graphicalView = ChartFactory.getLineChartView(
                 context, dataset, renderers);
@@ -100,17 +103,24 @@ public class GraphView implements ShoetagListener {
         renderer.setLabelsColor(labelsColor);
     }
 
+    public void setTextFields(TextView groundContacttime, TextView cadence){
+        mGroundContactTime = groundContacttime;
+        mCadence           = cadence;
+    }
+
     @Override
     public void updateForce(ForceReading reading) {
         for(ForceReading.Location location : ForceReading.Location.values()){
             seriesByLocation.get(location).add(n, reading.getReading(location));
-            if (n > 40) seriesByLocation.get(location).remove(0);
+            //if (n > 40) seriesByLocation.get(location).remove(0);
         }
 
         renderers.setXAxisMin(n - 40);
         renderers.setXAxisMax(n);
         graphicalView.repaint();
         ++n;
+
+        //mGroundContactTime.setText("ground contact time: " + reading.getGround_contact_time() + " ms");
     }
 
     @Override

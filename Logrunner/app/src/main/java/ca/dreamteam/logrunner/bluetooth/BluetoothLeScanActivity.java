@@ -151,13 +151,16 @@ public class BluetoothLeScanActivity extends Activity {
         public void onConnectionStateChange(BluetoothLeService service, int status, int newState) {
             super.onConnectionStateChange(service, status, newState);
 
+            Log.i(TAG, "On connection state changed -> " + newState);
             if (newState == BluetoothProfile.STATE_CONNECTED) {
+                Log.i(TAG, "On connection state changed => [CONNECTED] !");
                 service.discoverServices();
             }
         }
 
         @Override
         public void onServicesDiscovered(BluetoothLeService service, int status) {
+            Log.i(TAG, "Services discovered!!");
             finish();
         }
     }

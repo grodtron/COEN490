@@ -27,11 +27,11 @@ public class BluetoothLeService extends Service {
 
     // Important connection info!!
 
-    public final static String NAME = "SensorTag";
+    public final static String NAME = "ShoeTag";
 
     public final static UUID
-            SERVICE = fromString("f000aa10-0451-4000-b000-000000000000"),
-            DATA    = fromString("f000aa11-0451-4000-b000-000000000000"),
+            SERVICE = fromString("0000DA7A-0000-1000-8000-00805F9B34FB"),
+            DATA    = fromString("0000DA8A-0000-1000-8000-00805F9B34FB"),
             CONF_ENABLE     = fromString("f000aa12-0451-4000-b000-000000000000"), // 0: disable, 1:
             CONF_PERIOD     = fromString("f000aa13-0451-4000-b000-000000000000"); // Period in tens of milliseconds
     private int mConnectionState = BluetoothProfile.STATE_DISCONNECTED;
@@ -46,11 +46,12 @@ public class BluetoothLeService extends Service {
      * Determine if a device is actually one we are interested in!
      */
     public static boolean deviceMatches(BluetoothDevice dev){
-        try {
-            return dev.getName().equals(NAME);
-        }catch(NullPointerException e){
-            return false;
-        }
+//        try {
+//            return dev.getName().equals(NAME);
+//        }catch(NullPointerException e){
+//            return false;
+//        }
+        return true;
     }
 
 
@@ -99,44 +100,13 @@ public class BluetoothLeService extends Service {
             return false;
         }
 
-        mEnableCharacteristic = serv.getCharacteristic(CONF_ENABLE);
-        mPeriodCharacteristic = serv.getCharacteristic(CONF_PERIOD);
         mDataCharacteristic   = serv.getCharacteristic(DATA);
 
-        if(mEnableCharacteristic == null){
-            Log.w(TAG, "mEnableCharacteristic == null, aborting");
-            return false;
-        }
-
-        if(mPeriodCharacteristic == null){
-            Log.w(TAG, "mPeriodCharacteristic == null, aborting");
-            return false;
-        }
-
         if(mDataCharacteristic == null){
-            Log.w(TAG, "mDataCharacteristic == null, aborting");
+            Log.w(TAG, "char == null, aborting");
             return false;
         }
 
-        mPeriodCharacteristic.setValue(new byte[]{10});
-        mEnableCharacteristic.setValue(new byte[]{1});
-
-       Log.i(TAG, "setting period to 10");
-        mBluetoothLeGatt.writeCharacteristic(mPeriodCharacteristic);
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Log.i(TAG, "setting enabled to 1");
-        mBluetoothLeGatt.writeCharacteristic(mEnableCharacteristic);
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Log.i(TAG, "enabling notifications");
         mBluetoothLeGatt.setCharacteristicNotification(mDataCharacteristic, true);
 

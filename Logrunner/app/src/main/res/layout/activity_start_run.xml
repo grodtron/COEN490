@@ -39,8 +39,18 @@ tools:context=".StartRunActivity" >
                     <LinearLayout
                         android:id="@+id/chartview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="321dp"
                         android:orientation="horizontal" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="24dp"
+                        android:id="@+id/ground_contact_time"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="24dp"
+                        android:id="@+id/strides_per_min"/>
 
                 </LinearLayout>
 
@@ -57,21 +67,14 @@ tools:context=".StartRunActivity" >
 
     <Button
         android:id="@+id/runButton"
-        android:layout_height="50dp"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:background="#33B5E5" />
-
-    <TextView
-        android:id="@+id/textButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/start_run"
         android:textStyle="bold"
         android:textSize="28sp"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="6dp" />
+        android:background="#33B5E5" />
 
     <Button
         android:id="@+id/save_button"
@@ -96,5 +99,42 @@ tools:context=".StartRunActivity" >
         android:layout_marginLeft="180dp"
         android:background="#FF0000"
         android:visibility="gone" />
+
+
+    <Button
+        android:id="@+id/pause_button"
+        android:text="@string/pause"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="180dp"
+        android:background="#7755E5"
+        android:visibility="gone" />
+    <Button
+        android:id="@+id/resume_button"
+        android:text="@string/resume"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="180dp"
+        android:background="#33ee77"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/stop_button"
+        android:text="@string/stop"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="180dp"
+        android:background="#FF0000"
+        android:visibility="gone" />
+
 
 </RelativeLayout>

@@ -26,13 +26,17 @@ public class StartRunActivity extends Activity {
 
     private GraphicalView mChartView;
     private byte mByteArray[];
-    TextView textButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_run);
-        Button runButton = (Button) findViewById(R.id.runButton);
+        final Button runButton = (Button) findViewById(R.id.runButton);
+        final Button stopButton = (Button) findViewById(R.id.stop_button);
+        final Button saveButton = (Button) findViewById(R.id.save_button);
+        final Button discardButton = (Button) findViewById(R.id.discard_button);
+        final Button pauseButton = (Button) findViewById(R.id.pause_button);
+        final Button resumeButton = (Button) findViewById(R.id.resume_button);
 
         mStManager = new BluetoothLeShoetagManager(this);
 
@@ -42,6 +46,9 @@ public class StartRunActivity extends Activity {
         GraphView gt= new GraphView();
         mStManager.addListener(gt);
         mChartView = gt.getGraphView(getApplicationContext());
+        gt.setTextFields(
+                (TextView)findViewById(R.id.ground_contact_time),
+                (TextView)findViewById(R.id.strides_per_min));
 
         chartContainer.addView(mChartView);
         mChartView.setVisibility(View.VISIBLE);
@@ -63,26 +70,19 @@ public class StartRunActivity extends Activity {
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textButton = (TextView) findViewById(R.id.textButton);
-                final Button tempButton = (Button) findViewById(R.id.runButton);
-                final Button saveButton = (Button) findViewById(R.id.save_button);
-                final Button discardButton = (Button) findViewById(R.id.discard_button);
-                tempButton.setClickable(false);
+                if (mStManager.connected()) {
+                    runButton.setVisibility(View.GONE);
+                    stopButton.setVisibility(View.VISIBLE);
+                    pauseButton.setVisibility(View.VISIBLE);
+                    mStManager.start();
+                } else {
 
-                // Based on the textButton value change between Run, Stop & Save actions
-                if (((String)textButton.getText()).compareTo("START RUN") == 0) {
-                    if(mStManager.connected()){
-                        tempButton.setBackgroundColor(android.graphics.Color.RED); // Blue
-                        textButton.setText("STOP");
-                        mStManager.start();
-                    }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(StartRunActivity.this);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(StartRunActivity.this);
+                    builder.setTitle(R.string.ble_not_connected_dialog_title);
+                    builder.setMessage(R.string.ble_not_connected_dialog_content);
 
-                        builder.setTitle(R.string.ble_not_connected_dialog_title);
-                        builder.setMessage(R.string.ble_not_connected_dialog_content);
-
-                        builder.setPositiveButton(R.string.ble_not_connected_dialog_positive,
+                    builder.setPositiveButton(R.string.ble_not_connected_dialog_positive,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     startActivity(
@@ -93,49 +93,69 @@ public class StartRunActivity extends Activity {
                                 }
                             });
 
-                        // Simply dismiss the dialog, we're done
-                        builder.setNegativeButton(R.string.ble_not_connected_dialog_negative,
+                    // Simply dismiss the dialog, we're done
+                    builder.setNegativeButton(R.string.ble_not_connected_dialog_negative,
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface d, int w) { d.dismiss(); }
+                                public void onClick(DialogInterface d, int w) {
+                                    d.dismiss();
+                                }
                             });
 
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    }
-
-                } else if (((String)textButton.getText()).compareTo("STOP") == 0) {
-
-                    AlertDialog.Builder alert = new AlertDialog.Builder(
-                            StartRunActivity.this);
-
-                    alert.setTitle("Stop");
-                    alert.setMessage("Are you sure want to stop the current run?");
-                    alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mStManager.stop();
-                            textButton.setVisibility(View.GONE);
-                            tempButton.setVisibility(View.GONE);
-                            saveButton.setVisibility(View.VISIBLE);
-                            discardButton.setVisibility(View.VISIBLE);
-                            textButton.setText("START RUN");
-                        }
-                    });
-                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                    AlertDialog alert = builder.create();
                     alert.show();
                 }
-                tempButton.setClickable(true);
             }
         });
 
-        Button saveButton = (Button) findViewById(R.id.save_button);
-        Button discardButton = (Button) findViewById(R.id.discard_button);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        StartRunActivity.this);
+
+                alert.setTitle("Stop");
+                alert.setMessage("Are you sure want to stop the current run?");
+                alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mStManager.stop();
+                        stopButton.setVisibility(View.GONE);
+                        pauseButton.setVisibility(View.GONE);
+                        resumeButton.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.VISIBLE);
+                        discardButton.setVisibility(View.VISIBLE);
+                    }
+                });
+                alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+
+
+        pauseButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mStManager.pause();
+                pauseButton.setVisibility(View.GONE);
+                resumeButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        resumeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mStManager.resume();
+                resumeButton.setVisibility(View.GONE);
+                pauseButton.setVisibility(View.VISIBLE);
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,17 +185,9 @@ public class StartRunActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        final TextView textButton = (TextView) findViewById(R.id.textButton);
-                        final Button tempButton = (Button) findViewById(R.id.runButton);
-                        final Button save_btn = (Button) findViewById(R.id.save_button);
-                        final Button discard_btn = (Button) findViewById(R.id.discard_button);
-
-                        save_btn.setVisibility(View.GONE);
-                        discard_btn.setVisibility(View.GONE);
-                        textButton.setVisibility(View.VISIBLE);
-                        tempButton.setVisibility(View.VISIBLE);
-                        textButton.setText("START RUN");
-                        tempButton.setBackgroundColor(android.graphics.Color.parseColor("#33B5E5")); // Blue
+                        saveButton.setVisibility(View.GONE);
+                        discardButton.setVisibility(View.GONE);
+                        runButton.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -188,19 +200,6 @@ public class StartRunActivity extends Activity {
                 alert.show();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mStManager != null) mStManager.resume();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mStManager != null) mStManager.pause();
     }
 
     @Override
@@ -229,33 +228,29 @@ public class StartRunActivity extends Activity {
             mStManager = null;
         }
 
-        if (textButton == null) {
-            StartRunActivity.this.finish();
-            return;
-        }
 
-        if(((String)textButton.getText()).compareTo("STOP") == 0) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(
-                    StartRunActivity.this);
-            alert.setTitle("Stop");
-            alert.setMessage("Are you sure want to stop the current run without saving and go back?");
-            alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    StartRunActivity.this.finish();
-                }
-            });
-            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alert.show();
-        }
-        else {
+//        if(   ((String)textButton.getText()).compareTo("STOP") == 0) {
+//            AlertDialog.Builder alert = new AlertDialog.Builder(
+//                    StartRunActivity.this);
+//            alert.setTitle("Stop");
+//            alert.setMessage("Are you sure want to stop the current run without saving and go back?");
+//            alert.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    StartRunActivity.this.finish();
+//                }
+//            });
+//            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                }
+//            });
+//            alert.show();
+//        }
+//        else {
             StartRunActivity.this.finish();
-        }
+//        }
     }
 
     public void confirmDialog() {

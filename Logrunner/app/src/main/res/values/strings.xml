@@ -112,5 +112,8 @@
     </string-array>
 
     <string name="title_activity_about">AboutActivity</string>
+    <string name="pause">pause</string>
+    <string name="resume">resume</string>
+    <string name="stop">stop</string>
 
 </resources>

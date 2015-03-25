@@ -13,16 +13,31 @@ public class ForceReading {
         FRONT_MIDDLE,
         MIDDLE_MIDDLE,
         BACK_RIGHT,
+        FRONT_LEFT_roo,
+        FRONT_RIGHT_roo,
+        FRONT_MIDDLE_roo,
+        MIDDLE_MIDDLE_roo,
+        BACK_RIGHT_roo,
     }
 
-    private HashMap<Location, Integer> readings;
+    private HashMap<Location, Double> readings;
     private final long millis;
+
+    public int getGround_contact_time() {
+        return ground_contact_time;
+    }
+
+    public void setGround_contact_time(int ground_contact_time) {
+        this.ground_contact_time = ground_contact_time;
+    }
+
+    private int ground_contact_time;
 
     public ForceReading(long millis){
         this.millis = millis;
-        readings = new HashMap<Location, Integer>(5);
+        readings = new HashMap<Location, Double>(10);
         for(Location loc : Location.values()){
-            readings.put(loc, 0);
+            readings.put(loc, 0.0);
         }
     }
 
@@ -33,7 +48,7 @@ public class ForceReading {
      * @param where The location of the force
      * @param value The numerical value of the force
      */
-    public void setReading(Location where, int value){
+    public void setReading(Location where, double value){
         readings.put(where, value);
     }
 
@@ -42,7 +57,7 @@ public class ForceReading {
      * @param where The location
      * @return the value, or whatever a null Integer gets unboxed to (0 I guess).
      */
-    public int getReading(Location where){
+    public double getReading(Location where){
         return readings.get(where);
     }
 
