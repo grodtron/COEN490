@@ -110,6 +110,9 @@ public class GraphView implements ShoetagListener {
 
     @Override
     public void updateForce(ForceReading reading) {
+
+
+
         for(ForceReading.Location location : ForceReading.Location.values()){
             seriesByLocation.get(location).add(n, reading.getReading(location));
             //if (n > 40) seriesByLocation.get(location).remove(0);

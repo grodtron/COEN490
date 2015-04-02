@@ -1,12 +1,16 @@
 package ca.dreamteam.logrunner.shoetag;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Timer;
@@ -96,7 +100,31 @@ public class BluetoothLeShoetagManager extends ShoetagManager {
     }
 
     private class DeviceActivityListener extends BluetoothLeService.BluetoothLeServiceGattListener {
+
+        public void onConnectionStateChange(BluetoothLeService service, int status, int newState) {
+            if(newState == BluetoothGatt.STATE_DISCONNECTED){
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText( mContext, "disconnected", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+
+
+        boolean first = true;
+
         public void onCharacteristicChanged(BluetoothLeService service, BluetoothGattCharacteristic characteristic) {
+
+            if(first){
+                first = false;
+                byte [] value = characteristic.getValue();
+                Log.i(TAG, "=======================\n=======================\n=======================\n");
+                Log.i(TAG, Arrays.toString(value));
+                Log.i(TAG, "=======================\n=======================\n=======================\n");
+            }
+
             ForceReading reading = new ForceReading(System.currentTimeMillis());
 
             mBytesRead.addAndGet(characteristic.getValue().length);
@@ -119,17 +147,17 @@ public class BluetoothLeShoetagManager extends ShoetagManager {
 
             Log.i(TAG, Arrays.toString(maximum));
 
-            reading.setReading(ForceReading.Location.FRONT_LEFT,    1.35*maximum[0]);
-            reading.setReading(ForceReading.Location.MIDDLE_MIDDLE, 1.35*maximum[1]);
-            reading.setReading(ForceReading.Location.BACK_RIGHT,    1.35*maximum[2]);
-            reading.setReading(ForceReading.Location.FRONT_RIGHT,   1.35*maximum[3]);
-            reading.setReading(ForceReading.Location.FRONT_LEFT,    1.35*maximum[4]);
+            reading.setReading(ForceReading.Location.FRONT_LEFT,    maximum[0]);//1.35*maximum[0]);
+            reading.setReading(ForceReading.Location.MIDDLE_MIDDLE, maximum[1]);//1.35*maximum[1]);
+            reading.setReading(ForceReading.Location.BACK_RIGHT,    maximum[2]);//1.35*maximum[2]);
+            reading.setReading(ForceReading.Location.FRONT_RIGHT,   maximum[3]);//1.35*maximum[3]);
+            reading.setReading(ForceReading.Location.FRONT_LEFT,    maximum[4]);//1.35*maximum[4]);
 
-            reading.setReading(ForceReading.Location.FRONT_LEFT_roo,    rate_of_onset[0]*1.35*100);
-            reading.setReading(ForceReading.Location.MIDDLE_MIDDLE_roo, rate_of_onset[1]*1.35*100);
-            reading.setReading(ForceReading.Location.BACK_RIGHT_roo,    rate_of_onset[2]*1.35*100);
-            reading.setReading(ForceReading.Location.FRONT_RIGHT_roo,   rate_of_onset[3]*1.35*100);
-            reading.setReading(ForceReading.Location.FRONT_LEFT_roo,    rate_of_onset[4]*1.35*100);
+            reading.setReading(ForceReading.Location.FRONT_LEFT_roo,    rate_of_onset[0]);//*1.35*100);
+            reading.setReading(ForceReading.Location.MIDDLE_MIDDLE_roo, rate_of_onset[1]);//*1.35*100);
+            reading.setReading(ForceReading.Location.BACK_RIGHT_roo,    rate_of_onset[2]);//*1.35*100);
+            reading.setReading(ForceReading.Location.FRONT_RIGHT_roo,   rate_of_onset[3]);//*1.35*100);
+            reading.setReading(ForceReading.Location.FRONT_LEFT_roo,    rate_of_onset[4]);//*1.35*100);
 
             reading.setGround_contact_time(ground_contact_time);
 

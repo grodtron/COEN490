@@ -2,9 +2,12 @@ package ca.dreamteam.logrunner;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +16,12 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import org.achartengine.GraphicalView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import ca.dreamteam.logrunner.bluetooth.BluetoothLeScanActivity;
 import ca.dreamteam.logrunner.shoetag.BluetoothLeShoetagManager;
@@ -23,6 +32,8 @@ public class StartRunActivity extends Activity {
     final String TAG = "ca.dreamteam.logrunner.StartRunActivity";
 
     private ShoetagManager mStManager;
+
+    private ShoedataLogger mShoedataLogger;
 
     private GraphicalView mChartView;
     private byte mByteArray[];
@@ -49,6 +60,27 @@ public class StartRunActivity extends Activity {
         gt.setTextFields(
                 (TextView)findViewById(R.id.ground_contact_time),
                 (TextView)findViewById(R.id.strides_per_min));
+
+        try {
+
+            File folder = new File(Environment.getExternalStorageDirectory() + "/shoedata");
+
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+
+            File file = new File (folder,
+                    new SimpleDateFormat("'shoedata--'yyyy-MM-dd'--'hh-mm-ss'.csv'").format(new Date()));
+
+            FileOutputStream f = new FileOutputStream(file);
+
+            Log.i(TAG, "Opened output file " + file.getAbsolutePath());
+
+            mShoedataLogger = new ShoedataLogger(f);
+            mStManager.addListener(mShoedataLogger);
+        } catch (FileNotFoundException e) {
+            Log.w(TAG, "Could not open logging file " + e.getMessage());
+        }
 
         chartContainer.addView(mChartView);
         mChartView.setVisibility(View.VISIBLE);
@@ -205,6 +237,11 @@ public class StartRunActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if(mShoedataLogger != null){
+            mShoedataLogger.close();
+        }
+
         if (mStManager != null) {
             mStManager.onDestroy();
         }
